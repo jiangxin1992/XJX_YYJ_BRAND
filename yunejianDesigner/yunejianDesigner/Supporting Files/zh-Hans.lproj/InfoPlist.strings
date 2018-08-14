@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  yunejianDesigner
+
+  Created by yyj on 2017/9/12.
+  Copyright © 2017年 Apple. All rights reserved.
+*/
+NSCameraUsageDescription = "访问相机：用于扫描二维码获取商品信息。";
+NSPhotoLibraryUsageDescription = "访问相册：用于上传图片资料。";
+NSPhotoLibraryAddUsageDescription = "访问相册：用于保存二维码图片到相册。";

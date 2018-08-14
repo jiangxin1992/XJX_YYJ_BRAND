@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "电话"; ObjectID = "ITN-yd-WBd"; */
+"ITN-yd-WBd.text" = "Phone";
+
+/* Class = "UILabel"; text = "邮箱"; ObjectID = "esw-7q-R3g"; */
+"esw-7q-R3g.text" = "Email";
+
+/* Class = "UILabel"; text = "联系品牌"; ObjectID = "gd4-4X-HZ2"; */
+"gd4-4X-HZ2.text" = "Contact";
+
+/* Class = "UILabel"; text = "微信"; ObjectID = "uyP-gb-leO"; */
+"uyP-gb-leO.text" = "WeChat";
+
+/* Class = "UILabel"; text = "QQ"; ObjectID = "xH9-nK-DHK"; */
+"xH9-nK-DHK.text" = "QQ";

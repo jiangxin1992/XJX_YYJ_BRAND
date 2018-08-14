@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  yunejianDesigner
+
+  Created by yyj on 2017/9/12.
+  Copyright © 2017年 Apple. All rights reserved.
+*/
+NSCameraUsageDescription = "Access Camera:  to scan QR code for product information. ";
+NSPhotoLibraryUsageDescription = "Access Album:  to upload picture data. ";
+NSPhotoLibraryAddUsageDescription = "Access Album: to save the QR code image to iPhone photo library. ";

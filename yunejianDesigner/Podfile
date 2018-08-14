@@ -1,0 +1,27 @@
+=begin
+  yunejianDesigner的Podfile....
+  YY开头的是YYSpecs项目私有库
+=end
+
+source 'https://github.com/CocoaPods/Specs.git' #引入pod原有的私有库     
+source 'https://git.ycosystem.com/iOSMode/YYSpecs.git' #引入自定义私有库    
+
+platform :ios,’8.0’
+target 'yunejianDesigner' do
+
+ pod 'YYToast', '~> 0.1.1' # 三端通用toast
+
+ pod 'MBProgressHUD', '~> 1.1.0'
+ pod 'SDWebImage', '~> 4.1.0'
+ pod 'JSONModel', '~> 1.2.0'
+ pod 'Masonry', '~> 0.6.4'
+ pod 'MJExtension', '~> 3.0.13'
+ pod 'TTTAttributedLabel', '~> 1.13.4'
+ pod 'AFNetworking', '~> 3.1.0'
+ pod 'Qiniu', '~> 7.1.8'
+ pod 'UMengAnalytics-NO-IDFA', '~> 4.2.5' # 无 idfa版本
+ pod 'Bugly', '~> 2.4.8'
+ pod 'MJRefresh', '~> 3.1.12'
+ pod 'MGSwipeTableCell', '~> 1.6.1' # 自定义侧滑
+
+end

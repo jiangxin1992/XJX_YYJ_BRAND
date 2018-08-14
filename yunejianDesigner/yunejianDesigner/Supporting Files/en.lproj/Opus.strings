@@ -1,0 +1,96 @@
+
+/* Class = "UIButton"; normalTitle = "全选"; ObjectID = "3Ji-Vl-0MK"; */
+"3Ji-Vl-0MK.normalTitle" = "All";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "3ZU-tJ-EW1"; */
+"3ZU-tJ-EW1.normalTitle" = "Save";
+
+/* Class = "UILabel"; text = "款式数"; ObjectID = "99o-LH-gpv"; */
+"99o-LH-gpv.text" = "Styles";
+
+/* Class = "UILabel"; text = "过期"; ObjectID = "9y3-S3-1yL"; */
+"9y3-S3-1yL.text" = "Expired";
+
+/* Class = "UILabel"; text = "款式名称"; ObjectID = "A0I-Zt-Re2"; */
+"A0I-Zt-Re2.text" = "Style Name";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Cyt-IQ-zUK"; */
+"Cyt-IQ-zUK.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EJO-GL-hG1"; */
+"EJO-GL-hG1.text" = "Label";
+
+/* Class = "UILabel"; text = "系列名称"; ObjectID = "EwJ-Kv-8uf"; */
+"EwJ-Kv-8uf.text" = "Collection Name";
+
+/* Class = "UILabel"; text = "起订额"; ObjectID = "Fas-Jn-jdK"; */
+"Fas-Jn-jdK.text" = "Min Amount";
+
+/* Class = "UILabel"; text = "材料"; ObjectID = "GAE-8x-pnf"; */
+"GAE-8x-pnf.text" = "material";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "IH7-rj-ZzD"; */
+"IH7-rj-ZzD.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "LPj-zA-nv0"; */
+"LPj-zA-nv0.text" = "Label";
+
+/* Class = "UILabel"; text = "款式款号"; ObjectID = "MeK-kf-QHs"; */
+"MeK-kf-QHs.text" = "Style Code";
+
+/* Class = "UILabel"; text = "批发价"; ObjectID = "Rld-wO-wYs"; */
+"Rld-wO-wYs.text" = "Wholesale";
+
+/* Class = "UILabel"; text = "没有获取到数据"; ObjectID = "U8D-rP-Nw4"; */
+"U8D-rP-Nw4.text" = "No Data";
+
+/* Class = "UILabel"; text = "LookBook"; ObjectID = "UYR-wf-U0L"; */
+"UYR-wf-U0L.text" = "LookBook";
+
+/* Class = "UIButton"; normalTitle = "发布"; ObjectID = "b31-R3-h7t"; */
+"b31-R3-h7t.normalTitle" = "Publish";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "b6M-PX-V3N"; */
+"b6M-PX-V3N.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "b6a-hA-LkT"; */
+"b6a-hA-LkT.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "0个已选中"; ObjectID = "dpW-XU-LEn"; */
+"dpW-XU-LEn.text" = "0 styles selected";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "dvL-Hy-wfo"; */
+"dvL-Hy-wfo.text" = "Label";
+
+/* Class = "UILabel"; text = "没有系列相关Lookbook"; ObjectID = "fYS-N1-Dx5"; */
+"fYS-N1-Dx5.text" = "No lookbook";
+
+/* Class = "UILabel"; text = "尺码"; ObjectID = "hNV-Ch-zl7"; */
+"hNV-Ch-zl7.text" = "Size";
+
+/* Class = "UILabel"; text = "分类"; ObjectID = "hkT-oi-iDz"; */
+"hkT-oi-iDz.text" = "Category";
+
+/* Class = "UIButton"; normalTitle = "加入购物车"; ObjectID = "ijY-oI-dWE"; */
+"ijY-oI-dWE.normalTitle" = "Add to Cart";
+
+/* Class = "UILabel"; text = "发货波段"; ObjectID = "kef-40-oWc"; */
+"kef-40-oWc.text" = "Delivery";
+
+/* Class = "UILabel"; text = "起订量"; ObjectID = "lkU-5T-CdG"; */
+"lkU-5T-CdG.text" = "Min Order";
+
+/* Class = "UILabel"; text = "！您与此品牌不是合作关系，只有订单已包含的系列在此可见。"; ObjectID = "rxf-fW-MCR"; */
+"rxf-fW-MCR.text" = "！You haven't connected with the brand, thus only the collection you've ordered are visible to you.";
+
+/* Class = "UILabel"; text = "设置系列查看权限"; ObjectID = "sfz-fa-HAJ"; */
+"sfz-fa-HAJ.text" = "Setup Viewing Permission";
+
+/* Class = "UILabel"; text = "零售价"; ObjectID = "vRB-Af-BpM"; */
+"vRB-Af-BpM.text" = "Retail Price";
+
+/* Class = "UILabel"; text = "作品"; ObjectID = "xTo-4K-QWw"; */
+"xTo-4K-QWw.text" = "Collection";
+
+/* Class = "UILabel"; text = "自定义查看权限"; ObjectID = "zTV-wJ-bNP"; */
+"zTV-wJ-bNP.text" = "Customized";

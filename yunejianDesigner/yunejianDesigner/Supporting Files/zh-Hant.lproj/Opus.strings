@@ -1,0 +1,96 @@
+
+/* Class = "UIButton"; normalTitle = "全选"; ObjectID = "3Ji-Vl-0MK"; */
+"3Ji-Vl-0MK.normalTitle" = "全选";
+
+/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "3ZU-tJ-EW1"; */
+"3ZU-tJ-EW1.normalTitle" = "保存";
+
+/* Class = "UILabel"; text = "款式数"; ObjectID = "99o-LH-gpv"; */
+"99o-LH-gpv.text" = "款式数";
+
+/* Class = "UILabel"; text = "过期"; ObjectID = "9y3-S3-1yL"; */
+"9y3-S3-1yL.text" = "过期";
+
+/* Class = "UILabel"; text = "款式名称"; ObjectID = "A0I-Zt-Re2"; */
+"A0I-Zt-Re2.text" = "款式名称";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Cyt-IQ-zUK"; */
+"Cyt-IQ-zUK.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EJO-GL-hG1"; */
+"EJO-GL-hG1.text" = "Label";
+
+/* Class = "UILabel"; text = "系列名称"; ObjectID = "EwJ-Kv-8uf"; */
+"EwJ-Kv-8uf.text" = "系列名称";
+
+/* Class = "UILabel"; text = "起订额"; ObjectID = "Fas-Jn-jdK"; */
+"Fas-Jn-jdK.text" = "起订额";
+
+/* Class = "UILabel"; text = "材料"; ObjectID = "GAE-8x-pnf"; */
+"GAE-8x-pnf.text" = "材料";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "IH7-rj-ZzD"; */
+"IH7-rj-ZzD.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "LPj-zA-nv0"; */
+"LPj-zA-nv0.text" = "Label";
+
+/* Class = "UILabel"; text = "款式款号"; ObjectID = "MeK-kf-QHs"; */
+"MeK-kf-QHs.text" = "款式款号";
+
+/* Class = "UILabel"; text = "批发价"; ObjectID = "Rld-wO-wYs"; */
+"Rld-wO-wYs.text" = "批发价";
+
+/* Class = "UILabel"; text = "没有获取到数据"; ObjectID = "U8D-rP-Nw4"; */
+"U8D-rP-Nw4.text" = "没有获取到数据";
+
+/* Class = "UILabel"; text = "LookBook"; ObjectID = "UYR-wf-U0L"; */
+"UYR-wf-U0L.text" = "LookBook";
+
+/* Class = "UIButton"; normalTitle = "发布"; ObjectID = "b31-R3-h7t"; */
+"b31-R3-h7t.normalTitle" = "发布";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "b6M-PX-V3N"; */
+"b6M-PX-V3N.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "b6a-hA-LkT"; */
+"b6a-hA-LkT.normalTitle" = "取消";
+
+/* Class = "UILabel"; text = "0个已选中"; ObjectID = "dpW-XU-LEn"; */
+"dpW-XU-LEn.text" = "0个已选中";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "dvL-Hy-wfo"; */
+"dvL-Hy-wfo.text" = "Label";
+
+/* Class = "UILabel"; text = "没有系列相关Lookbook"; ObjectID = "fYS-N1-Dx5"; */
+"fYS-N1-Dx5.text" = "没有系列相关Lookbook";
+
+/* Class = "UILabel"; text = "尺码"; ObjectID = "hNV-Ch-zl7"; */
+"hNV-Ch-zl7.text" = "尺码";
+
+/* Class = "UILabel"; text = "分类"; ObjectID = "hkT-oi-iDz"; */
+"hkT-oi-iDz.text" = "分类";
+
+/* Class = "UIButton"; normalTitle = "加入购物车"; ObjectID = "ijY-oI-dWE"; */
+"ijY-oI-dWE.normalTitle" = "加入购物车";
+
+/* Class = "UILabel"; text = "发货波段"; ObjectID = "kef-40-oWc"; */
+"kef-40-oWc.text" = "发货波段";
+
+/* Class = "UILabel"; text = "起订量"; ObjectID = "lkU-5T-CdG"; */
+"lkU-5T-CdG.text" = "起订量";
+
+/* Class = "UILabel"; text = "！您与此品牌不是合作关系，只有订单已包含的系列在此可见。"; ObjectID = "rxf-fW-MCR"; */
+"rxf-fW-MCR.text" = "！您与此品牌不是合作关系，只有订单已包含的系列在此可见。";
+
+/* Class = "UILabel"; text = "设置系列查看权限"; ObjectID = "sfz-fa-HAJ"; */
+"sfz-fa-HAJ.text" = "设置系列查看权限";
+
+/* Class = "UILabel"; text = "零售价"; ObjectID = "vRB-Af-BpM"; */
+"vRB-Af-BpM.text" = "零售价";
+
+/* Class = "UILabel"; text = "作品"; ObjectID = "xTo-4K-QWw"; */
+"xTo-4K-QWw.text" = "作品";
+
+/* Class = "UILabel"; text = "自定义查看权限"; ObjectID = "zTV-wJ-bNP"; */
+"zTV-wJ-bNP.text" = "自定义查看权限";

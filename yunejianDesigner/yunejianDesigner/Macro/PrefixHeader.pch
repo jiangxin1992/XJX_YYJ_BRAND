@@ -1,0 +1,81 @@
+//
+//  PrefixHeader.pch
+//  yunejianDesigner
+//
+//  Created by yyj on 2017/8/2.
+//  Copyright © 2017年 Apple. All rights reserved.
+//
+
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef __OBJC__
+#import "Header.h"
+#import "CommonMacro.h"
+#endif
+
+#pragma mark - 唯一标示
+#define kYYAppID @"1128311166"
+#define kJPushAppKey  @"6703ddffd1f46c83b34b452b"
+#define kJPushChannel  @"Publish channel"
+#define kJPushIsProduction  FALSE
+
+#define kApplicationMarked @"tbPhoneDesignerApp"
+
+#pragma mark - ServerURL
+
+#define YYDEBUG 1 // 测试环境
+#define kYYServerURL   @"http://test.ycosystem.com/"
+
+//#define YYDEBUG 2 // 展示环境
+//#define kYYServerURL   @"http://show.ycofoundation.com/"
+
+//#define YYDEBUG 0 // 正式环境
+//#define kYYServerURL   @"http://ycosystem.com"
+
+#pragma mark - 常用
+/** 状态栏高度 */
+#define kStatusBarHeight    (kIPhoneX ? 44.f:20.f)
+/** 导航栏高度 44+1 */
+#define kNavigationBarHeight    45.f
+/** 导航栏高度+状态栏高度*/
+#define kStatusBarAndNavigationBarHeight    (kIPhoneX ? 89.f : 65.f)
+/** tabbar高度 */
+#define kTabbarHeight   58.f
+/** 底部安全区高度 */
+#define kBottomSafeAreaHeight   (kIPhoneX ? 34.f : 0.f)
+/** tabbar高度+底部安全区高度 */
+#define kTabbarAndBottomSafeAreaHeight  (kIPhoneX ? (58.f + 34.f) : 58.f)
+
+/** 最多显示尺寸数量 */
+#define kMaxSizeCount 20
+
+#pragma mark - register type
+#define kBuyerRegisterType 4 //买手店提交审核
+#define kForgetPasswordType 3 //密码忘记
+#define kEmailPasswordType 5 //邮箱密码验证
+#define kEmailRegisterType 6 //邮箱注册验证
+#define kBrandRegisterStep1Type 7 //品牌提交审核
+#define kBrandRegisterStep2Type 9 //品牌提交审核
+#define kBrandInfoType 8 //品牌信息修改
+#define kPayLogRegisterType 10 //线上付款记录
+
+
+#pragma mark - 尺寸相关
+#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
+#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
+#define ORIGINAL_MAX_WIDTH 640.0f
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define BLOCK_EXEC(block, ...)      if (block) { block(__VA_ARGS__); };//用宏定义检测block是否可用!
+
+#define FormatString(args...)       [NSString stringWithFormat:args]//stringWithFormat
+#define GET_KEY_PATH(obj, PATH)     FormatString(@"%s", ((void)obj.PATH, # PATH))//KVO
+
+#define TICK NSDate *startTime = [NSDate date]
+
+#define TOCK NSLog(@"Time: %f", -[startTime timeIntervalSinceNow])
+
+#endif /* PrefixHeader_pch */

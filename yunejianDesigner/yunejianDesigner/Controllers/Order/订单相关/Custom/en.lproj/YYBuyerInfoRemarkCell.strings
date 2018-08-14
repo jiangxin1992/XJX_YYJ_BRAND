@@ -1,0 +1,17 @@
+
+/* Class = "UILabel"; text = "建单时间："; ObjectID = "b1W-ax-2eU"; */
+"b1W-ax-2eU.text" = "Order Date  : ";
+
+/* Class = "UILabel"; text = "订单编号："; ObjectID = "biz-zD-wTz"; */
+"biz-zD-wTz.text" = "Order No. : ";
+
+/* Class = "UILabel"; text = "订单备注："; ObjectID = "6rG-2x-6O2"; */
+"6rG-2x-6O2.text" = "Order Notes: ";
+
+/* Class = "UILabel"; text = "建单人　："; ObjectID = "B6t-Wi-WIv"; */
+"B6t-Wi-WIv.text" = "Creator        : ";
+
+/* Class = "UILabel"; text = "建单场合："; ObjectID = "IOQ-dg-BFS"; */
+"IOQ-dg-BFS.text" = "Event           : ";
+
+

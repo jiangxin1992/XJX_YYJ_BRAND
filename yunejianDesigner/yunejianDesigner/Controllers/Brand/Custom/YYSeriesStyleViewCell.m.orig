@@ -1,0 +1,244 @@
+//
+//  YYSeriesStyleViewself.m
+//  Yunejian
+//
+//  Created by Apple on 15/12/3.
+//  Copyright © 2015年 yyj. All rights reserved.
+//
+
+#import "YYSeriesStyleViewCell.h"
+#import "YYSmallShoppingCarButton.h"
+#import "AppDelegate.h"
+#import "YYOrderOneInfoModel.h"
+#import "YYOrderInfoModel.h"
+#import "UIColor+KTUtilities.h"
+#import "Masonry.h"
+#import "CommonHelper.h"
+<<<<<<< HEAD
+#import "UIView+UpdateAutoLayoutConstraints.h"
+=======
+#import "SCGIFImageView.h"
+>>>>>>> 2601c2ae4fa93bb4a3a05c89da17b280e6c4c7f6
+@implementation YYSeriesStyleViewCell
+-(void)updateUI{
+    self.layer.cornerRadius = 5;
+    self.layer.masksToBounds = YES;
+    
+    UIButton *smallShoppingCarButton = (YYSmallShoppingCarButton *)[self viewWithTag:80005];
+    smallShoppingCarButton.hidden = YES;
+    UIButton *addButton = (UIButton *)[self viewWithTag:80006];
+    addButton.hidden = NO;
+    if (!_isModifyOrder) {
+        addButton.hidden = YES;
+    }else{
+        smallShoppingCarButton.hidden = YES;
+    }
+<<<<<<< HEAD
+    
+    UIImageView *imageView = (UIImageView *)[self viewWithTag:80000];
+=======
+
+//    UIImageView *imageView = (UIImageView *)[self viewWithTag:80000];
+    SCGIFImageView *imageView = (SCGIFImageView *)[self viewWithTag:80000];
+>>>>>>> 2601c2ae4fa93bb4a3a05c89da17b280e6c4c7f6
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.layer.cornerRadius = 5;
+    imageView.layer.masksToBounds = YES;
+    
+    NSString *imageRelativePath = @"";
+    NSString *name = @"";
+    NSString *styleCode = @"";
+    NSString *tradePrice = @"";
+    NSString *retailPrice = @"";
+    NSArray *colorArray = nil;
+    if(_opusStyleModel){
+        imageRelativePath = _opusStyleModel.albumImg;
+        name = _opusStyleModel.name;
+        styleCode = [_opusStyleModel.id stringValue];
+        tradePrice = replaceMoneyFlag([NSString stringWithFormat:@"批发价 ￥%0.2f",[_opusStyleModel.tradePrice floatValue]],[_opusStyleModel.curType integerValue]);
+        retailPrice = replaceMoneyFlag([NSString stringWithFormat:@"零售价 ￥%0.2f",[_opusStyleModel.retailPrice floatValue]],[_opusStyleModel.curType integerValue]);
+        UILabel *taxPriceLabel = (UILabel *)[self viewWithTag:80008];
+        if(_isModifyOrder == NO && needPayTaxView([_opusStyleModel.curType integerValue]) && _selectTaxType){
+            [taxPriceLabel hideByHeight:NO];
+            float taxRate = [getPayTaxType(_selectTaxType,NO) doubleValue];
+            taxPriceLabel.text = replaceMoneyFlag([NSString stringWithFormat:@"税后价 ￥%0.2f",[_opusStyleModel.tradePrice floatValue]*(1+taxRate)],[_opusStyleModel.curType integerValue]);
+        }else{
+            [taxPriceLabel hideByHeight:YES];
+        }
+        if (_opusStyleModel.color
+            && [_opusStyleModel.color count] > 0) {
+            colorArray = _opusStyleModel.color;
+        }
+        
+    }
+    if (!_isModifyOrder) {
+        //        AppDelegate *appdelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        //        for (YYOrderOneInfoModel *oneInfoModel in appdelegate.cartModel.orderInfo) {
+        //            for (YYOrderStyleModel * orderInfoMode in oneInfoModel.styles) {
+        //                if([styleCode isEqualToString:[orderInfoMode.styleId stringValue]]){
+        //                   // [smallShoppingCarButton updateButtonNumber:@"√"];
+        //                    smallShoppingCarButton.hidden = NO;
+        //                    break;
+        //                }
+        //            }
+        //            if(smallShoppingCarButton.hidden == NO){
+        //                break;
+        //            }
+        //        } //;
+    }
+    imageView.backgroundColor = [UIColor colorWithHex:kDefaultImageColor];
+    if([imageRelativePath isEqualToString:@""]){
+        
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        downloadImagedefaultLoadingWithRelativePath(imageRelativePath, @"", imageView, kStyleCover);
+        
+//        downloadImageWithRelativePath(imageRelativePath, @"", imageView, kStyleCover);
+    }else{
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        downloadImagedefaultLoadingWithRelativePath(imageRelativePath, getStyleCoverImageStorePath(imageRelativePath), imageView, kStyleCover);
+//            downloadImageWithRelativePath(imageRelativePath, getStyleCoverImageStorePath(imageRelativePath), imageView, kStyleCover);
+        
+    }
+    
+    
+    UILabel *nameLabel = (UILabel *)[self viewWithTag:80001];
+    UILabel *styleLabel = (UILabel *)[self viewWithTag:80002];
+    UILabel *tradePriceLabel = (UILabel *)[self viewWithTag:80003];
+    UILabel *retailPriceLabel = (UILabel *)[self viewWithTag:80004];
+    
+    
+    nameLabel.text = name;
+    [nameLabel setAdjustsFontSizeToFitWidth:YES];
+    styleLabel.text = _opusStyleModel.styleCode;
+    tradePriceLabel.text = tradePrice;
+    retailPriceLabel.text = retailPrice;
+    
+    
+    UIView *colorView = (UIView *)[self viewWithTag:80007];
+    if (colorArray
+        && [colorArray count] > 0) {
+        NSArray *array = [colorView subviews];
+        for (UIView *view in array) {
+            [view removeFromSuperview];
+        }
+        
+        [self addColorViewToCover:colorView colors:colorArray];
+    }
+    
+    
+}
+- (void)addColorViewToCover:(UIView *)coverImageView colors:(NSArray *)colorArray{
+    
+    UIView *lastView = nil;
+    UIView *tempContainer = [[UIView alloc] init];
+    tempContainer.backgroundColor = [UIColor clearColor];
+    __weak UIView *weakCoverImageView = coverImageView;
+    
+    [coverImageView addSubview:tempContainer];
+    [tempContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(15);
+        make.left.equalTo(weakCoverImageView.mas_left);
+        make.bottom.equalTo(weakCoverImageView.mas_bottom);
+    }];
+    
+    __weak UIView *weakContainer = tempContainer;
+    for (int i= 0; i < [colorArray count]; i++) {
+        NSObject *obj = [colorArray objectAtIndex:i];
+        NSString *colorValue = @"";
+        if ([obj isKindOfClass:[YYColorModel class]]) {
+            YYColorModel *colorModel = (YYColorModel *)obj;
+            colorValue = colorModel.value;
+        }
+        
+        if (colorValue) {
+            if ([colorValue hasPrefix:@"#"]
+                && [colorValue length] == 7) {
+                //16进制的色值
+                UIColor *color = [UIColor colorWithHex:[colorValue substringFromIndex:1]];
+                UILabel *label = [[UILabel alloc] init];
+                label.backgroundColor = color;
+                label.layer.borderWidth = 1;
+                label.layer.borderColor = kBorderColor.CGColor;
+                [tempContainer addSubview:label];
+                
+                
+                [label mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.and.bottom.equalTo(weakContainer);
+                    make.width.mas_equalTo(15);
+                    
+                    if ( lastView )
+                    {
+                        make.left.mas_equalTo(lastView.mas_right).with.offset(5);
+                    }
+                    else
+                    {
+                        make.left.mas_equalTo(weakContainer.mas_left);
+                    }
+                    
+                }];
+                lastView = label;
+                
+                
+            }else{
+                //是图片的地址
+                
+//                UIImageView *imageView = [[UIImageView alloc] init];
+                SCGIFImageView *imageView = [[SCGIFImageView alloc] init];
+                
+                [tempContainer addSubview:imageView];
+                
+                imageView.layer.borderWidth = 1;
+                imageView.layer.borderColor = kBorderColor.CGColor;
+                
+                [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.and.bottom.equalTo(weakContainer);
+                    make.width.mas_equalTo(15);
+                    
+                    if ( lastView )
+                    {
+                        make.left.mas_equalTo(lastView.mas_right).with.offset(5);
+                    }
+                    else
+                    {
+                        make.left.mas_equalTo(weakContainer.mas_left);
+                    }
+                    
+                }];
+                lastView = imageView;
+                
+                
+                NSString *imageRelativePath = colorValue;
+                
+                //                NSString *imageName = [[imageRelativePath lastPathComponent] stringByAppendingString:kStyleColorImageCover];
+                //                NSString *storePath = (self.seriesId,imageRelativePath,imageName);
+                //
+                //                UIImage *image = [UIImage imageWithContentsOfFile:storePath];
+                //                if (image) {
+                //                    imageView.image = image;
+                //                }else{
+//                downloadImageWithRelativePath(imageRelativePath, getStyleColorImageStorePath(imageRelativePath), imageView, kStyleColorImageCover);
+                imageView.contentMode = UIViewContentModeScaleAspectFit;
+                downloadImagedefaultLoadingWithRelativePath(imageRelativePath, getStyleColorImageStorePath(imageRelativePath), imageView, kStyleColorImageCover);
+                
+                //                }
+                
+            }
+        }
+    }
+    
+    if (lastView) {
+        [tempContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(lastView.mas_right);
+        }];
+    }
+}
+
+
++(float)CellHeight:(NSInteger)cellWidth showtax:(BOOL)showtax{
+    //299  170
+    if(showtax){
+        return 355 + cellWidth -10- 196;
+    }
+    return 333 + cellWidth -10- 196;
+}
+@end

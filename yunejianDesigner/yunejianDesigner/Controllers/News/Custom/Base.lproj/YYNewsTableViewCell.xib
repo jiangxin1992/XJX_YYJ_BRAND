@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="YYNewsTableViewCell" rowHeight="125" id="KGk-i7-Jjw" customClass="YYNewsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="471" height="125"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="471" height="124.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Il3-3g-S8m" customClass="SCGIFImageView">
+                        <rect key="frame" x="336" y="16" width="118" height="66"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="66" id="3Dy-Rz-pQ0"/>
+                            <constraint firstAttribute="width" constant="118" id="JFv-Ne-7Zr"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rxn-0r-CiR">
+                        <rect key="frame" x="17" y="70" width="314" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="gVt-h1-ki0"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.56862745098039214" green="0.56862745098039214" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3W-2U-yv2">
+                        <rect key="frame" x="0.0" y="124" width="471" height="1"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="QeM-bx-CVL"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVT-5h-dLL">
+                        <rect key="frame" x="17" y="16" width="302" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="ap6-jV-Q3n"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="rxn-0r-CiR" secondAttribute="trailing" constant="140" id="9ZG-39-2UJ"/>
+                    <constraint firstItem="lVT-5h-dLL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="17" id="F4y-qe-l7t"/>
+                    <constraint firstItem="Il3-3g-S8m" firstAttribute="bottom" secondItem="rxn-0r-CiR" secondAttribute="bottom" id="Ha4-Bf-5cT"/>
+                    <constraint firstAttribute="trailing" secondItem="Il3-3g-S8m" secondAttribute="trailing" constant="17" id="MC7-yN-2On"/>
+                    <constraint firstItem="g3W-2U-yv2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="RQI-ig-x7c"/>
+                    <constraint firstAttribute="trailing" secondItem="g3W-2U-yv2" secondAttribute="trailing" id="S97-12-yiz"/>
+                    <constraint firstAttribute="bottom" secondItem="g3W-2U-yv2" secondAttribute="bottom" id="WvF-1B-4SZ"/>
+                    <constraint firstItem="Il3-3g-S8m" firstAttribute="leading" secondItem="lVT-5h-dLL" secondAttribute="trailing" constant="17" id="Yfp-uO-lAx"/>
+                    <constraint firstItem="Il3-3g-S8m" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="tIn-c5-Imf"/>
+                    <constraint firstItem="rxn-0r-CiR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="17" id="unS-uW-vMT"/>
+                    <constraint firstItem="lVT-5h-dLL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="yvE-z3-nFK"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="coverImageView" destination="Il3-3g-S8m" id="UVh-Ns-AOs"/>
+                <outlet property="timerLabel" destination="rxn-0r-CiR" id="rYS-yH-9Uc"/>
+                <outlet property="titleLabel" destination="lVT-5h-dLL" id="tNJ-EU-9Il"/>
+            </connections>
+            <point key="canvasLocation" x="392.5" y="330.5"/>
+        </tableViewCell>
+    </objects>
+</document>

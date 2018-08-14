@@ -1,0 +1,102 @@
+
+/* Class = "UILabel"; text = "已经收款"; ObjectID = "4Pi-Is-dyV"; */
+"4Pi-Is-dyV.text" = "Paid";
+
+/* Class = "UILabel"; text = "待审核"; ObjectID = "ea2-Bh-IGP"; */
+"ea2-Bh-IGP.text" = "Pending";
+
+/* Class = "UILabel"; text = "订单总价"; ObjectID = "76z-rY-Aal"; */
+"76z-rY-Aal.text" = "Total";
+
+/* Class = "UILabel"; text = "1"; ObjectID = "8EM-kX-v8Y"; */
+"8EM-kX-v8Y.text" = "1";
+
+/* Class = "UIButton"; normalTitle = "编辑"; ObjectID = "95A-h9-VG9"; */
+"95A-h9-VG9.normalTitle" = "Edit";
+
+/* Class = "UIButton"; normalTitle = "编辑"; ObjectID = "nuB-Ue-YGR"; */
+"nuB-Ue-YGR.normalTitle" = "Edit";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "BUY-L0-P9c"; */
+"BUY-L0-P9c.text" = "Label";
+
+/* Class = "UILabel"; text = "%"; ObjectID = "CT7-Ub-80j"; */
+"CT7-Ub-80j.text" = "%";
+
+/* Class = "UITextField"; placeholder = "搜索买手店名称、买手邮箱"; ObjectID = "K4l-XW-pKo"; */
+"K4l-XW-pKo.placeholder" = "Search for retailer name or email";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "KXy-Ca-NXi"; */
+"KXy-Ca-NXi.text" = "Label";
+
+/* Class = "UILabel"; text = "已成功收款"; ObjectID = "N3h-Su-yGZ"; */
+"N3h-Su-yGZ.text" = "Received";
+
+/* Class = "UILabel"; text = "尚未收款"; ObjectID = "OK2-rD-Hyn"; */
+"OK2-rD-Hyn.text" = "Unpaid";
+
+/* Class = "UILabel"; text = "需要退款给买手"; ObjectID = "BMG-ls-Fsu"; */
+"BMG-ls-Fsu.text" = "Refund to the buyer";
+
+/* Class = "UIButton"; normalTitle = "已退款"; ObjectID = "B30-lZ-xdr"; */
+"B30-lZ-xdr.normalTitle" = "Refunded";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "QQ4-BB-2Qh"; */
+"QQ4-BB-2Qh.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "未入驻"; ObjectID = "VRE-la-tmn"; */
+"VRE-la-tmn.text" = "Unregistered";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Vrd-fF-hYn"; */
+"Vrd-fF-hYn.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "建立订单"; ObjectID = "W0Q-3q-oPp"; */
+"W0Q-3q-oPp.normalTitle" = "Create Order";
+
+/* Class = "UILabel"; text = "本次收款"; ObjectID = "WpR-Ky-k2T"; */
+"WpR-Ky-k2T.text" = "Payment";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "aKX-Gv-uHq"; */
+"aKX-Gv-uHq.normalTitle" = "OK";
+
+/* Class = "UIButton"; normalTitle = "确认添加"; ObjectID = "g9X-Nl-dsg"; */
+"g9X-Nl-dsg.normalTitle" = "Add";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qNz-gs-nkv"; */
+"qNz-gs-nkv.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "税制"; ObjectID = "qRc-nc-Fkm"; */
+"qRc-nc-Fkm.normalTitle" = "Tax";
+
+/* Class = "UIButton"; normalTitle = "税制"; ObjectID = "03w-qc-tue"; */
+"03w-qc-tue.normalTitle" = "Tax";
+
+/* Class = "UIButton"; normalTitle = "删除"; ObjectID = "qUj-ID-o3b"; */
+"qUj-ID-o3b.normalTitle" = "Delete";
+
+/* Class = "UILabel"; text = "订单号"; ObjectID = "r93-hc-0cf"; */
+"r93-hc-0cf.text" = "Order No. ";
+
+/* Class = "UIButton"; normalTitle = "保存修改"; ObjectID = "rhh-qb-qsZ"; */
+"rhh-qb-qsZ.normalTitle" = "Save";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "tZc-sl-0UZ"; */
+"tZc-sl-0UZ.text" = "Label";
+
+/* Class = "UITextField"; text = "90"; ObjectID = "uGz-bo-S5L"; */
+"uGz-bo-S5L.text" = "90";
+
+/* Class = "UILabel"; text = "尚未支付"; ObjectID = "vcr-sr-4Rw"; */
+"vcr-sr-4Rw.text" = "Unpaid";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vgP-lc-AvE"; */
+"vgP-lc-AvE.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "完成"; ObjectID = "y92-b9-ECv"; */
+"y92-b9-ECv.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "完成"; ObjectID = "SKl-G5-bh5"; */
+"SKl-G5-bh5.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "本次收款"; ObjectID = "zfX-h0-Rnu"; */
+"zfX-h0-Rnu.text" = "Payment";
