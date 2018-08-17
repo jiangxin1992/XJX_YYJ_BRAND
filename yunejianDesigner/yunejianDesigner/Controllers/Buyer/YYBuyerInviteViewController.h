@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface YYBuyerInviteViewController : UIViewController
- 
-@property (nonatomic, strong) CancelButtonClicked cancelButtonClicked;
+@property (nonatomic,strong)CancelButtonClicked cancelButtonClicked;
 
 @end

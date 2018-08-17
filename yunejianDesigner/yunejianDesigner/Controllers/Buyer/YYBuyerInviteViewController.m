@@ -19,8 +19,8 @@
 #import "YYBrandSeriesListViewController.h"
 #import "AppDelegate.h"
 #import "UserDefaultsMacro.h"
+#import "YYBuyerHomePageViewController.h"
 #import "YYUserApi.h"
-#import "YYBuyerListModel.h"
 
 @interface YYBuyerInviteViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,YYTableCellDelegate>
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -172,10 +172,10 @@
         AppDelegate *appdelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
         [appdelegate showBuyerInfoViewController:buyerModel.buyerId WithBuyerName:buyerModel.name parentViewController:self WithReqSuccessBlock:nil WithHomePageCancelBlock:^{
             [ws.navigationController popViewControllerAnimated:YES];
-            blockBuyerModel.connectStatus = [[NSNumber alloc] initWithInt:YYUserConnStatusNone];//;
+            blockBuyerModel.connectStatus = [[NSNumber alloc] initWithInt:kConnStatus];//;
             [ws.collectionView reloadData];
         } WithModifySuccessBlock:^{
-            blockBuyerModel.connectStatus = YYUserConnStatusInvite;
+            blockBuyerModel.connectStatus = kConnStatus0;
             [ws.collectionView reloadData];
         }];
 
@@ -190,7 +190,7 @@
         if(buyerModel && [buyerModel.connectStatus integerValue] == -1){
             __block YYBuyerModel *blockBuyerModel = buyerModel;
             [YYConnApi invite:[blockBuyerModel.buyerId integerValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                if(rspStatusAndMessage.status == YYReqStatusCode100){
+                if(rspStatusAndMessage.status == kCode100){
                     blockBuyerModel.connectStatus = 0;
                     [YYToast showToastWithTitle:NSLocalizedString(@"已向买手店发送合作邀请",nil) andDuration:kAlertToastDuration];
                     [ws.collectionView reloadData];
@@ -234,7 +234,7 @@
 - (void)loadDataByPageIndex:(int)pageIndex queryStr:(NSString*)queryStr{
     WeakSelf(ws);
     [YYConnApi queryConnBuyer:queryStr  pageIndex:pageIndex pageSize:10  andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYBuyerListModel *buyerList, NSError *error) {
-        if (rspStatusAndMessage.status == YYReqStatusCode100 && buyerList.result
+        if (rspStatusAndMessage.status == kCode100 && buyerList.result
             && [buyerList.result count] > 0) {
             if(ws.searchResultArray == nil){
                 ws.currentPageInfo = buyerList.pageInfo;
@@ -252,7 +252,7 @@
         }
         
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
-        if (rspStatusAndMessage.status != YYReqStatusCode100) {
+        if (rspStatusAndMessage.status != kCode100) {
             [YYToast showToastWithTitle:rspStatusAndMessage.message  andDuration:kAlertToastDuration];
         }
         [ws reloadCollectionViewData];

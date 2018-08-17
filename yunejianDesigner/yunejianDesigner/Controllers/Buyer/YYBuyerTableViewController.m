@@ -13,8 +13,8 @@
 #import <MJRefresh.h>
 #import "YYBuyerViewCell.h"
 #import "YYBuyerAddViewCell.h"
+#import "YYConnAddViewController.h"
 #import "YYBuyerTableViewController.h"
-#import "YYConnBuyerListModel.h"
 #import "YYUser.h"
 
 @interface YYBuyerTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
@@ -52,7 +52,7 @@
     if(!self.noDataView.hidden){
         YYUser *user = [YYUser currentUser];
 
-        if(!((user.userType == YYUserTypeShowroom || user.userType == YYUserTypeShowroomSub)&&![YYUser isShowroomToBrand])){
+        if(!((user.userType == 5 || user.userType ==6)&&![YYUser isShowroomToBrand])){
             [self headerWithRefreshingAction];
         }else{
             NSLog(@"showroom主页");
@@ -108,7 +108,7 @@
     WeakSelf(ws);
     __block BOOL blockEndrefreshing =endrefreshing;
     [YYConnApi getConnBuyers:_currentListType pageIndex:pageIndex pageSize:8 andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYConnBuyerListModel *listModel, NSError *error) {
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        if(rspStatusAndMessage.status == kCode100){
             ws.currentPageInfo = listModel.pageInfo;
             if( !ws.currentPageInfo || ws.currentPageInfo.isFirstPage){
                 ws.buyerListArray =  [[NSMutableArray alloc] init];//;
@@ -125,7 +125,7 @@
         
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
         
-        if (rspStatusAndMessage.status != YYReqStatusCode100) {
+        if (rspStatusAndMessage.status != kCode100) {
             [YYToast showToastWithTitle:rspStatusAndMessage.message  andDuration:kAlertToastDuration];
         }
     }];

@@ -11,7 +11,7 @@ target 'yunejianDesigner' do
 
  pod 'YYToast', '~> 0.1.1' # 三端通用toast
 
- pod 'MBProgressHUD', '~> 1.1.0'
+ pod 'MBProgressHUD', '~> 1.0.0'
  pod 'SDWebImage', '~> 4.1.0'
  pod 'JSONModel', '~> 1.2.0'
  pod 'Masonry', '~> 0.6.4'

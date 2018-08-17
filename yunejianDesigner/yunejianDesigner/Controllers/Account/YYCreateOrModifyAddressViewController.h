@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class YYAddress,YYOrderInfoModel;
+#import "YYAddress.h"
+#import "YYOrderInfoModel.h"
 
 typedef NS_ENUM(NSInteger, OperationType) {
-    OperationTypeCreate        = 80000,
-    OperationTypeModify        = 80001,
-    OperationTypeHelpCreate    = 80002,
+    OperationTypeCreate = 80000,
+    OperationTypeModify = 80001,
+    OperationTypeHelpCreate = 80002
 };
 
 typedef void (^AddressForBuyerButtonClicked)(YYAddress *address);

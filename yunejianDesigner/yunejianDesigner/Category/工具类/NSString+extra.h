@@ -11,6 +11,13 @@
 @interface NSString (extra)
 
 /**
+ 判断当前字符串是否为空（尽量用这个）
+
+ @return 是否为空(nil/@""/nsnull)
+ */
+- (BOOL )isNilOrEmpty;
+
+/**
  判断传入字符串是否为空
 
  @param str 传入字符串

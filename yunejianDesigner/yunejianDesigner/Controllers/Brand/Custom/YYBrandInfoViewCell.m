@@ -48,7 +48,7 @@ static NSInteger curCellWidth;
         //[_addBtn setImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
         //[_addBtn setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
         _connStatusLabel.hidden = YES;
-        if([_designerModel.connectStatus integerValue] == YYUserConnStatusNone){
+        if([_designerModel.connectStatus integerValue] == kConnStatus){
             _addBtn.hidden = NO;
         }else {
             _connStatusLabel.hidden = NO;

@@ -13,8 +13,11 @@
 #import "YYShowroomHomePageViewController.h"
 #import "YYModifyNameOrPhoneViewContrller.h"
 #import "YYModifyDesignerBrandInfoViewController.h"
+#import "YYModifyBuyerStoreBrandInfoViewController.h"
 #import "YYSellerListViewController.h"
 #import "YYVerifyBrandViewController.h"
+#import "YYConnMsgListController.h"
+#import "YYConnAddViewController.h"
 #import "YYShowroomAgentController.h"
 
 #import "UIImage+Tint.h"
@@ -23,7 +26,6 @@
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 #import "AppDelegate.h"
 #import "YYUser.h"
-#import "YYMessageUnreadModel.h"
 #import "YYDesignerModel.h"
 #import "YYBrandInfoModel.h"
 #import "YYBuyerStoreModel.h"
@@ -59,6 +61,7 @@
 @property(nonatomic,strong) YYModifyPasswordViewController *modifyPasswordViewController;
 @property(nonatomic,strong) YYModifyNameOrPhoneViewContrller *modifyNameOrPhoneViewContrller;
 @property(nonatomic,strong) YYSettingViewController *settingViewController;
+@property(nonatomic,strong) YYModifyBuyerStoreBrandInfoViewController *modifyBuyerStoreBrandInfoViewController;
 @property(nonatomic,strong) YYModifyDesignerBrandInfoViewController *modifyDesignerBrandInfoViewController;
 @property(nonatomic,strong) YYSellerListViewController *sellerListViewController;
 @property (strong, nonatomic) YYUserInfo *userInfo;
@@ -126,7 +129,7 @@
         
     }
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub){
+    if(user.userType == 5||user.userType == 6){
         //Showroom 账号
         [_messageButton initBackButton];
         [_messageButton addTarget:self action:@selector(GoBack:) forControlEvents:UIControlEventTouchUpInside];
@@ -156,10 +159,28 @@
     [appDelegate showMessageView:nil parentViewController:self];
 }
 - (void)messageCountChanged:(NSNotification *)notification{
-
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.messageUnreadModel setUnreadMessageAmount:_messageButton];
-    
+    if([YYUser isShowroomToBrand])
+    {
+        NSInteger msgAmount = [appDelegate.messageUnreadModel.orderAmount integerValue] + [appDelegate.messageUnreadModel.connAmount integerValue];
+        if(msgAmount > 0){
+            [_messageButton updateButtonNumber:[NSString stringWithFormat:@"%ld",(long)msgAmount]];
+        }else{
+            [_messageButton updateButtonNumber:@""];
+        }
+    }else
+    {
+        NSInteger msgAmount = [appDelegate.messageUnreadModel.orderAmount integerValue] + [appDelegate.messageUnreadModel.connAmount integerValue] + [appDelegate.messageUnreadModel.personalMessageAmount integerValue];
+        if(msgAmount > 0 || [appDelegate.messageUnreadModel.newsAmount integerValue] >0){
+            if(msgAmount > 0 ){
+                [_messageButton updateButtonNumber:[NSString stringWithFormat:@"%ld",(long)msgAmount]];
+            }else{
+                [_messageButton updateButtonNumber:@"dot"];
+            }
+        }else{
+            [_messageButton updateButtonNumber:@""];
+        }
+    }
 }
 #pragma mark 开始进入刷新状态
 - (void)addHeader{
@@ -198,7 +219,7 @@
     self.userInfo.status = user.status;//@"305";//
     
     switch (user.userType) {
-        case YYUserTypeDesigner:{
+        case kDesignerType:{
             [self getDesignerInfo];
             [self getDesignerBrandInfo];
             [self getSellList];
@@ -207,15 +228,15 @@
         }
             
             break;
-        case YYUserTypeRetailer:{
+        case kBuyerStorUserType:{
             //[self getBuyStoreUserInfo];
             //[self getAddressList];
         }
             break;
-        case YYUserTypeSales:{
+        case kSellerType:{
             self.userInfo.username = user.name;
             self.userInfo.email = user.email;
-            self.userInfo.userType = YYUserTypeSales;
+            self.userInfo.userType = kSellerType;
             [self getDesignerBrandInfo];
             [self getShowroomInfoByDesigner];
             //以下代码，目前只考虑设计师登录的情况，保存信息至本地
@@ -225,17 +246,17 @@
             }];
         }
             break;
-        case YYUserTypeShowroom:{
+        case kShowroomType:{
             self.userInfo.username = user.name;
             self.userInfo.email = user.email;
-            self.userInfo.userType = YYUserTypeShowroom;
+            self.userInfo.userType = kShowroomType;
             [self getShowroomInfo];
         }
             break;
-        case YYUserTypeShowroomSub:{
+        case kShowroomSubType:{
             self.userInfo.username = user.name;
             self.userInfo.email = user.email;
-            self.userInfo.userType = YYUserTypeShowroomSub;
+            self.userInfo.userType = kShowroomSubType;
             [self getShowroomInfo];
         }
             break;
@@ -266,7 +287,7 @@
             ws.userInfo.username = designerModel.userName;
             ws.userInfo.phone = designerModel.phone;
             ws.userInfo.email = designerModel.email;
-            ws.userInfo.userType = YYUserTypeDesigner;
+            ws.userInfo.userType = kDesignerType;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [ws reloadTableView];
@@ -316,7 +337,7 @@
 -(void)getConnBuyerInfo{
     WeakSelf(ws);
     [YYConnApi getConnBuyers:1 pageIndex:1 pageSize:1 andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYConnBuyerListModel *listModel, NSError *error) {
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        if(rspStatusAndMessage.status == kCode100){
            // ws.connedNum = [listModel.pageInfo.recordTotalAmount integerValue];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -324,7 +345,7 @@
         });
     }];
     [YYConnApi getConnBuyers:0 pageIndex:1 pageSize:1 andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYConnBuyerListModel *listModel, NSError *error) {
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        if(rspStatusAndMessage.status == kCode100){
             //ws.conningNum = [listModel.pageInfo.recordTotalAmount integerValue];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -345,7 +366,7 @@
             ws.userInfo.username = BuyerStoreModel.contactName;
             ws.userInfo.phone = BuyerStoreModel.contactPhone;
             ws.userInfo.email = BuyerStoreModel.contactEmail;
-            ws.userInfo.userType = YYUserTypeRetailer;
+            ws.userInfo.userType = kBuyerStorUserType;
             ws.userInfo.brandName = BuyerStoreModel.name;
             ws.userInfo.brandLogoName = BuyerStoreModel.logoPath;
             
@@ -401,7 +422,7 @@
 -(void)applicationDidBecomeActiveAction{
     YYUser *user = [YYUser currentUser];
 
-    if(!((user.userType == YYUserTypeShowroom || user.userType == YYUserTypeShowroomSub)&&![YYUser isShowroomToBrand])){
+    if(!((user.userType == 5 || user.userType ==6)&&![YYUser isShowroomToBrand])){
         [self headerWithRefreshingAction];
     }else{
         NSLog(@"showroom主页");
@@ -431,7 +452,7 @@
 - (void)showDesginerHomePage
 {
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub)
+    if(user.userType == 5||user.userType == 6)
     {
         //跳转Showroom主页
         YYShowroomHomePageViewController *ShowroomHomePage = [[YYShowroomHomePageViewController alloc] init];
@@ -519,7 +540,7 @@
 }
 
 -(void) checkUserIdentity{
-    if([_userInfo.status integerValue] == YYReqStatusCode300){
+    if([_userInfo.status integerValue] == kCode300){
         [YYToast showToastWithTitle:NSLocalizedString(@"审核中!",nil) andDuration:kAlertToastDuration];
         return ;
     }
@@ -642,7 +663,7 @@
         ws.sellerListViewController = nil;
     }];
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeShowroom)
+    if(user.userType == 5)
     {
         sellerListViewController.ShowroomModel = _ShowroomModel;
         //需要更新的时候
@@ -677,7 +698,7 @@
                 [user saveUserData];
                 [YYUserApi modifyLogoWithUrl:imageUrl andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
 //                    成功的时候去回调
-                    if(rspStatusAndMessage.status == YYReqStatusCode100){
+                    if(rspStatusAndMessage.status == kCode100){
                         if(_modifySuccess)
                         {
                             _modifySuccess();
@@ -703,19 +724,19 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     YYUser *user = [YYUser currentUser];    
     switch (user.userType) {
-        case YYUserTypeDesigner:{
+        case kDesignerType:{
             return 6;
         }
             break;
-        case YYUserTypeSales:{
+        case kSellerType:{
             return 5;
         }
             break;
-        case YYUserTypeShowroom:{
+        case kShowroomType:{
             return 5;
         }
             break;
-        case YYUserTypeShowroomSub:{
+        case kShowroomSubType:{
             return 4;
         }
             break;
@@ -736,9 +757,9 @@
     }else if (section == 2) {
         rows = 1;
     }else if (section == 3) {
-        if(user.userType == YYUserTypeDesigner){
+        if(user.userType == kDesignerType){
             rows = 4;
-        }else if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub){
+        }else if(user.userType == kShowroomType||user.userType == kShowroomSubType){
             rows = 3;
         }else
         {
@@ -789,9 +810,9 @@
         }
         cell = logoCell;
     }else if(section == 1) {
-        if([_userInfo.status integerValue] == YYReqStatusCode100){
+        if([_userInfo.status integerValue] == kCode100){
 
-            if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub)
+            if(user.userType == 5||user.userType == 6)
             {
                 static NSString *CellIdentifier = @"UITableViewCell";
                 UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -852,7 +873,7 @@
             }else if (row == 1){
                 [userInfoCell updateUIWithShowType:ShowTypePassword];
             }else if (row == 2){
-                if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub)
+                if(user.userType == 5||user.userType == 6)
                 {
                     
                     if(_ShowroomModel)
@@ -873,7 +894,7 @@
                     [userInfoCell hideBottomLine:YES];
                 }else
                 {
-                    if(user.userType == YYUserTypeSales)
+                    if(user.userType == 2)
                     {
                         [userInfoCell hideBottomLine:YES];
                     }
@@ -885,7 +906,7 @@
             }
             
         }else if (section == 4||section == 5) {
-            if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub)
+            if(user.userType == 5||user.userType == 6)
             {
                 if (section == 4)
                 {
@@ -895,7 +916,7 @@
             {
                 if (section == 4)
                 {
-                    if(user.userType == YYUserTypeDesigner)
+                    if(user.userType == 0)
                     {
                         [userInfoCell hideBottomLine:YES];
                     }
@@ -972,9 +993,9 @@
         return 207;
     }
     if(indexPath.section== 1){
-        if([_userInfo.status integerValue] == YYReqStatusCode100){
+        if([_userInfo.status integerValue] == kCode100){
             YYUser *user = [YYUser currentUser];
-            if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub)
+            if(user.userType == 5||user.userType == 6)
             {
                 return 1;
             }else
@@ -1009,12 +1030,12 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeDesigner)
+    if(user.userType == 0)
     {
         if(section == 5){
             return 40;
         }
-    }else if(user.userType == YYUserTypeSales)
+    }else if(user.userType == 2)
     {
         if(section == 4){
             return 40;

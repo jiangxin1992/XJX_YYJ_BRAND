@@ -16,9 +16,21 @@
 
 @interface YYYellowPanelManage : NSObject
 
+@property (nonatomic,assign) UIView *parentView;
+@property (nonatomic,strong) YYOrderAddMoneyLogController *moneyLogViewContorller;
+@property (nonatomic,strong) YYAlertViewController *alertViewController;
+@property (nonatomic,strong) YYOrderAddressListController *buyerAddressListController;
+@property (nonatomic,strong) YYDiscountViewController *discountViewController;
+@property (nonatomic,strong) YYUserCheckAlertViewController *userCheckAlertViewController;
+@property (nonatomic,strong) YYOrderStatusRequestCloseViewController *orderStatusRequestCloseViewController;
+@property (nonatomic,strong) YYOpusSettingViewController *opusSettingViewController;
+@property (nonatomic,strong) YYHelpPanelViewController *helpPanelViewController;
+@property (nonatomic,strong) YYOrderAppendViewController *orderAppendViewController;
+@property (nonatomic,strong) YYOpusSettingDefinedViewController *opusSettingDefinedViewController;
+
 + (YYYellowPanelManage *)instance;
 
--(void)showOrderAddMoneyLogPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier orderCode:(NSString*)orderCode totalMoney:(double)totalMoney moneyType:(NSInteger)moneyType isNeedRefund:(BOOL)isNeedRefund parentView:(UIViewController *)specialParentView andCallBack:(void (^)(NSString *orderCode, NSNumber *totalPercent))callback;
+-(void)showOrderAddMoneyLogPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier orderCode:(NSString*)orderCode totalMoney:(double)totalMoney moneyType:(NSInteger)moneyType parentView:(UIViewController *)specialParentView andCallBack:(void (^)(NSString *orderCode, NSNumber *totalPercent))callback;
 -(void)showYellowAlertPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier title:(NSString*)title msg:(NSString*)msg btn:(NSString*)btnStr align:(NSTextAlignment)textAlignment closeBtn:(BOOL)needCloseBtn andCallBack:(YellowPabelCallBack)callback;
 -(void)showSamllYellowAlertPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier title:(NSString*)title msg:(NSString*)msg btn:(NSString*)btnStr align:(NSTextAlignment)textAlignment closeBtn:(BOOL)needCloseBtn  parentView:(UIView *)specialParentView andCallBack:(YellowPabelCallBack)callback;
 -(void)showOrderBuyerAddressListPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier needUnDefineBuyer:(NSInteger)needUnDefineBuyer parentView:(UIViewController *)specialParentView andCallBack:(YellowPabelCallBack)callback;

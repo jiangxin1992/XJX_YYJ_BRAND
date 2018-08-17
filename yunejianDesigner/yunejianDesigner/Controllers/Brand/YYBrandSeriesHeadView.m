@@ -104,7 +104,7 @@
         [_sureAddToCartButton setTitle:NSLocalizedString(@"未选择", nil) forState:UIControlStateNormal];
         _sureAddToCartButton.backgroundColor = [UIColor colorWithHex:@"d3d3d3"];
     }else{
-        [_sureAddToCartButton setTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"确定加入（%ld）", nil),_selectCount] forState:UIControlStateNormal];
+        [_sureAddToCartButton setTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"确定加入(%ld)", nil),_selectCount] forState:UIControlStateNormal];
         _sureAddToCartButton.backgroundColor = _define_black_color;
     }
 }

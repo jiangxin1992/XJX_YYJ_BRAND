@@ -118,7 +118,7 @@
 //    }else{
     if(_lookBookId != nil && [_lookBookId integerValue] > 0){
         [YYUserApi getLookBookInfoWithId:[_lookBookId integerValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYLookBookModel *lookBookModel, NSError *error) {
-            if(rspStatusAndMessage.status == YYReqStatusCode100){
+            if(rspStatusAndMessage.status == kCode100){
                 ws.lookBookModel = lookBookModel;
                 [ws updateLookBookUI];
             }

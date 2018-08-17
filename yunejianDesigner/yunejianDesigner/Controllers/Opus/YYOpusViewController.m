@@ -27,9 +27,6 @@
 #import "YYStylesAndTotalPriceModel.h"
 #import "YYScanFunctionModel.h"
 #import "YYMessageUnreadModel.h"
-#import "YYOpusSeriesModel.h"
-#import "YYStyleInfoModel.h"
-#import "YYOpusSeriesListModel.h"
 #import "YYQRCode.h"
 
 @interface YYOpusViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,YYSeriesCollectionViewCellDelegate>
@@ -56,7 +53,7 @@
     [super viewDidLoad];
     if([YYUser isShowroomToBrand])
     {
-        _collectionBottomLayer.constant = kTabbarHeight;
+        _collectionBottomLayer.constant = 58;
     }else
     {
         _collectionBottomLayer.constant = 0;
@@ -95,7 +92,7 @@
     if(!self.noDataView.hidden){
         YYUser *user = [YYUser currentUser];
 
-        if(!((user.userType == YYUserTypeShowroom || user.userType == YYUserTypeShowroomSub)&&![YYUser isShowroomToBrand])){
+        if(!((user.userType == 5 || user.userType ==6)&&![YYUser isShowroomToBrand])){
             [self headerWithRefreshingAction];
         }else{
             NSLog(@"showroom主页");
@@ -140,10 +137,28 @@
 }
 
 - (void)messageCountChanged:(NSNotification *)notification{
-
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.messageUnreadModel setUnreadMessageAmount:_messageButton];
-    
+    if([YYUser isShowroomToBrand])
+    {
+        NSInteger msgAmount = [appDelegate.messageUnreadModel.orderAmount integerValue] + [appDelegate.messageUnreadModel.connAmount integerValue];
+        if(msgAmount > 0){
+            [_messageButton updateButtonNumber:[NSString stringWithFormat:@"%ld",msgAmount]];
+        }else{
+            [_messageButton updateButtonNumber:@""];
+        }
+    }else
+    {
+        NSInteger msgAmount = [appDelegate.messageUnreadModel.orderAmount integerValue] + [appDelegate.messageUnreadModel.connAmount integerValue] + [appDelegate.messageUnreadModel.personalMessageAmount integerValue] + [appDelegate.messageUnreadModel.skuAmount integerValue];
+        if(msgAmount > 0 || [appDelegate.messageUnreadModel.newsAmount integerValue] >0){
+            if(msgAmount > 0 ){
+                [_messageButton updateButtonNumber:[NSString stringWithFormat:@"%ld",(long)msgAmount]];
+            }else{
+                [_messageButton updateButtonNumber:@"dot"];
+            }
+        }else{
+            [_messageButton updateButtonNumber:@""];
+        }
+    }
 }
 #pragma mark - 扫码
 - (IBAction)sweepYardButtonClicked:(id)sender {
@@ -176,12 +191,12 @@
     [YYOpusApi getStyleInfoByStyleId:[scanModel.id longLongValue] orderCode:nil andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYStyleInfoModel *styleInfoModel, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if(rspStatusAndMessage){
-            if (rspStatusAndMessage.status == YYReqStatusCode100) {
+            if (rspStatusAndMessage.status == kCode100) {
                 [code dismissController];
                 //表示有权限访问，跳转款式详情页
                 if(styleInfoModel){
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    YYStyleOneColorModel *infoModel = [styleInfoModel transformToStyleOneColorModel];
+                    YYInventoryBoardModel *infoModel = [styleInfoModel transformToInventoryBoardModel];
                     [appDelegate showStyleInfoViewController:infoModel parentViewController:self IsShowroomToScan:NO];
                 }
             }else{
@@ -274,7 +289,7 @@
 
     [YYOpusApi getSeriesListWithId:[user.userId intValue] pageIndex:pageIndex pageSize:kPageSize withDraft:@"true" andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYOpusSeriesListModel *opusSeriesListModel, NSError *error) {
         BOOL checkGuide = NO;
-        if (rspStatusAndMessage.status == YYReqStatusCode100
+        if (rspStatusAndMessage.status == kCode100
             && opusSeriesListModel.result
             && [opusSeriesListModel.result count] > 0) {
             
@@ -298,7 +313,7 @@
         
         [MBProgressHUD hideAllHUDsForView:superView animated:YES];
         
-        if (rspStatusAndMessage.status != YYReqStatusCode100) {
+        if (rspStatusAndMessage.status != kCode100) {
             [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
         }
     }];
@@ -453,7 +468,7 @@
             YYOpusSeriesModel *opusSeriesModel = [_online_opusSeriesArray objectAtIndex:row];
             __block YYOpusSeriesModel *blockopusSeriesModel = opusSeriesModel;
 
-            if(section == YYOpusAuthDefined){
+            if(section == kAuthTypeDefined){
                 if(opusSeriesModel.id && opusSeriesModel.authType){
                 [[YYYellowPanelManage instance] showOpusSettingDefinedViewWidthParentView:self info:@[opusSeriesModel.id,opusSeriesModel.authType] andCallBack:^(NSArray *value) {
                     NSString *authTypeInfo = [value objectAtIndex:0];
@@ -463,7 +478,7 @@
                         NSString *buyerIds = [authTypeInfoArr objectAtIndex:1];
                         __block NSInteger whiteAuthCount = [[buyerIds componentsSeparatedByString:@","] count];
                         [YYOpusApi updateSeriesAuthType:[blockopusSeriesModel.id integerValue] authType:authType buyerIds:buyerIds andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                            if(rspStatusAndMessage.status == YYReqStatusCode100){
+                            if(rspStatusAndMessage.status == kCode100){
                                 blockopusSeriesModel.authType = [[NSNumber alloc] initWithInteger:authType];
                                 blockopusSeriesModel.whiteAuthCount= [[NSNumber alloc] initWithInteger:whiteAuthCount];
                                 [ws.collectionView reloadData];
@@ -476,7 +491,7 @@
                 return;
             }
             [YYOpusApi updateSeriesAuthType:[opusSeriesModel.id integerValue] authType:section buyerIds:@"" andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                if(rspStatusAndMessage.status == YYReqStatusCode100){
+                if(rspStatusAndMessage.status == kCode100){
                     blockopusSeriesModel.authType = [[NSNumber alloc] initWithInteger:section];
                     [ws.collectionView reloadData];
                     [YYToast showToastWithTitle:NSLocalizedString(@"修改成功",nil) andDuration:kAlertToastDuration];
@@ -504,7 +519,7 @@
             __block NSInteger blockType = [authType integerValue];
             __block NSInteger whiteAuthCount = [[buyerIds componentsSeparatedByString:@","] count];
             [YYOpusApi updateSeriesPubStatus:[blockopusSeriesModel.id integerValue] status:0 authType:authType buyerIds:buyerIds andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                if(rspStatusAndMessage.status == YYReqStatusCode100){
+                if(rspStatusAndMessage.status == kCode100){
                     blockopusSeriesModel.authType = [[NSNumber alloc] initWithInteger:blockType];
                     blockopusSeriesModel.status = [[NSNumber alloc] initWithInt:0];
                     blockopusSeriesModel.whiteAuthCount= [[NSNumber alloc] initWithInteger:whiteAuthCount];

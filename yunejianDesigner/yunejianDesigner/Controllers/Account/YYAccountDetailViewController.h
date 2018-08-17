@@ -12,8 +12,8 @@
 
 -(void) checkUserIdentity;
 
-@property (nonatomic, strong) CancelButtonClicked cancelButtonClicked;
+@property (nonatomic,strong) CancelButtonClicked cancelButtonClicked;
 
-@property (nonatomic, strong) ModifySuccess modifySuccess;
+@property (nonatomic,strong) ModifySuccess modifySuccess;
 
 @end

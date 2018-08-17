@@ -10,10 +10,12 @@
 
 @implementation YYVerifyTool
 
+
+
 +(BOOL )emailVerify:(NSString *)email
 {
     NSString *newEmail = [email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if(![NSString isNilOrEmpty:newEmail]){
+    if(![newEmail isNilOrEmpty]){
         if(![newEmail containsString:@" "]){
             return [self Verify:newEmail WithCode:@"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"];
         }
@@ -29,7 +31,7 @@
 {
     return [self Verify:phone WithCode:@"^1[3|4|5|7|8][0-9]\\d{8}$"];
 }
-+(BOOL )postCodeVerify:(NSString *)phone
++(BOOL )PostCodeVerify:(NSString *)phone
 {
     
     return [self Verify:phone WithCode:@"^[1-9][0-9]{5}$"];
@@ -81,7 +83,7 @@
  * 国际手机号码格式验证(中国 11位纯数字 国外 6-20位纯数字)
  */
 +(BOOL )internationalPhoneVerify:(NSString *)phone WithCountryCode:(NSInteger )countryCode{
-    BOOL isValidPhone = NO;
+    BOOL _isValidPhone = NO;
     //如果手机号码没有满足正确格式
     //中国 11 位数效验正确性  其他国家 6-20（中国 11位纯数字 国外 6-20位纯数字）
     if([YYVerifyTool numberVerift:phone]){
@@ -89,35 +91,16 @@
         if(countryCode == 721){
             //            中国
             if(phone.length == 11){
-                isValidPhone = YES;
+                _isValidPhone = YES;
             }
         }else{
             //            国外
             if(phone.length <= 20 && phone.length >= 6){
-                isValidPhone = YES;
+                _isValidPhone = YES;
             }
             
         }
     }
-    return isValidPhone;
+    return _isValidPhone;
 }
-+(BOOL)internationalPhoneVerify:(NSString *)phone{
-    if([YYVerifyTool numberVerift:phone] && (phone.length <= 20 && phone.length >= 6)){
-        return YES;
-    }
-    return NO;
-}
-/**
- * 英文字母与数字正则
- */
-+(BOOL)inputShouldLetterOrNum:(NSString *)inputString{
-    if (inputString.length == 0){
-        return NO;
-    }
-    
-    NSString *regex =@"[a-zA-Z0-9]*";
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
-    return [pred evaluateWithObject:inputString];
-}
-
 @end

@@ -92,16 +92,16 @@
 }
 -(void)CreateTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView=[[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [_containerView addSubview:_tableView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(_containerView);
     }];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.delegate=self;
+    _tableView.dataSource=self;
+    _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [UIColor colorWithHex:@"f8f8f8"];
-    _tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0,0,0,15)];
+    _tableView.tableHeaderView=[[UIView alloc]initWithFrame:CGRectMake(0,0,0,15)];
 
     [self addHeader];
     [self addFooter];
@@ -170,7 +170,7 @@
 
     __block BOOL blockEndrefreshing = endrefreshing;
     [YYShowroomApi getOrderingListWithPageIndex:pageIndex pageSize:kPageSize andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYShowroomOrderingListModel *showroomOrderingListModel, NSError *error) {
-        if (rspStatusAndMessage.status == YYReqStatusCode100) {
+        if (rspStatusAndMessage.status == kCode100) {
             if (pageIndex == 1) {
                 [ws.dataArray removeAllObjects];
             }

@@ -17,7 +17,7 @@
 @property (nonatomic, copy)   NSString  *brandName;
 @property (nonatomic, copy)   NSString  *brandLogoName;
 @property (nonatomic, copy)   NSString  *status;
-@property (nonatomic, assign) YYUserType userType;
+@property (nonatomic, assign) NSInteger userType;
 
 @property (nonatomic,copy) NSArray *sellersArray;
 

@@ -27,10 +27,7 @@
 // 自定义类和三方类（ cocoapods类 > model > 工具类 > 其他）
 #import "MLInputDodger.h"
 
-#import "YYAddress.h"
-#import "YYOrderInfoModel.h"
 #import "YYCountryListModel.h"
-#import "YYBuyerAddressModel.h"
 
 #import "YYRspStatusAndMessage.h"
 #import "UserDefaultsMacro.h"
@@ -58,7 +55,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *yellowView;
 
-@property (weak, nonatomic) IBOutlet UIButton *defaultReceiveButton;//默认收件地址
+@property (weak, nonatomic) IBOutlet UIButton *defaultReceiveButton;//默认收货地址
 @property (weak, nonatomic) IBOutlet UIButton *defaultBillingButton;//默认发票地址
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
@@ -249,10 +246,10 @@
 
 - (void)updateUI{
     if (_currentOperationType == OperationTypeModify) {
-        _navigationBarViewController.nowTitle = NSLocalizedString(@"修改收件地址",nil);
+        _navigationBarViewController.nowTitle = NSLocalizedString(@"修改收货地址",nil);
         [self setShowValue];
     }else if(_currentOperationType == OperationTypeCreate){
-        _navigationBarViewController.nowTitle = NSLocalizedString(@"新建收件地址",nil);
+        _navigationBarViewController.nowTitle = NSLocalizedString(@"新建收货地址",nil);
         [self setDefaultCountry];
     }else if(_currentOperationType == OperationTypeHelpCreate){
         _defaultBillingButton.hidden = YES;
@@ -356,7 +353,7 @@
     if(!_countryInfo){
         WeakSelf(ws);
         [YYUserApi getCountryInfoWithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYCountryListModel *countryListModel, NSError *error) {
-            if (rspStatusAndMessage.status == YYReqStatusCode100) {
+            if (rspStatusAndMessage.status == kCode100) {
                 ws.countryInfo = countryListModel;
                 
                 if(ws.countryInfo.result.count){
@@ -381,7 +378,7 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [YYUserApi getSubCountryInfoWithCountryID:[_currentNationID integerValue] WithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYCountryListModel *countryListModel, NSInteger impId,NSError *error) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if (rspStatusAndMessage.status == YYReqStatusCode100) {
+            if (rspStatusAndMessage.status == kCode100) {
                 if(countryListModel.result.count){
                     ws.provinceInfo = countryListModel;
                 }else{
@@ -498,7 +495,7 @@
     
     if (_currentOperationType == OperationTypeHelpCreate) {
         [YYOrderApi createOrModifyAddress:nowAddress orderCode:nil andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYBuyerAddressModel *addressModel, NSError *error) {
-            if (rspStatusAndMessage.status == YYReqStatusCode100
+            if (rspStatusAndMessage.status == kCode100
                 && addressModel
                 && addressModel.addressId){
                 if (ws.addressForBuyerButtonClicked) {
@@ -510,7 +507,7 @@
         }];
     }else{
         [YYUserApi createOrModifyAddress:nowAddress andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-            if (rspStatusAndMessage.status == YYReqStatusCode100) {
+            if (rspStatusAndMessage.status == kCode100) {
                 [YYToast showToastWithView:customView title:NSLocalizedString(@"操作成功！",nil) andDuration:kAlertToastDuration];
                 if (ws.modifySuccess) {
                     ws.modifySuccess();

@@ -88,7 +88,7 @@
         //            0:设计师 1:买手店 2:销售代表 5:Showroom 6:Showroom子账号
         //            0:设计师 1:买手店 2:销售代表 5:Showroom 6:Showroom子账号
         //            设计师端的设备会接受到的标签是 DESIGNER和SALESMAN   买手接受到的是RETAILER    SHOWROOM,SHOWROOMSUB
-        NSString *roleTag = user.userType==YYUserTypeDesigner?@"DESIGNER":user.userType==YYUserTypeRetailer?@"RETAILER":user.userType==YYUserTypeSales?@"SALESMAN":user.userType==YYUserTypeShowroom?@"SHOWROOM":user.userType==YYUserTypeShowroomSub?@"SHOWROOMSUB":nil;
+        NSString *roleTag = user.userType==0?@"DESIGNER":user.userType==1?@"RETAILER":user.userType==2?@"SALESMAN":user.userType==5?@"SHOWROOM":user.userType==6?@"SHOWROOMSUB":nil;
 
         [tags addObject:fullVersionNum];
         [tags addObject:bigVersionNum];

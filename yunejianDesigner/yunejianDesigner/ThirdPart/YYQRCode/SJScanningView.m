@@ -74,7 +74,7 @@ static const CGFloat kSJQRCodeRectPadY = 184.5;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             // 手机
             paddingX = kSJQRCodeRectPhoneX;
-            paddingY = kSJQRCodeRectPhoneY + (kIPhoneX?34.f:0.f);
+            paddingY = kSJQRCodeRectPhoneY;
         }else{
             // pad
             paddingX = kSJQRCodeRectPadX;
@@ -146,7 +146,7 @@ static const CGFloat kSJQRCodeRectPadY = 184.5;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         // 手机
         paddingX = kSJQRCodeRectPhoneX;
-        paddingY = kSJQRCodeRectPhoneY + (kIPhoneX?34.f:0.f);
+        paddingY = kSJQRCodeRectPhoneY;
         time = 2.5;
     }else{
         // pad
@@ -222,7 +222,7 @@ static const CGFloat kSJQRCodeRectPadY = 184.5;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         // 手机
         paddingX = kSJQRCodeRectPhoneX;
-        paddingY = kSJQRCodeRectPhoneY + (kIPhoneX?34.f:0.f);
+        paddingY = kSJQRCodeRectPhoneY;
     }else{
         // pad
         paddingX = kSJQRCodeRectPadX;

@@ -395,7 +395,7 @@
         }else
         {
             if(_oprateBtn){
-                if([_infoModel.connectStatus integerValue] == YYUserConnStatusNone){
+                if([_infoModel.connectStatus integerValue] == kConnStatus){
                     _oprateBtn.backgroundColor =[UIColor clearColor];
                     [_oprateBtn setImage:[UIImage imageNamed:@"conn_invite1_icon"] forState:UIControlStateNormal];
                     [_oprateBtn setTitle:NSLocalizedString(@"邀请合作",nil) forState:UIControlStateNormal];
@@ -407,7 +407,7 @@
                         make.width.mas_equalTo(20);
                     }];
                     
-                }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusInvite || [_infoModel.connectStatus integerValue] == YYUserConnStatusBeInvited){
+                }else if([_infoModel.connectStatus integerValue] == kConnStatus0 || [_infoModel.connectStatus integerValue] == kConnStatus2){
                     
                     _oprateBtn.backgroundColor =[UIColor clearColor];
                     [_oprateBtn setImage:[UIImage imageNamed:@"conn_inviteing1_icon"] forState:UIControlStateNormal];
@@ -420,7 +420,7 @@
                         make.width.mas_equalTo(20);
                     }];
                     
-                }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusConnected){
+                }else if([_infoModel.connectStatus integerValue] == kConnStatus1){
                     _oprateBtn.backgroundColor =[UIColor colorWithHex:@"58c77d"];
                     [_oprateBtn setImage:[UIImage imageNamed:@"conn_cancel_icon"] forState:UIControlStateNormal];
                     [_oprateBtn setTitle:NSLocalizedString(@"已经合作",nil) forState:UIControlStateNormal];

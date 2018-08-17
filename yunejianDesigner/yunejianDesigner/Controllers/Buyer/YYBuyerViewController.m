@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "YYUser.h"
 #import "YYMessageButton.h"
+#import "YYConnMsgListController.h"
 #import "YYOrderApi.h"
 #import "YYConnApi.h"
 #import "YYBrandSeriesListViewController.h"
@@ -19,9 +20,8 @@
 #import "UserDefaultsMacro.h"
 #import "TitlePagerView.h"
 #import "YYBuyerTableViewController.h"
+#import "YYBuyerHomePageViewController.h"
 #import "YYUserApi.h"
-#import "YYConnBuyerModel.h"
-#import "YYMessageUnreadModel.h"
 
 @interface YYBuyerViewController ()<ViewPagerDataSource, ViewPagerDelegate, TitlePagerViewDelegate,YYTableCellDelegate>
 @property (weak, nonatomic) IBOutlet UIView *msgBtnContainer;
@@ -92,10 +92,28 @@
 }
 
 - (void)messageCountChanged:(NSNotification *)notification{
-
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.messageUnreadModel setUnreadMessageAmount:_messageButton];
-
+    if([YYUser isShowroomToBrand])
+    {
+        NSInteger msgAmount = [appDelegate.messageUnreadModel.orderAmount integerValue] + [appDelegate.messageUnreadModel.connAmount integerValue];
+        if(msgAmount > 0){
+            [_messageButton updateButtonNumber:[NSString stringWithFormat:@"%ld",msgAmount]];
+        }else{
+            [_messageButton updateButtonNumber:@""];
+        }
+    }else
+    {
+        NSInteger msgAmount = [appDelegate.messageUnreadModel.orderAmount integerValue] + [appDelegate.messageUnreadModel.connAmount integerValue] + [appDelegate.messageUnreadModel.personalMessageAmount integerValue];
+        if(msgAmount > 0 || [appDelegate.messageUnreadModel.newsAmount integerValue] >0){
+            if(msgAmount > 0 ){
+                [_messageButton updateButtonNumber:[NSString stringWithFormat:@"%ld",(long)msgAmount]];
+            }else{
+                [_messageButton updateButtonNumber:@"dot"];
+            }
+        }else{
+            [_messageButton updateButtonNumber:@""];
+        }
+    }
 }
 
 - (void)messageButtonClicked:(id)sender {
@@ -139,8 +157,8 @@
     }else if([type isEqualToString:@"addBrand"]){
         WeakSelf(ws);
         [YYUserApi getUserStatus:-1 andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSInteger status, NSError *error) {
-            if(rspStatusAndMessage.status == YYReqStatusCode100){
-                if(status == YYUserStatusOk){
+            if(rspStatusAndMessage.status == kCode100){
+                if(status == kUserStatusOk){
                     [ws addBrandHandler:nil];
                 }else{
                     [YYToast showToastWithView:ws.view title:NSLocalizedString(@"您还没有通过品牌身份认证，不能添加合作买手店",nil) andDuration:kAlertToastDuration];

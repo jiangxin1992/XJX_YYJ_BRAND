@@ -83,9 +83,6 @@
 /* Class = "UILabel"; text = "买手店*"; ObjectID = "I7U-Ui-bCN"; */
 "I7U-Ui-bCN.text" = "买手店*";
 
-/* Class = "UILabel"; text = "订单类型*"; ObjectID = "vVK-na-tcN"; */
-"vVK-na-tcN.text" = "订单类型*";
-
 /* Class = "UILabel"; text = "订单备注："; ObjectID = "I93-9U-J9W"; */
 "I93-9U-J9W.text" = "订单备注：";
 
@@ -203,9 +200,6 @@
 
 /* Class = "UIButton"; normalTitle = "添加收款记录"; ObjectID = "pvO-zg-9Xb"; */
 "pvO-zg-9Xb.normalTitle" = "添加收款记录";
-
-/* Class = "UILabel"; text = "确认收货"; ObjectID = "LZN-8s-vjj"; */
-"LZN-8s-vjj.text" = "确认收货";
 
 /* Class = "UILabel"; text = "件数"; ObjectID = "qyQ-H6-Mee"; */
 "qyQ-H6-Mee.text" = "件数";

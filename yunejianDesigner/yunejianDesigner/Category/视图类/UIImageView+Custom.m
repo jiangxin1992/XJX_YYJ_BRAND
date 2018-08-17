@@ -17,7 +17,7 @@
 {
     UIImageView *imageview = [[UIImageView alloc] init];
     imageview.userInteractionEnabled = YES;
-    if(![NSString isNilOrEmpty:imageStr]){
+    if(![imageStr isNilOrEmpty]){
         imageview.image = [UIImage imageNamed:imageStr];
     }
     imageview.contentMode = UIViewContentModeScaleAspectFit;

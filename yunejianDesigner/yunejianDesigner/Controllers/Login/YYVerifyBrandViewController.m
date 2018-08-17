@@ -110,11 +110,11 @@
     if (self.registerType == kBrandRegisterStep2Type) {
         self.uploadImg1 = nil;
         self.uploadImg2 = nil;
-        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - kStatusBarAndNavigationBarHeight - kTabbarAndBottomSafeAreaHeight);
+        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds) - kStatusBarAndNavigationBarHeight - 58 - (kIPhoneX?34.f:0.f));
         self.submitButton.hidden = NO;
-        self.submitButton.frame = CGRectMake(0, SCREEN_HEIGHT - kTabbarAndBottomSafeAreaHeight, SCREEN_WIDTH, 58);
+        self.submitButton.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds) - 58 - (kIPhoneX?34.f:0.f), CGRectGetWidth([UIScreen mainScreen].bounds), 58);
     } else if (self.registerType == kBrandRegisterStep1Type) {
-        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - kStatusBarAndNavigationBarHeight - kBottomSafeAreaHeight);
+        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds) - kStatusBarAndNavigationBarHeight - (kIPhoneX?34.f:0.f));
         self.submitButton.hidden = YES;
         self.submitButton.frame = CGRectZero;
     }
@@ -125,8 +125,8 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:NO];
     NSString *brandFiles = [paramsArr objectAtIndex:0];
     [YYUserApi uploadBrandFiles:brandFiles andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSInteger errorCode, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-        if( rspStatusAndMessage.status == YYReqStatusCode100 && errorCode == YYReqStatusCode100){
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        if( rspStatusAndMessage.status == kCode100 && errorCode == kCode100){
             [YYToast showToastWithTitle: NSLocalizedString(@"提交成功！",nil) andDuration:kAlertToastDuration];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }else{
@@ -231,7 +231,7 @@
         }else{
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             [YYOrderApi uploadImage:image size:2.0f andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSString *imageUrl, NSError *error) {
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 if (imageUrl && [imageUrl length] > 0) {
                     NSLog(@"imageUrl: %@",imageUrl);
                     NSArray *data = nil;

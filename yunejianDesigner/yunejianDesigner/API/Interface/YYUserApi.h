@@ -8,9 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+@class YYLookBookListModel,YYBuyerHomeInfoModel,YYBrandIntroductionModel,YYLookBookModel,YYSalesManListModel,YYBuyerStoreModel,YYBrandInfoModel,YYDesignerModel,YYUserModel,YYBrandHomeInfoModel,YYShowroomInfoModel;
 #import "YYRspStatusAndMessage.h"
-
-@class YYBuyerHomeInfoModel,YYLookBookModel,YYSalesManListModel,YYBuyerStoreModel,YYBrandInfoModel,YYDesignerModel,YYUserModel,YYBrandHomeInfoModel,YYShowroomInfoModel,YYBuyerBaseInfoModel,YYAddressListModel,YYAddress,YYBuyerAddressListModel,YYBuyerListModel,YYBuyerDetailModel,YYHomePageModel,YYIndexPicsModel,YYNewsListModel,YYUserHomePageModel,YYCountryListModel;
+#import "YYAddressListModel.h"
+#import "YYAddress.h"
+#import "YYBuyerAddressListModel.h"
+#import "YYBuyerListModel.h"
+#import "YYBuyerAddressListModel.h"
+#import "YYBuyerDetailModel.h"
+#import "YYHomePageModel.h"
+#import "YYIndexPicsModel.h"
+#import "YYOrderOneInfoModel.h"
+#import "YYCartInfoModel.h"
+#import "YYNewsListModel.h"
+#import "YYUserHomePageModel.h"
+#import "YYCountryListModel.h"
 
 @interface YYUserApi : NSObject
 
@@ -50,12 +62,7 @@
  *
  */
 + (void)getShowroomInfoWithBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYShowroomInfoModel *ShowroomModel,NSError *error))block;
-/**
- *
- * 获取买手基础信息
- *
- */
-+ (void)getBuyerInfo:(NSNumber *)userId andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYBuyerBaseInfoModel *buyerBaseInfoModel,NSError *error))block;
+
 /**
  *
  * 获取买手店个人信息
@@ -73,14 +80,14 @@
 
 /**
  *
- * 获取收件地址列表
+ * 获取收货地址列表
  *
  */
 + (void)getAddressListWithBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYAddressListModel *addressListModel,NSError *error))block;
 
 /**
  *
- * 买手-删除地址
+ * 买家-删除地址
  *
  */
 + (void)deleteAddress:(NSInteger)addressId andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,NSError *error))block;
@@ -95,7 +102,7 @@
 
 /**
  *
- * 修改买手用户名或电话
+ * 修改买家用户名或电话
  *
  */
 + (void)updateBuyerUsername:(NSString *)username phone:(NSString *)phone province:(NSString *)province city:(NSString *)city andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,NSError *error))block;
@@ -123,7 +130,7 @@
 
 /**
  *
- * 修改买手店铺信息
+ * 修改买家店铺信息
  *
  */
 + (void)storeUpdateByBuyerStoreModel:(YYBuyerStoreModel *)BuyerStoreModel andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,NSError *error))block;
@@ -131,7 +138,7 @@
 
 /**
  *
- * 添加或修改收件地址
+ * 添加或修改收货地址
  *
  */
 + (void)createOrModifyAddress:(YYAddress *)address andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,NSError *error))block;
@@ -167,7 +174,7 @@
 
 /**
  *
- * 买手注册
+ * 买家注册
  *
  */
 +(void)registerBuyerWithData:(NSArray *)data andBlock:(void(^)(YYRspStatusAndMessage *rspStatusAndMessage,NSError *error))block;
@@ -217,7 +224,7 @@
 
 /**
  *
- * 获取收件地址列表
+ * 获取收货地址列表
  *
  */
 + (void)getAddressListWithID:(NSInteger)buyerId pageIndex:(int)pageIndex pageSize:(int)pageSize andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYBuyerAddressListModel *addressListModel,NSError *error))block;

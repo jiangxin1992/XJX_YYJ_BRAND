@@ -10,10 +10,10 @@
 
 @implementation NSMutableArray (extra)
 
-+ (BOOL)isNilOrEmpty:(NSMutableArray *)array{
-    if (array)
+- (BOOL )isNilOrEmpty{
+    if (self)
     {
-        if(array.count){
+        if(self.count){
             return NO;
         }
     }

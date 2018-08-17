@@ -285,21 +285,21 @@
         }else{
             _oprateBtn.hidden = NO;
             _oprateBtn.backgroundColor =[UIColor clearColor];
-            if([_infoModel.connectStatus integerValue] == YYUserConnStatusNone){
+            if([_infoModel.connectStatus integerValue] == kConnStatus){
                 
                 [_oprateBtn setTitleColor:[UIColor colorWithHex:@"000000"] forState:UIControlStateNormal];
                 [_oprateBtn setTitle:NSLocalizedString(@"添加品牌",nil) forState:UIControlStateNormal];
                 [_oprateBtn setImage:[UIImage imageNamed:@"brandadd_homepage_icon"] forState:UIControlStateNormal];
                 _oprateBtn.layer.borderColor = [UIColor colorWithHex:@"000000"].CGColor;
                 
-            }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusInvite || [_infoModel.connectStatus integerValue] == YYUserConnStatusBeInvited){
+            }else if([_infoModel.connectStatus integerValue] == kConnStatus0 || [_infoModel.connectStatus integerValue] == kConnStatus2){
                 
                 [_oprateBtn setTitleColor:[UIColor colorWithHex:@"58c776"] forState:UIControlStateNormal];
                 [_oprateBtn setTitle:NSLocalizedString(@"已经邀请_short",nil) forState:UIControlStateNormal];
                 [_oprateBtn setImage:[UIImage imageNamed:@"brandwait_homepage_icon"] forState:UIControlStateNormal];
                 _oprateBtn.layer.borderColor = [UIColor colorWithHex:@"58c776"].CGColor;
                 
-            }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusConnected){
+            }else if([_infoModel.connectStatus integerValue] == kConnStatus1){
                 
                 [_oprateBtn setImage:[UIImage imageNamed:@"chat_homepage_icon"] forState:UIControlStateNormal];
                 [_oprateBtn setTitle:NSLocalizedString(@"发送私信",nil) forState:UIControlStateNormal];

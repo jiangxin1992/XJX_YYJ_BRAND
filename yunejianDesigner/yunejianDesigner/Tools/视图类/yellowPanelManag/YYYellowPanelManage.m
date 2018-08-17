@@ -38,26 +38,10 @@
 
 #import "AppDelegate.h"
 
-@interface YYYellowPanelManage ()
-
-@property (nonatomic,assign) UIView *parentView;
-
-@property (nonatomic,strong) YYOrderAddMoneyLogController *moneyLogViewContorller;
-@property (nonatomic,strong) YYAlertViewController *alertViewController;
-@property (nonatomic,strong) YYOrderAddressListController *buyerAddressListController;
-@property (nonatomic,strong) YYDiscountViewController *discountViewController;
-@property (nonatomic,strong) YYUserCheckAlertViewController *userCheckAlertViewController;
-@property (nonatomic,strong) YYOrderStatusRequestCloseViewController *orderStatusRequestCloseViewController;
-@property (nonatomic,strong) YYOpusSettingViewController *opusSettingViewController;
-@property (nonatomic,strong) YYHelpPanelViewController *helpPanelViewController;
-@property (nonatomic,strong) YYOrderAppendViewController *orderAppendViewController;
-@property (nonatomic,strong) YYOpusSettingDefinedViewController *opusSettingDefinedViewController;
-
-@end
 
 @implementation YYYellowPanelManage
-
 static YYYellowPanelManage *instance = nil;
+
 
 +(id)allocWithZone:(struct _NSZone *)zone{
     static dispatch_once_t predicate;
@@ -77,29 +61,28 @@ static YYYellowPanelManage *instance = nil;
     return instance;
 }
 
--(void)showOrderAddMoneyLogPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier orderCode:(NSString*)orderCode totalMoney:(double)totalMoney moneyType:(NSInteger)moneyType isNeedRefund:(BOOL)isNeedRefund parentView:(UIViewController *)specialParentView andCallBack:(void (^)(NSString *orderCode, NSNumber *totalPercent))callback{
+-(void)showOrderAddMoneyLogPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier orderCode:(NSString*)orderCode totalMoney:(double)totalMoney moneyType:(NSInteger)moneyType parentView:(UIViewController *)specialParentView andCallBack:(void (^)(NSString *orderCode, NSNumber *totalPercent))callback{
 
     WeakSelf(ws);
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:[NSBundle mainBundle]];
-    ws.moneyLogViewContorller = [storyboard instantiateViewControllerWithIdentifier:identifier];
-    ws.moneyLogViewContorller.totalMoney = totalMoney;
-    ws.moneyLogViewContorller.moneyType = moneyType;
-    ws.moneyLogViewContorller.orderCode = orderCode;
-    ws.moneyLogViewContorller.isNeedRefund = isNeedRefund;
+    [YYOrderApi getPaymentNoteList:orderCode andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYPaymentNoteListModel *paymentNoteList, NSError *error) {
 
-    __block UIViewController *blockParentViewController = specialParentView;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:[NSBundle mainBundle]];
+        ws.moneyLogViewContorller = [storyboard instantiateViewControllerWithIdentifier:identifier];
+        ws.moneyLogViewContorller.totalMoney = totalMoney;
+        ws.moneyLogViewContorller.paymentNoteList = paymentNoteList;
+        ws.moneyLogViewContorller.moneyType = moneyType;
+        ws.moneyLogViewContorller.orderCode = orderCode;
+        __block UIViewController *blockParentViewController = specialParentView;
+        [ws.moneyLogViewContorller setCancelButtonClicked:^(){
+            [blockParentViewController.navigationController popViewControllerAnimated:YES];
+        }];
+        [ws.moneyLogViewContorller setModifySuccess:^(NSString *orderCode, NSNumber *totalPercent){
+            callback(orderCode,totalPercent);
+            [blockParentViewController.navigationController popViewControllerAnimated:YES];
+        }];
+        [specialParentView.navigationController pushViewController:ws.moneyLogViewContorller animated:YES];
 
-    [ws.moneyLogViewContorller setCancelButtonClicked:^(){
-        [blockParentViewController.navigationController popViewControllerAnimated:YES];
     }];
-
-    [ws.moneyLogViewContorller setModifySuccess:^(NSString *orderCode, NSNumber *totalPercent){
-        callback(orderCode,totalPercent);
-        [blockParentViewController.navigationController popViewControllerAnimated:YES];
-    }];
-
-    [specialParentView.navigationController pushViewController:ws.moneyLogViewContorller animated:YES];
-
 }
 
 -(void)showYellowAlertPanel:(NSString *)storyboardName andIdentifier:(NSString *)identifier title:(NSString*)title msg:(NSString*)msg btn:(NSString*)btnStr align:(NSTextAlignment)textAlignment closeBtn:(BOOL)needCloseBtn andCallBack:(YellowPabelCallBack)callback{
@@ -153,6 +136,7 @@ static YYYellowPanelManage *instance = nil;
     
     __block UIViewController *blockParentViewController = specialParentView;
     [self.buyerAddressListController setCancelButtonClicked:^(){
+        //removeFromSuperviewUseUseAnimateAndDeallocViewController(weakShowView,weakSelf.moneyLogViewContorller);
         [blockParentViewController.navigationController popViewControllerAnimated:YES];
     }];
     [self.buyerAddressListController setMakeSureButtonClicked:^(NSString* name,YYBuyerModel *infoModel){
@@ -281,7 +265,7 @@ static YYYellowPanelManage *instance = nil;
     }else{
         __block YYBrandInfoView *blockBrandInfoView = brandInfoView;
         [YYUserApi getOrderDesignerInfoBrandInfo:orderCode designerId:designerId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYHomePageModel *homePageModel, NSError *error) {
-            if(rspStatusAndMessage.status == YYReqStatusCode100 && blockBrandInfoView != nil){
+            if(rspStatusAndMessage.status == kCode100 && blockBrandInfoView != nil){
                 NSString *phone = (homePageModel.brandIntroduction.phone?homePageModel.brandIntroduction.phone:@"");
                 NSString *email = (homePageModel.brandIntroduction.email?homePageModel.brandIntroduction.email:@"");
                 NSString *qq = (homePageModel.brandIntroduction.qq?homePageModel.brandIntroduction.qq:@"");

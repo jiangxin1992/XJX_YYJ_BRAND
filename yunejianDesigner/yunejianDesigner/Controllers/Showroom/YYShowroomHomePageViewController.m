@@ -83,7 +83,7 @@
     WeakSelf(ws);
     [YYShowroomApi getShowroomHomePageInfoWithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYShowroomHomePageModel *homePageModel, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        if(rspStatusAndMessage.status == kCode100){
             
             _homePageModel = homePageModel;
             

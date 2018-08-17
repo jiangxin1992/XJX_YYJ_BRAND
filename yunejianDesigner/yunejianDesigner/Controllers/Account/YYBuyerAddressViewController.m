@@ -14,8 +14,6 @@
 #import "YYAddress.h"
 #import "YYCreateOrModifyAddressViewController.h"
 #import "AppDelegate.h"
-#import "YYAddressModel.h"
-#import "YYAddressListModel.h"
 #import "YYNavigationBarViewController.h"
 
 @interface YYBuyerAddressViewController ()<UITableViewDataSource,UITableViewDelegate,YYTableCellDelegate>
@@ -128,7 +126,7 @@
     
 }
 
-//创建或修改收件地址
+//创建或修改收货地址
 - (void)createOrModifyAddress:(YYAddress *)address{
     
     WeakSelf(ws);
@@ -279,7 +277,7 @@
                 YYAddress *address = [ws.addressArray objectAtIndex:indexPath.row];
                 //__block NSInteger row = indexPath.row;
                 [YYUserApi deleteAddress:[address.addressId integerValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                    if(rspStatusAndMessage.status == YYReqStatusCode100){
+                    if(rspStatusAndMessage.status == kCode100){
                         //                [weakself.addressArray removeObjectAtIndex:row];  //删除数组里的数据
                         //                [weakself.tableView reloadData];
                         //[weakself.tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell

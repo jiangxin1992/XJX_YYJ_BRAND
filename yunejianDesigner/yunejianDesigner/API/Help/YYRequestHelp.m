@@ -262,7 +262,7 @@ typedef NS_ENUM(NSInteger, RequestType)
 
 
             //需要重新登录
-            if (rspStatusAndMessage.status == YYReqStatusCode402
+            if (rspStatusAndMessage.status == kCode402
                 ) {
                 if(requestGet402Count != 0){//重新获取toke
                     block(nil,nil, currentError, response);
@@ -290,7 +290,7 @@ typedef NS_ENUM(NSInteger, RequestType)
                     //品牌重新登录
                     [YYShowroomApi getShowroomToBrandToken:^(YYRspStatusAndMessage *rspStatusAndMessage, YYUserModel *userModel, NSError *error) {
                         if (rspStatusAndMessage
-                            && (rspStatusAndMessage.status == YYReqStatusCode100 || rspStatusAndMessage.status == YYReqStatusCode1000)) {
+                            && (rspStatusAndMessage.status == kCode100 || rspStatusAndMessage.status == kCode1000)) {
                             [YYRequestHelp increaseOrDecreaseRequestGet402Count:NO];
                             NSMutableDictionary *headDic = [[NSMutableDictionary alloc] initWithDictionary:headers];
 
@@ -329,7 +329,7 @@ typedef NS_ENUM(NSInteger, RequestType)
                 }else if (user.email && user.password) {
                     [YYUserApi loginWithUsername:user.email password:md5(user.password) verificationCode:nil andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYUserModel *userModel, NSError *error) {
                         if (rspStatusAndMessage
-                            && (rspStatusAndMessage.status == YYReqStatusCode100 || rspStatusAndMessage.status == YYReqStatusCode1000)) {
+                            && (rspStatusAndMessage.status == kCode100 || rspStatusAndMessage.status == kCode1000)) {
                             [YYRequestHelp increaseOrDecreaseRequestGet402Count:NO];
                             NSMutableDictionary *headDic = [[NSMutableDictionary alloc] initWithDictionary:headers];
 
@@ -362,7 +362,7 @@ typedef NS_ENUM(NSInteger, RequestType)
                             }
 
                             // 获取subshowroom的权限列表, 首先是判断showroom子账号
-                            if (user.userType == YYUserTypeShowroomSub) {
+                            if (user.userType == kShowroomSubType) {
                                 [YYShowroomApi selectSubShowroomPowerUserId:[NSNumber numberWithInteger:[user.userId integerValue]] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSArray *powerArray, NSError *error) {
                                     YYSubShowroomUserPowerModel *subShowroom = [YYSubShowroomUserPowerModel shareModel];
                                     for (NSNumber *i in powerArray) {
@@ -390,14 +390,14 @@ typedef NS_ENUM(NSInteger, RequestType)
                 //审核功能 老版本(1.2)没
                 if ([requestUrl rangeOfString:kLogin].location != NSNotFound) {
                     //登录接口
-                    if(rspStatusAndMessage.status == YYReqStatusCode100 &&[dataDic objectForKey:@"toMainPage"] != nil){
+                    if(rspStatusAndMessage.status == kCode100 &&[dataDic objectForKey:@"toMainPage"] != nil){
                         NSString *toMainPage = (NSString *)[dataDic objectForKey:@"toMainPage"];
                         if([toMainPage intValue]>0){
                             id expireDate = [dataDic objectForKey:@"expireDate"];
                             if(expireDate == 0 ||(NSNull *)expireDate == [NSNull null]){
-                                rspStatusAndMessage.status = YYReqStatusCode100;
+                                rspStatusAndMessage.status = kCode100;
                             }else{
-                                rspStatusAndMessage.status = YYReqStatusCode1000;
+                                rspStatusAndMessage.status = kCode1000;
                                 rspStatusAndMessage.message =  getShowDateByFormatAndTimeInterval(NSLocalizedString(@"请在30天内完成品牌信息，未验证的品牌账号将被锁定（yyyy/MM/dd）",nil),[NSString stringWithFormat:@"%@",expireDate]);
                             }
                         }
@@ -435,10 +435,8 @@ typedef NS_ENUM(NSInteger, RequestType)
     if ([requestUrl rangeOfString:kOrderCreate].location != NSNotFound
         || [requestUrl rangeOfString:kOrderModify].location != NSNotFound
         || [requestUrl rangeOfString:kOrderAppend].location != NSNotFound
-        || [requestUrl rangeOfString:kBrandInfoUpdate_buyer].location != NSNotFound
-        || [requestUrl rangeOfString:kBrandInfoUpdate_brand].location != NSNotFound
-        || [requestUrl rangeOfString:kSaveParcel].location != NSNotFound
-        || [requestUrl rangeOfString:kSaveDeliverPackage].location != NSNotFound) {
+        ||[requestUrl rangeOfString:kBrandInfoUpdate_buyer].location != NSNotFound
+        ||[requestUrl rangeOfString:kBrandInfoUpdate_brand].location != NSNotFound) {
         manager.requestSerializer=[AFJSONRequestSerializer serializer];
     }
 
@@ -464,13 +462,9 @@ typedef NS_ENUM(NSInteger, RequestType)
     //    manager.responseSerializer.acceptableContentTypes = nil;//[NSSet setWithObject:@"text/ plain"];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", nil];
 
-    if ([requestUrl rangeOfString:kOrderCreate].location != NSNotFound
-        || [requestUrl rangeOfString:kOrderModify].location != NSNotFound
-        || [requestUrl rangeOfString:kOrderAppend].location != NSNotFound
-        || [requestUrl rangeOfString:kBrandInfoUpdate_buyer].location != NSNotFound
-        || [requestUrl rangeOfString:kBrandInfoUpdate_brand].location != NSNotFound
-        || [requestUrl rangeOfString:kSaveParcel].location != NSNotFound
-        || [requestUrl rangeOfString:kSaveDeliverPackage].location != NSNotFound) {
+    if ([requestUrl rangeOfString:kOrderCreate].location != NSNotFound || [requestUrl rangeOfString:kOrderModify].location != NSNotFound || [requestUrl rangeOfString:kOrderAppend].location != NSNotFound||
+        [requestUrl rangeOfString:kBrandInfoUpdate_buyer].location != NSNotFound||
+        [requestUrl rangeOfString:kBrandInfoUpdate_brand].location != NSNotFound) {
         manager.requestSerializer=[AFJSONRequestSerializer serializer];
     }
 

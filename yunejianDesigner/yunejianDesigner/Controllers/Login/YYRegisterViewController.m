@@ -118,12 +118,12 @@
 }
 
 - (void)reloadUI {
-    if (self.registerType == YYUserTypeDesigner) {
-        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - kStatusBarAndNavigationBarHeight - kTabbarAndBottomSafeAreaHeight);
+    if (self.registerType == kDesignerType) {
+        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds) - kStatusBarAndNavigationBarHeight - 58 - (kIPhoneX?34.f:0.f));
         self.submitButton.hidden = NO;
-        self.submitButton.frame = CGRectMake(0, SCREEN_HEIGHT - kTabbarAndBottomSafeAreaHeight, SCREEN_WIDTH, 58);
+        self.submitButton.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds) - 58 - (kIPhoneX?34.f:0.f), CGRectGetWidth([UIScreen mainScreen].bounds), 58);
     } else if (self.registerType == kEmailRegisterType) {
-        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - kStatusBarAndNavigationBarHeight);
+        self.tableView.frame = CGRectMake(0, kStatusBarAndNavigationBarHeight, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds) - kStatusBarAndNavigationBarHeight);
         self.submitButton.hidden = YES;
         self.submitButton.frame = CGRectZero;
     }
@@ -137,8 +137,8 @@
     YYTableViewCellInfoModel *infoModel = [self getCellData:1 row:11 index:0 content:nil];
     __block NSString *blockEmailstr = infoModel.value;
     [YYUserApi registerDesignerWithData:paramsArr andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-        if( rspStatusAndMessage.status == YYReqStatusCode100){
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        if( rspStatusAndMessage.status == kCode100){
             [YYToast showToastWithView:self.view title: NSLocalizedString(@"注册成功！",nil) andDuration:kAlertToastDuration];
             self.registerType = kEmailRegisterType;
             self.userEmail = blockEmailstr;
@@ -261,7 +261,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.registerType == YYUserTypeDesigner) {
+    if (self.registerType == kDesignerType) {
         if (indexPath.section == 1 && indexPath.row == 8) {
             [self countryCodeButtonClicked];
         }
@@ -404,7 +404,7 @@
             verifyRow ++;
         }
     }
-    if(self.registerType == YYUserTypeDesigner){
+    if(self.registerType == kDesignerType){
         if(retailerNameArr.count)
         {
             NSString *getp = [retailerNameArr componentsJoinedByString:@","];
@@ -414,7 +414,7 @@
         [self registerDesignerWithParams:paramsArr];
     }else if (self.registerType == kEmailRegisterType) {
         WeakSelf(ws);
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
         [ws.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -422,7 +422,7 @@
 #pragma mark - --------------自定义方法----------------------
 - (void)buildTableViewDataSource {
     NSMutableArray *arrays = [NSMutableArray array];
-    if (self.registerType == YYUserTypeDesigner) {
+    if (self.registerType == kDesignerType) {
         if (YES) {
             NSMutableArray *array = [NSMutableArray array];
             if (YES) {

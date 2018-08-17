@@ -25,8 +25,6 @@
 // 自定义类和三方类（ cocoapods类 > model > 工具类 > 其他）
 #import "YYMessageUnreadModel.h"
 #import "YYTableViewCellData.h"
-#import "YYPageInfoModel.h"
-#import "YYSkuMessageListModel.h"
 #import <MBProgressHUD.h>
 #import <MJRefresh.h>
 #import "AppDelegate.h"

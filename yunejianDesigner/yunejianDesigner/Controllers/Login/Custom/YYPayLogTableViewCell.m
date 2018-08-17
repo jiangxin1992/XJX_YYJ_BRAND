@@ -225,7 +225,7 @@
         self.fifthTitleLabel.text = NSLocalizedString(@"确认时间",nil);
         if([noteModel.payStatus integerValue] == 0){
             self.affirmButton.hidden = NO;
-            if(([noteModel.tmpPercent floatValue] + [noteModel.realPercent floatValue]) >100){
+            if(([noteModel.tmpPercent integerValue] + [noteModel.percent integerValue]) >100){
                 self.affirmButton.enabled = NO;
                 self.affirmButton.backgroundColor = [UIColor colorWithHex:@"d3d3d3"];
                 

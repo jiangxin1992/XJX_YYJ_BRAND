@@ -25,6 +25,21 @@
     return YES;
 }
 
+- (BOOL )isNilOrEmpty{
+    if (self && ![self isEqualToString:@""])
+    {
+        //去掉两端的空格
+        if(![[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]) {
+            //string is all whitespace
+            return YES;
+        }else{
+            return NO;
+        }
+    }
+
+    return YES;
+}
+
 - (NSString *)transformToPinyin
 {
     NSMutableString *mutableString = [NSMutableString stringWithString:self];

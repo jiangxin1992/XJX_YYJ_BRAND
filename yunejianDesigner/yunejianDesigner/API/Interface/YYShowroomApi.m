@@ -8,29 +8,16 @@
 
 #import "YYShowroomApi.h"
 
-// c文件 —> 系统文件（c文件在前）
-
-// 控制器
-
-// 自定义视图
-
-// 接口
-
-// 分类
-
-// 自定义类和三方类（ cocoapods类 > model > 工具类 > 其他）
-#import "RequestMacro.h"
-#import "YYRequestHelp.h"
-#import "UserDefaultsMacro.h"
-#import "YYHttpHeaderManager.h"
-
-#import "YYUser.h"
-#import "YYUserModel.h"
-#import "YYShowroomHomePageModel.h"
 #import "YYShowroomBrandListModel.h"
+#import "YYShowroomHomePageModel.h"
 #import "YYShowroomOrderingListModel.h"
-#import "YYShowroomInfoByDesignerModel.h"
 #import "YYShowroomOrderingCheckListModel.h"
+#import "YYHttpHeaderManager.h"
+#import "YYRequestHelp.h"
+#import "RequestMacro.h"
+#import "UserDefaultsMacro.h"
+#import "YYUser.h"
+#import "YYShowroomInfoByDesignerModel.h"
 
 @implementation YYShowroomApi
 /**
@@ -439,7 +426,7 @@
 {
     YYUser *user = [YYUser currentUser];
     
-    if(user.userType == YYUserTypeDesigner||user.userType == YYUserTypeSales)
+    if(user.userType == 0||user.userType == 2)
     {
         NSString *requestURL = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastYYServerURL] stringByAppendingString:kGetShowroomInfoByDesigner];
         NSDictionary *dic = [YYHttpHeaderManager buildHeadderWithAction:kGetShowroomInfoByDesigner params:nil];

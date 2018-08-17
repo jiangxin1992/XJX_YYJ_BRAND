@@ -20,10 +20,10 @@
     UISwitch *tempSwitch = (UISwitch *)sender;
     BOOL isOn = tempSwitch.isOn;
     if (_switchClicked) {
-        if(user.userType == YYUserTypeShowroom)
+        if(user.userType == 5)
         {
             _switchClicked(_subModel.showroomUserId,isOn);
-        }else if(user.userType == YYUserTypeDesigner)
+        }else if(user.userType == 0)
         {
             _switchClicked(@(_seller.salesmanId),isOn);
         }
@@ -50,7 +50,7 @@
 //    _statusSwitch.transform = CGAffineTransformMakeScale(1, 1);
     
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeShowroom)
+    if(user.userType == 5)
     {
         if (!_subModel) {
             return;

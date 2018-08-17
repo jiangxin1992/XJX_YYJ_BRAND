@@ -54,7 +54,7 @@
     _readFlagView.layer.masksToBounds = YES;
     
     if(_msgInfoModel && _msgInfoModel.msgContent){
-        if(user.userType == YYUserTypeRetailer){
+        if(user.userType == kBuyerStorUserType){
             sd_downloadWebImageWithRelativePath(NO, _msgInfoModel.msgContent.designerBrandLogo, self.userImageView, kLogoCover, 0);
         }else {
             sd_downloadWebImageWithRelativePath(NO, _msgInfoModel.msgContent.buyerLogo, self.userImageView, kLogoCover, 0);
@@ -101,7 +101,7 @@
     
     NSString *msgTitleStr = nil;
     //用户类型 0:设计师 1:买手店 2:销售代表
-    if(user.userType == YYUserTypeDesigner ||user.userType == YYUserTypeSales)
+    if(user.userType == 0 ||user.userType ==2 )
     {
         //0:设计师 1:买手店
         if(![NSString isNilOrEmpty:_msgInfoModel.msgContent.buyerName])

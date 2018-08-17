@@ -9,7 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface YYServerURLApi : NSObject
-
 +(void)getAppServerURLWidth:(void (^)(NSString *serverURL,BOOL isNeedUpdate,NSError *error))block;
-
 @end

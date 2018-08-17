@@ -38,7 +38,7 @@
 }
 - (void)updateReadState{
     YYUser *user = [YYUser currentUser];
-    if(user.userType != YYUserTypeShowroom)
+    if(user.userType != 5)
     {
         NSString *CFBundleVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
         if([CFBundleVersion integerValue] == 17)
@@ -140,7 +140,7 @@
         case ShowTypeSeller:{//
             
             YYUser *user = [YYUser currentUser];
-            if(user.userType == YYUserTypeShowroom)
+            if(user.userType == 5)
             {
                 [_infoIconImage setImage:[UIImage imageNamed:@"user_icon"] forState:UIControlStateNormal];
                 _keyLabel.text = NSLocalizedString(@"Showroom子账号",nil);
@@ -176,7 +176,7 @@
         case ShowTypeHome:{
             YYUser *user = [YYUser currentUser];
 
-            if(user.userType == YYUserTypeDesigner || user.userType == YYUserTypeRetailer)
+            if(user.userType == 0||user.userType == 1)
             {
                 _keyLabel.text = NSLocalizedString(@"我的品牌主页",nil);
             }else
@@ -199,21 +199,21 @@
                         _keyLabel.text = titleStr;
                         _valueLabel.text = _userInfo.brandName;
                         //_userInfo.status = @"305";
-                        if([_userInfo.status integerValue] == YYReqStatusCode305){
+                        if([_userInfo.status integerValue] == kCode305){
                             //_modifyButton.hidden = NO;
                         }else{
                             //_modifyButton.hidden = YES;
                         }
                         //_valueLabel.hidden = YES;
-                        if([_userInfo.status integerValue] == YYReqStatusCode305){
+                        if([_userInfo.status integerValue] == kCode305){
                             [_valueLabel setAdjustsFontSizeToFitWidth:YES];
                             _valueLabel.text = btnStr;
                             _valueLabel.hidden = NO;
-                        }else if([_userInfo.status integerValue] == YYReqStatusCode300){
+                        }else if([_userInfo.status integerValue] == kCode300){
                             [_valueLabel setAdjustsFontSizeToFitWidth:YES];
                             _valueLabel.text = btnWaitingStr;
                             _valueLabel.hidden = NO;
-                        }else if([_userInfo.status integerValue] == YYReqStatusCode301){
+                        }else if([_userInfo.status integerValue] == kCode301){
                             [_valueLabel setAdjustsFontSizeToFitWidth:YES];
                             _valueLabel.text = rufuseTipStr;
                             _valueLabel.hidden = NO;

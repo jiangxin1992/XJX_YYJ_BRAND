@@ -15,6 +15,7 @@
 // 自定义视图
 
 // 接口
+#import "YYInventoryApi.h"
 
 // 分类
 #import "UIImage+YYImage.h"
@@ -61,7 +62,7 @@ static NSInteger numFontSize = 15;
 - (void)viewDidAppear:(BOOL)animated {
     UIView *targetView = self.leftMenuButton_3;
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeDesigner){
+    if(user.userType == kDesignerType){
         targetView = self.leftMenuButton_4;
     }
     [YYGuideHandler showGuideView:GuideTypeTabMe parentView:self.view targetView:targetView];
@@ -114,7 +115,7 @@ static NSInteger numFontSize = 15;
     NSInteger btnWidth = 0;
 
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeDesigner){
+    if(user.userType == kDesignerType){
         btnsCount = 4;
         btnWidth = SCREEN_WIDTH/btnsCount;
         [self.leftMenuButton_0 setConstraintConstant:btnWidth forAttribute:NSLayoutAttributeWidth];
@@ -194,7 +195,11 @@ static NSInteger numFontSize = 15;
         }
     }else{
         if (button != _currentSelectedButton) {
+            if(_currentSelectedButton.tag == LeftMenuButtonTypeInventory){
+                [YYInventoryApi markAsReadOnMsg:nil adnBlock:nil];
+            }
             [self updateSelectedButton:button];
+
         }
     }
 }
@@ -215,6 +220,8 @@ static NSInteger numFontSize = 15;
         return NSLocalizedString(@"设置",nil);
     }else if(tag == LeftMenuButtonTypeBuyer){
         return NSLocalizedString(@"买手店",nil);
+    }else if(tag == LeftMenuButtonTypeInventory){
+        return NSLocalizedString(@"库存",nil);
     }
     return @"";
 }

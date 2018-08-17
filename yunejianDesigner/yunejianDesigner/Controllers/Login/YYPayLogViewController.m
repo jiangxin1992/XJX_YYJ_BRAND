@@ -96,8 +96,8 @@
 - (void)confirmPayment {
     [MBProgressHUD showHUDAddedTo:self.view animated:NO];
     [YYOrderApi confirmPayment:[self.noteModel.id integerValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        if(rspStatusAndMessage.status == kCode100){
             if(self.affirmRecordBlock){
                 self.affirmRecordBlock();
             }
@@ -110,8 +110,8 @@
 - (void)discardPayment {
     [MBProgressHUD showHUDAddedTo:self.view animated:NO];
     [YYOrderApi discardPayment:[self.noteModel.id integerValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        if(rspStatusAndMessage.status == kCode100){
             if(self.cancelRecordBlock){
                 self.cancelRecordBlock();
             }
@@ -124,8 +124,8 @@
 - (void)deletePayment {
     [MBProgressHUD showHUDAddedTo:self.view animated:NO];
     [YYOrderApi deletePayment:[self.noteModel.id integerValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        if(rspStatusAndMessage.status == kCode100){
             if(self.deleteRecordBlock){
                 self.deleteRecordBlock();
             }

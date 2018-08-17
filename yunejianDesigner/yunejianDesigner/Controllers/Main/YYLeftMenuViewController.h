@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, LeftMenuButtonType) {
-    LeftMenuButtonTypeIndex   = 50000,//首页
-    LeftMenuButtonTypeOpus    = 50001,//作品
-    LeftMenuButtonTypeOrder   = 50002,//订单
+    LeftMenuButtonTypeIndex = 50000,//首页
+    LeftMenuButtonTypeOpus = 50001,//作品
+    LeftMenuButtonTypeOrder = 50002,//订单
     LeftMenuButtonTypeAccount = 50003,//我的
-    LeftMenuButtonTypeBrand   = 50004,//品牌
+    LeftMenuButtonTypeBrand = 50004,//品牌
     LeftMenuButtonTypeSetting = 50005,//设置
-    LeftMenuButtonTypeBuyer   = 50006 //买手店
+    LeftMenuButtonTypeInventory = 50007,//库存
+    LeftMenuButtonTypeBuyer = 50006//买手店
 };
 
 typedef void (^LeftMenuButtonClicked)(LeftMenuButtonType buttonIndex);

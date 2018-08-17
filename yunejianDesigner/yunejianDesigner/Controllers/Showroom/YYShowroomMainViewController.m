@@ -25,7 +25,6 @@
 
 #import "AppDelegate.h"
 #import "YYUser.h"
-#import "YYStyleInfoModel.h"
 #import "YYShowroomBrandListModel.h"
 #import "YYShowroomBrandModel.h"
 #import "YYShowroomBrandTool.h"
@@ -41,7 +40,6 @@
 #import "YYQRCode.h"
 #import "YYScanFunctionModel.h"
 #import "YYOpusApi.h"
-#import "ChineseToPinyin.h"
 
 @interface YYShowroomMainViewController ()<UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate>
 //列表
@@ -129,7 +127,7 @@
     self.arrayChar = [YYShowroomBrandTool getCharArr];
 
     self.currentUser = [YYUser currentUser];
-    if(_currentUser.userType == YYUserTypeShowroom){
+    if(_currentUser.userType == 5){
         //showroom权限
         self.permissionStatus = 1;
     }else{
@@ -379,7 +377,7 @@
     //    [_ShowroomBrandListModel getTestModel];
     for (YYShowroomBrandModel *model in _ShowroomBrandListModel.brandList) {
 
-        NSString *pinyin = [[ChineseToPinyin pinyinFromChiniseString:model.brandName] uppercaseString];
+        NSString *pinyin = [[model.brandName transformToPinyin] uppercaseString];
 
         NSString *charFirst = [pinyin substringToIndex:1];
         //从字典中招关于G的键值对
@@ -457,7 +455,7 @@
 //showroom切换到品牌角色
 -(void)showroomToBrandWithBrandID:(NSNumber *)brandId WithScanModel:(YYScanFunctionModel *)scanModel code:(YYQRCodeController *)code{
     [YYShowroomApi showroomToBrandWithBrandID:brandId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYUserModel *userModel, NSError *error) {
-        if (rspStatusAndMessage.status == YYReqStatusCode100) {
+        if (rspStatusAndMessage.status == kCode100) {
             //表示切换角色成功,并进行扫码款式类型处理
             [self sweepYardStyleTypeAction:scanModel code:code];
         }else{
@@ -471,12 +469,12 @@
     [YYOpusApi getStyleInfoByStyleId:[scanModel.id longLongValue] orderCode:nil andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYStyleInfoModel *styleInfoModel, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if(rspStatusAndMessage){
-            if (rspStatusAndMessage.status == YYReqStatusCode100) {
+            if (rspStatusAndMessage.status == kCode100) {
                 [code dismissController];
                 //表示有权限访问，跳转款式详情页
                 if(styleInfoModel){
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    YYStyleOneColorModel *infoModel = [styleInfoModel transformToStyleOneColorModel];
+                    YYInventoryBoardModel *infoModel = [styleInfoModel transformToInventoryBoardModel];
                     [appDelegate showStyleInfoViewController:infoModel parentViewController:self IsShowroomToScan:YES];
                 }else{
                     //清除brand的角色，切换到showroom角色
@@ -517,7 +515,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     WeakSelf(ws);
     [YYShowroomApi getShowroomBrandListWithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage,YYShowroomBrandListModel *brandListModel,NSError *error) {
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        if(rspStatusAndMessage.status == kCode100){
             ws.ShowroomBrandListModel = brandListModel;
             [ws updateData];
             [self CreateOrUpdateTableHeadView];
@@ -527,7 +525,7 @@
 
             _NavView.navTitle = ws.ShowroomBrandListModel.name;
 
-            if(_currentUser.userType == YYUserTypeShowroom){
+            if(_currentUser.userType == 5){
                 //showroom权限
                 [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
                 //获取红星
@@ -550,7 +548,7 @@
     WeakSelf(ws);
     [YYShowroomApi hasPermissionToVisitOrderingWithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, BOOL hasPermission, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
-        if(rspStatusAndMessage.status == YYReqStatusCode100){
+        if(rspStatusAndMessage.status == kCode100){
             if(hasPermission){
                 ws.permissionStatus = 1;
                 //获取红星
@@ -567,7 +565,7 @@
     WeakSelf(ws);
     if(_permissionStatus == 1){
         [YYShowroomApi hasOrderingMsgWithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, BOOL hasMsg, NSError *error) {
-            if(rspStatusAndMessage.status == YYReqStatusCode100){
+            if(rspStatusAndMessage.status == kCode100){
                 ws.hasOrderingMsg = hasMsg;
             }else{
                 ws.hasOrderingMsg = NO;
@@ -733,13 +731,13 @@
 
 -(void)CreateTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView=[[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     
     [self.view addSubview:_tableView];
     //    消除分割线
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
+    _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    _tableView.delegate=self;
+    _tableView.dataSource=self;
     _tableView.backgroundColor = _define_white_color;
     _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     _tableView.sectionIndexColor = [UIColor colorWithHex:@"d3d3d3"];

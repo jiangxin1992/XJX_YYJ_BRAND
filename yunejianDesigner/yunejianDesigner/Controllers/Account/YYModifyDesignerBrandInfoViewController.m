@@ -182,7 +182,7 @@ static CGFloat yellowView_default_constant = 112;
                               annualSales:[perYear floatValue]
                              retailerName:names
                                  andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                                     if (rspStatusAndMessage.status == YYReqStatusCode100) {
+                                     if (rspStatusAndMessage.status == kCode100) {
                                          [YYToast showToastWithTitle:NSLocalizedString(@"修改成功！",nil) andDuration:kAlertToastDuration];
                                          if (_modifySuccess) {
                                              _modifySuccess();

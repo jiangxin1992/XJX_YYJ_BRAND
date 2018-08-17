@@ -5,9 +5,6 @@
 /* Class = "UIButton"; normalTitle = "手机号码格式不对"; ObjectID = "gRw-g9-6AS"; */
 "gRw-g9-6AS.normalTitle" = "手机号码格式不对";
 
-/* Class = "UIButton"; normalTitle = "手机号码格式不对"; ObjectID = "e6W-uw-1Gw"; */
-"e6W-uw-1Gw.normalTitle" = "手机号码格式不对";
-
 /* Class = "UILabel"; text = "省/市/区"; ObjectID = "Zcx-vw-dOH"; */
 "Zcx-vw-dOH.text" = "省/市/区";
 
@@ -29,9 +26,6 @@
 /* Class = "UILabel"; text = "详细地址*"; ObjectID = "oJj-K8-PCP"; */
 "oJj-K8-PCP.text" = "详细地址*";
 
-/* Class = "UILabel"; text = "详细地址*"; ObjectID = "sXG-Fp-GCJ"; */
-"sXG-Fp-GCJ.text" = "详细地址*";
-
 /* Class = "UIButton"; normalTitle = "保存"; ObjectID = "4aK-0z-s16"; */
 "4aK-0z-s16.normalTitle" = "保存";
 
@@ -41,8 +35,8 @@
 /* Class = "UILabel"; text = "万元"; ObjectID = "80a-qw-wur"; */
 "80a-qw-wur.text" = "万元";
 
-/* Class = "UILabel"; text = "设置为默认收件地址"; ObjectID = "QRU-8F-pIs"; */
-"QRU-8F-pIs.text" = "设置为默认收件地址";
+/* Class = "UILabel"; text = "设置为默认收货地址"; ObjectID = "QRU-8F-pIs"; */
+"QRU-8F-pIs.text" = "设置为默认收货地址";
 
 /* Class = "UITextField"; placeholder = "请输入邮箱地址"; ObjectID = "ANQ-5m-nub"; */
 "ANQ-5m-nub.placeholder" = "请输入邮箱地址";
@@ -73,9 +67,6 @@
 
 /* Class = "UIButton"; normalTitle = "保存"; ObjectID = "DoI-pg-EWq"; */
 "DoI-pg-EWq.normalTitle" = "保存";
-
-/* Class = "UIButton"; normalTitle = "保存"; ObjectID = "4bU-Nx-Fq7"; */
-"4bU-Nx-Fq7.normalTitle" = "保存";
 
 /* Class = "UIButton"; normalTitle = "设置"; ObjectID = "Eq6-Lj-PNt"; */
 "Eq6-Lj-PNt.normalTitle" = "设置";
@@ -136,9 +127,6 @@
 
 /* Class = "UILabel"; text = "收件人*"; ObjectID = "q9k-MR-qCZ"; */
 "q9k-MR-qCZ.text" = "收件人*";
-
-/* Class = "UILabel"; text = "收件人*"; ObjectID = "dMx-sO-2dO"; */
-"dMx-sO-2dO.text" = "收件人*";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Rne-V3-eNN"; */
 "Rne-V3-eNN.text" = "Label";
@@ -232,9 +220,6 @@
 
 /* Class = "UILabel"; text = "电话*"; ObjectID = "FmJ-4X-gVQ"; */
 "FmJ-4X-gVQ.text" = "电话*";
-
-/* Class = "UILabel"; text = "电话*"; ObjectID = "gN5-Gf-NN3"; */
-"gN5-Gf-NN3.text" = "电话*";
 
 /* Class = "UILabel"; text = "打折"; ObjectID = "sLH-A2-Nds"; */
 "sLH-A2-Nds.text" = "打折";

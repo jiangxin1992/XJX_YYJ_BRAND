@@ -94,7 +94,7 @@
     }
     _startBtn.hidden = NO;
     [_startBtn setTitleColor:[UIColor colorWithHex:@"000000"] forState:UIControlStateNormal];
-    if(_status == YYOpusCheckAuthDraft){
+    if(_status == kOpusDraft){
         _statusDraftImage.hidden = NO;
         [_startBtn setImage:[UIImage imageNamed:@"opuspublish_icon"] forState:UIControlStateNormal];
         [_startBtn setTitle:NSLocalizedString(@"发布作品",nil) forState:UIControlStateNormal];
@@ -103,20 +103,20 @@
         _statusDraftImage.hidden = YES;
         [_startBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
 
-        if(_authType == YYOpusAuthBuyer){
+        if(_authType == kAuthTypeBuyer){
             [_startBtn setImage:[UIImage imageNamed:@"menu_pub_status_buyer1"] forState:UIControlStateNormal];
             [_startBtn setTitle:NSLocalizedString(@"合作买手店可见",nil) forState:UIControlStateNormal];
-        }else if (_authType == YYOpusAuthMe){
+        }else if (_authType == kAuthTypeMe){
             [_startBtn setImage:[UIImage imageNamed:@"menu_pub_status_me1"] forState:UIControlStateNormal];
             [_startBtn setTitle:NSLocalizedString(@"仅自己可见",nil) forState:UIControlStateNormal];
-        }else if(_authType == YYOpusAuthAll){
+        }else if(_authType == kAuthTypeAll){
             [_startBtn setImage:[UIImage imageNamed:@"menu_pub_status_all1"] forState:UIControlStateNormal];
             [_startBtn setTitle:NSLocalizedString(@"公开",nil) forState:UIControlStateNormal];
-        }else if(_authType >= YYOpusAuthDefined){
+        }else if(_authType >= kAuthTypeDefined){
             [_startBtn setImage:[UIImage imageNamed:@"menu_pub_status_defined1"] forState:UIControlStateNormal];
-            if(_authType == YYOpusAuthDefined){
+            if(_authType == kAuthTypeDefined){
                 [_startBtn setTitle:[NSString stringWithFormat:NSLocalizedString(@"%@个买手店可见",nil),_whiteAuthCount] forState:UIControlStateNormal];
-            }else if (_authType == YYOpusAuthDefinedOther){
+            }else if (_authType == kAuthTypeDefinedOther){
                 [_startBtn setTitle:NSLocalizedString(@"已设置黑名单",nil) forState:UIControlStateNormal];
             }else{
                 [_startBtn setTitle:NSLocalizedString(@"自定义查看权限" ,nil) forState:UIControlStateNormal];
@@ -131,7 +131,7 @@
 
     YYUser *user = [YYUser currentUser];
     // 获取subshowroom的权限列表, 首先是判断showroom子账号
-    if (user.userType == YYUserTypeShowroomSub) {
+    if (user.userType == kShowroomSubType) {
         // 如果没有品牌操作权限，就不能操作
         YYSubShowroomUserPowerModel *subShowroom = [YYSubShowroomUserPowerModel shareModel];
         if (!subShowroom.isBrandAction) {
@@ -140,7 +140,7 @@
         }
     }
 
-    if(_status == YYOpusCheckAuthPublish){
+    if(_status == kOpusPublish){
 
         WeakSelf(ws);
         
@@ -150,13 +150,13 @@
         NSArray *menuIconData;
         menuData = @[NSLocalizedString(@"合作买手店可见",nil),NSLocalizedString(@"仅自己可见",nil),NSLocalizedString(@"公开",nil),NSLocalizedString(@"自定义查看权限",nil)];
         menuIconData = @[@"menu_pub_status_buyer",@"menu_pub_status_me",@"menu_pub_status_all",@"menu_pub_status_defined"];
-        if(_authType == YYOpusAuthBuyer){
+        if(_authType == kAuthTypeBuyer){
             menuIconData = @[@"menu_pub_status_buyer1",@"menu_pub_status_me",@"menu_pub_status_all",@"menu_pub_status_defined"];
-        }else if (_authType == YYOpusAuthMe){
+        }else if (_authType == kAuthTypeMe){
             menuIconData = @[@"menu_pub_status_buyer",@"menu_pub_status_me1",@"menu_pub_status_all",@"menu_pub_status_defined"];
-        }else if(_authType == YYOpusAuthAll){
+        }else if(_authType == kAuthTypeAll){
             menuIconData = @[@"menu_pub_status_buyer",@"menu_pub_status_me",@"menu_pub_status_all1",@"menu_pub_status_defined"];
-        }else if(_authType >= YYOpusAuthDefined){
+        }else if(_authType >= kAuthTypeDefined){
             menuIconData = @[@"menu_pub_status_buyer",@"menu_pub_status_me",@"menu_pub_status_all",@"menu_pub_status_defined1"];
         }
         

@@ -10,9 +10,9 @@
 #import "YYBuyerHomeInfoModel.h"
 @interface YYBuyerModifyInfoViewController : UIViewController
 
-@property (nonatomic, copy) void (^block)(NSString *type);
+@property(nonatomic,copy) void (^block)(NSString *type);
 
-@property (nonatomic, strong) CancelButtonClicked cancelButtonClicked;
-@property (nonatomic, strong) YYBuyerHomeInfoModel *homeInfoModel;
+@property (nonatomic,strong)CancelButtonClicked cancelButtonClicked;
+@property (nonatomic,strong)YYBuyerHomeInfoModel *homeInfoModel;
 
 @end

@@ -1,9 +1,6 @@
 
-/* Class = "UILabel"; text = "已经收款"; ObjectID = "4Pi-Is-dyV"; */
+/* Class = "UILabel"; text = "已经收到"; ObjectID = "4Pi-Is-dyV"; */
 "4Pi-Is-dyV.text" = "Paid";
-
-/* Class = "UILabel"; text = "待审核"; ObjectID = "ea2-Bh-IGP"; */
-"ea2-Bh-IGP.text" = "Pending";
 
 /* Class = "UILabel"; text = "订单总价"; ObjectID = "76z-rY-Aal"; */
 "76z-rY-Aal.text" = "Total";
@@ -35,17 +32,11 @@
 /* Class = "UILabel"; text = "尚未收款"; ObjectID = "OK2-rD-Hyn"; */
 "OK2-rD-Hyn.text" = "Unpaid";
 
-/* Class = "UILabel"; text = "需要退款给买手"; ObjectID = "BMG-ls-Fsu"; */
-"BMG-ls-Fsu.text" = "Refund to the buyer";
-
-/* Class = "UIButton"; normalTitle = "已退款"; ObjectID = "B30-lZ-xdr"; */
-"B30-lZ-xdr.normalTitle" = "Refunded";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "QQ4-BB-2Qh"; */
 "QQ4-BB-2Qh.normalTitle" = "Button";
 
 /* Class = "UILabel"; text = "未入驻"; ObjectID = "VRE-la-tmn"; */
-"VRE-la-tmn.text" = "Unregistered";
+"VRE-la-tmn.text" = "No Account";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Vrd-fF-hYn"; */
 "Vrd-fF-hYn.text" = "Label";
@@ -53,11 +44,14 @@
 /* Class = "UIButton"; normalTitle = "建立订单"; ObjectID = "W0Q-3q-oPp"; */
 "W0Q-3q-oPp.normalTitle" = "Create Order";
 
-/* Class = "UILabel"; text = "本次收款"; ObjectID = "WpR-Ky-k2T"; */
+/* Class = "UILabel"; text = "本次付款"; ObjectID = "WpR-Ky-k2T"; */
 "WpR-Ky-k2T.text" = "Payment";
 
 /* Class = "UIButton"; normalTitle = "确认"; ObjectID = "aKX-Gv-uHq"; */
 "aKX-Gv-uHq.normalTitle" = "OK";
+
+/* Class = "UIButton"; normalTitle = "填写的比例需小于余款的比例"; ObjectID = "ejj-fv-AJj"; */
+"ejj-fv-AJj.normalTitle" = "It should be less than unpaid amount.";
 
 /* Class = "UIButton"; normalTitle = "确认添加"; ObjectID = "g9X-Nl-dsg"; */
 "g9X-Nl-dsg.normalTitle" = "Add";

@@ -10,6 +10,11 @@
 
 @interface NSArray (extra)
 
-+ (BOOL)isNilOrEmpty:(NSArray *)array;
+/**
+ 判断当前字符串是否为空（尽量用这个）
+
+ @return 是否为空(nil/no count)
+ */
+- (BOOL )isNilOrEmpty;
 
 @end

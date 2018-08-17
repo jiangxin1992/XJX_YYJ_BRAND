@@ -33,12 +33,8 @@
 #import <MJRefresh.h>
 
 #import "YYUser.h"
-#import "YYPageInfoModel.h"
-#import "YYOrderInfoModel.h"
 #import "YYOpusSeriesModel.h"
-#import "YYOpusStyleListModel.h"
-#import "YYOpusSeriesListModel.h"
-#import "YYSeriesInfoDetailModel.h"
+#import "YYOrderInfoModel.h"
 #import "YYStylesAndTotalPriceModel.h"
 
 #import "AppDelegate.h"
@@ -244,7 +240,7 @@ static CGFloat searchFieldWidthMaxConstraint = 200;
     WeakSelf(ws);
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [YYOpusApi getSeriesListWithId:[user.userId intValue] pageIndex:1 pageSize:20 withDraft:@"false" andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYOpusSeriesListModel *opusSeriesListModel, NSError *error) {
-        if (rspStatusAndMessage.status == YYReqStatusCode100
+        if (rspStatusAndMessage.status == kCode100
             && opusSeriesListModel.result
             && [opusSeriesListModel.result count] > 0) {
 
@@ -263,7 +259,7 @@ static CGFloat searchFieldWidthMaxConstraint = 200;
 -(void)loadSeriesDetailInfo{
     WeakSelf(ws);
     [YYOpusApi getSeriesInfo:_seriesId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYSeriesInfoDetailModel *infoDetailModel, NSError *error) {
-        if (rspStatusAndMessage.status == YYReqStatusCode100){
+        if (rspStatusAndMessage.status == kCode100){
             ws.seriesInfoDetailModel = infoDetailModel;
             [ws.collectionView reloadData];
         }
@@ -273,7 +269,7 @@ static CGFloat searchFieldWidthMaxConstraint = 200;
 - (void)loadStyleListByPageIndex:(int)pageIndex queryStr:(NSString*)str{
     WeakSelf(ws);
     [YYOpusApi getConnStyleListWithDesignerId:_designerId seriesId:_seriesId orderBy:nil queryStr:str pageIndex:pageIndex pageSize:kPageSize andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYOpusStyleListModel *opusStyleListModel, NSError *error) {
-        if (rspStatusAndMessage.status == YYReqStatusCode100
+        if (rspStatusAndMessage.status == kCode100
             && opusStyleListModel.result
             && [opusStyleListModel.result count] > 0) {
             if(ws.searchResultArray == nil){
@@ -297,7 +293,7 @@ static CGFloat searchFieldWidthMaxConstraint = 200;
 
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
 
-        if (rspStatusAndMessage.status != YYReqStatusCode100) {
+        if (rspStatusAndMessage.status != kCode100) {
             [YYToast showToastWithTitle:rspStatusAndMessage.message  andDuration:kAlertToastDuration];
         }
 

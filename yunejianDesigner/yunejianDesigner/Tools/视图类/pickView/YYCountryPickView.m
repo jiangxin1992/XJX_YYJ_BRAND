@@ -282,7 +282,7 @@
         NSInteger _impId = [countryModel.impId integerValue];
         if(_plistType == SubCountryPickView){
             [YYUserApi getSubCountryInfoWithCountryID:_impId WithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYCountryListModel *countryListModel,NSInteger impId, NSError *error) {
-                if (rspStatusAndMessage.status == YYReqStatusCode100) {
+                if (rspStatusAndMessage.status == kCode100) {
                     if(_impId == impId){
                         _subCountryModel = countryListModel;
                         [_pickerView reloadAllComponents];

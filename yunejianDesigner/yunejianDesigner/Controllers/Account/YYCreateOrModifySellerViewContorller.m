@@ -61,7 +61,7 @@ static CGFloat yellowView_default_constant = 127;
 
 -(void)PrepareData{
     YYUser *user = [YYUser currentUser];
-    if(user.userType == YYUserTypeShowroom)
+    if(user.userType == 5)
     {
         _isShowroom = YES;
     }else
@@ -145,7 +145,7 @@ static CGFloat yellowView_default_constant = 127;
     }
     if(_isShowroom){
         [YYShowroomApi createSubShowroomWithUsername:name email:email password:password andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSNumber *userId, NSError *error) {
-            if (rspStatusAndMessage.status == YYReqStatusCode100) {
+            if (rspStatusAndMessage.status == kCode100) {
                 [YYToast showToastWithTitle:NSLocalizedString(@"创建成功！",nil) andDuration:kAlertToastDuration];
                 if (_modifySuccess) {
                     _modifySuccess(userId);//=====
@@ -156,7 +156,7 @@ static CGFloat yellowView_default_constant = 127;
         }];
     }else{
         [YYUserApi createSellerWithUsername:name email:email password:password andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-            if (rspStatusAndMessage.status == YYReqStatusCode100) {
+            if (rspStatusAndMessage.status == kCode100) {
                 [YYToast showToastWithTitle:NSLocalizedString(@"创建成功！",nil) andDuration:kAlertToastDuration];
                 if (_modifySuccess) {
                     _modifySuccess(@0);

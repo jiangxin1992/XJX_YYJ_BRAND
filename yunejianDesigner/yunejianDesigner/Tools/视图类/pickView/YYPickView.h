@@ -12,8 +12,7 @@ typedef NS_ENUM(NSInteger, UIDataType) {
     UIDataTypeOccasionList,
     UIDataTypeDeliveryList,
     UIDataTypePayList,
-    UIDataTypeModifyLimit,
-    UIDataTypeOrderType
+    UIDataTypeModifyLimit
 };
 
 @class YYPickView;
