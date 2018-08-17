@@ -15,7 +15,8 @@
 #import <MJRefresh.h>
 #import "YYBrandViewCell.h"
 #import "YYBrandAddViewCell.h"
-#import "YYConnAddViewController.h"
+#import "YYConnBrandInfoListModel.h"
+
 @interface YYBrandTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic,strong)YYPageInfoModel *currentPageInfo;
@@ -91,7 +92,7 @@
     WeakSelf(ws);
     __block BOOL blockEndrefreshing =endrefreshing;
     [YYConnApi getConnBrands:_currentListType andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYConnBrandInfoListModel *listModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100){
+        if (rspStatusAndMessage.status == YYReqStatusCode100){
             ws.currentPageInfo = listModel.pageInfo;
             if( !ws.currentPageInfo || ws.currentPageInfo.isFirstPage){
                 ws.brandListArray =  [[NSMutableArray alloc] init];//;
@@ -108,7 +109,7 @@
         
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
         
-        if (rspStatusAndMessage.status != kCode100) {
+        if (rspStatusAndMessage.status != YYReqStatusCode100) {
             [YYToast showToastWithTitle:rspStatusAndMessage.message  andDuration:kAlertToastDuration];
         }
     }];

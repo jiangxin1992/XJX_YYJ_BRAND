@@ -8,22 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class YYOrderInfoModel,YYOpusSeriesModel,YYInventoryBoardModel,YYOrderStyleModel,YYOrderOneInfoModel,YYOpusStyleModel,YYBrandSeriesToCartTempModel,YYMessageUnreadModel;
+@class YYOrderInfoModel,YYOpusSeriesModel,YYStyleOneColorModel,YYOrderStyleModel,YYOrderOneInfoModel,YYOpusStyleModel,YYBrandSeriesToCartTempModel,YYMessageUnreadModel;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property (assign, nonatomic) NSInteger leftMenuIndex;//跳转tabIndex
-@property (strong, nonatomic) NSString *openURLInfo;//跳转url跳转信息
-@property (nonatomic,assign) CGFloat keyBoardHeight;
-@property (nonatomic,assign) BOOL keyBoardIsShowNow;
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, assign) NSInteger leftMenuIndex;//跳转tabIndex
+@property (nonatomic, strong) NSString *openURLInfo;//跳转url跳转信息
+@property (nonatomic, assign) CGFloat keyBoardHeight;
+@property (nonatomic, assign) BOOL keyBoardIsShowNow;
 
-//@property (nonatomic,assign) NSInteger unreadOrderNotifyMsgAmount;//未读信息数量
-//@property (nonatomic,assign) NSInteger unreadConnNotifyMsgAmount;//未读信息数量
-//@property (nonatomic,assign) NSInteger unreadInventoryAmount;//未读信息数量
-//@property (nonatomic,assign) NSInteger unreadNewsAmount;//未读信息数量
-//@property (nonatomic,assign) NSInteger unreadPersonalMsgAmount;//未读私信信息数量
-//@property (nonatomic, assign) NSInteger unreadSkuAmount;//未读库存消息数量
 @property (nonatomic, strong) YYMessageUnreadModel *messageUnreadModel;
 
 @property (nonatomic, strong) YYOrderInfoModel *cartModel;//购物车对象
@@ -33,12 +27,12 @@
 
 @property (nonatomic, strong) YYOrderInfoModel *orderModel;//订单对象，修改订单中的添加款式要用到
 @property (nonatomic, strong) NSMutableArray *orderSeriesArray;//订单系列数组，修改订单中的添加款式要用到
-@property (strong, nonatomic) YYOrderInfoModel *currentYYOrderInfoModel;//修改订单临时数据
+@property (nonatomic, strong) YYOrderInfoModel *currentYYOrderInfoModel;//修改订单临时数据
 
 @property (nonatomic, strong) UINavigationController *mainViewController;//首页视图
 
-@property (nonatomic)bool inRunLoop;
-@property (strong, nonatomic) NSThread* myThread;
+@property (nonatomic) bool inRunLoop;
+@property (nonatomic, strong) NSThread* myThread;
 
 /**
  清空本地购物车
@@ -89,7 +83,7 @@
 - (void)showBuildOrderViewController:(YYOrderInfoModel *)orderInfoModel parent:(UIViewController *)parentViewController isCreatOrder:(Boolean)isCreatOrder isReBuildOrder:(Boolean)isReBuildOrder isAppendOrder:(Boolean)isAppendOrder isFromCardDetail:(BOOL )isFromCardDetail modifySuccess:(ModifySuccess)modifySuccess;
 - (void)showBuyerInfoViewController:(NSNumber *)buyerId WithBuyerName:(NSString *)buyerName parentViewController:(UIViewController *)viewController WithReqSuccessBlock:(void(^)())reqSuccessblock WithHomePageCancelBlock:(CancelButtonClicked )cancelblock WithModifySuccessBlock:(ModifySuccess )modifySuccessblock;
 - (void)showStyleInfoViewController:(YYOrderInfoModel *)infoModel oneInfoModel:(YYOrderOneInfoModel *)oneInfoModel orderStyleModel:(YYOrderStyleModel *)styleModel parentViewController:(UIViewController*)viewController;
-- (void)showStyleInfoViewController:(YYInventoryBoardModel *)infoModel parentViewController:(UIViewController*)viewController IsShowroomToScan:(BOOL)isShowroomToScan;
+- (void)showStyleInfoViewController:(YYStyleOneColorModel *)infoModel parentViewController:(UIViewController*)viewController IsShowroomToScan:(BOOL)isShowroomToScan;
 - (void)showShoppingView:(BOOL )isModifyOrder styleInfoModel:(id )styleInfoModel seriesModel:(id)seriesModel opusStyleModel:(YYOpusStyleModel *)opusStyleModel parentView:(UIView *)parentView fromBrandSeriesView:(BOOL )isFromSeries WithBlock:(void (^)(YYBrandSeriesToCartTempModel *brandSeriesToCardTempModel))block;
 - (void)showMessageView:(NSArray*)info parentViewController:(UIViewController*)viewController;
 - (void)showStyleDetailWithStyleId:(NSInteger)styleId parentViewController:(UIViewController*)viewController;

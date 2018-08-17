@@ -5,9 +5,8 @@
 //  Created by Apple on 15/12/4.
 //  Copyright © 2015年 yyj. All rights reserved.
 //
-#import "YYBrandSeriesViewController.h"
-
 #import "YYBrandSeriesListViewController.h"
+
 #import "YYSeriesListViewCell.h"
 #import "YYBrandIntroductionViewCell.h"
 #import "YYBrandPicsViewCell.h"
@@ -19,9 +18,12 @@
 #import "YYMenuPopView.h"
 #import "YYConnApi.h"
 #import "YYUser.h"
+#import "YYOpusSeriesListModel.h"
 #import "AppDelegate.h"
 #import "DTKDropdownMenuView.h"
 #import "YYYellowPanelManage.h"
+#import "YYHomePageModel.h"
+#import "YYIndexPicsModel.h"
 
 @interface YYBrandSeriesListViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -67,7 +69,7 @@
         }
     }];
     _topBtn.hidden = YES;
-//    if(_isConnStatus == kConnStatus1){
+//    if(_isConnStatus == YYUserConnStatusConnected){
 //        [_topBtn setImage:[UIImage imageNamed:@"topmore_icon"] forState:UIControlStateNormal];
 //    }else{
 //        [_topBtn setImage:[UIImage imageNamed:@"addbrand_icon"] forState:UIControlStateNormal];
@@ -114,33 +116,34 @@
 //}
 
 - (IBAction)topBtnHandler:(id)sender {
-    if(_isConnStatus == kConnStatus1){
+    if(_isConnStatus == YYUserConnStatusConnected){
         [self showMenuUI:nil];
     }else{
         WeakSelf(ws);
         if(_designerId ){
-            if(_isConnStatus == kConnStatus0 || _isConnStatus == kConnStatus){
-                if(_isConnStatus == kConnStatus){
+            if(_isConnStatus == YYUserConnStatusInvite || _isConnStatus == YYUserConnStatusNone){
+                if(_isConnStatus == YYUserConnStatusNone){
                     [YYConnApi invite:_designerId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                        if(rspStatusAndMessage.status == kCode100){
-                            ws.isConnStatus = kConnStatus0;
+                        if(rspStatusAndMessage.status == YYReqStatusCode100){
+                            ws.isConnStatus = YYUserConnStatusInvite;
                             [ws.topBtn setImage:[UIImage imageNamed:@"addbrand_icon"] forState:UIControlStateNormal];
                             [ws.collectionView reloadData];
+                        }else{
+                            [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
                         }
-                        [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
                     }];
                 }else{
                 
                 CMAlertView *alertView = [[CMAlertView alloc] initWithTitle:NSLocalizedString(@"取消对此品牌的合作邀请吗？",nil) message:nil needwarn:NO delegate:nil cancelButtonTitle:NSLocalizedString(@"继续邀请",nil) otherButtonTitles:@[NSLocalizedString(@"取消邀请",nil)]];
                 alertView.specialParentView = self.view;
                 [alertView setAlertViewBlock:^(NSInteger selectedIndex){
-                    if(selectedIndex == 1 && _isConnStatus == kConnStatus0){
+                    if(selectedIndex == 1 && _isConnStatus == YYUserConnStatusInvite){
                         [ws oprateConnWithDesigner:_designerId status:4];
                     }
                 }];
                 [alertView show];
                 }
-            }else if (_isConnStatus == kConnStatus2){
+            }else if (_isConnStatus == YYUserConnStatusBeInvited){
                 CMAlertView *alertView = [[CMAlertView alloc] initWithTitle:NSLocalizedString(@"确定品牌的合作邀请吗？",nil) message:nil needwarn:NO delegate:nil cancelButtonTitle:NSLocalizedString(@"同意邀请",nil) otherButtonTitles:@[NSLocalizedString(@"拒绝邀请",nil)]];
                 alertView.specialParentView = self.view;
                 [alertView setAlertViewBlock:^(NSInteger selectedIndex){
@@ -219,13 +222,13 @@
     WeakSelf(ws);
     __block NSInteger blockStatus = status;
     [YYConnApi OprateConnWithDesignerBrand:designerId status:status andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
             if(blockStatus == 2 || blockStatus == 3 || blockStatus == 4){
-                ws.isConnStatus = kConnStatus;
+                ws.isConnStatus = YYUserConnStatusNone;
                 [ws.topBtn setImage:[UIImage imageNamed:@"addbrand_icon"] forState:UIControlStateNormal];
             }else{
-                ws.isConnStatus = kConnStatus1;//
+                ws.isConnStatus = YYUserConnStatusConnected;//
                 [ws.topBtn setImage:[UIImage imageNamed:@"topmore_icon"] forState:UIControlStateNormal];
             }
             [ws.collectionView reloadData];
@@ -241,7 +244,7 @@
 - (void)loadAllSeries{
     WeakSelf(ws);
     [YYOpusApi getConnSeriesListWithId:(int)_designerId pageIndex:1 pageSize:20 andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYOpusSeriesListModel *opusSeriesListModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100
+        if (rspStatusAndMessage.status == YYReqStatusCode100
             && opusSeriesListModel.result
             && [opusSeriesListModel.result count] > 0) {
             ws.seriesArray = [[NSMutableArray alloc] init];
@@ -255,7 +258,7 @@
 - (void)loadBrandInfo{
     WeakSelf(ws);
     [YYUserApi getHomePageBrandInfo:_designerId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYHomePageModel *homePageModel, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             ws.homePageModel = homePageModel;
             ws.isConnStatus = [homePageModel.connectStatus integerValue];
             ws.navigationBarViewController.nowTitle = homePageModel.brandIntroduction.brandName;
@@ -268,7 +271,7 @@
 -(void)loadBrandPics{
     WeakSelf(ws);
     [YYUserApi getHomePagePics:_designerId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYIndexPicsModel *picsModel, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             ws.picsModel = picsModel;
         }
     }];
@@ -333,7 +336,7 @@
 }
 
 -(void)dealConnHandler:(id)sender{
-    if(self.isConnStatus == kConnStatus1){
+    if(self.isConnStatus == YYUserConnStatusConnected){
         [self menuBtnHandler:1];
     }else{
         [self topBtnHandler:nil];
@@ -350,7 +353,7 @@
             cell.logoPath = (_homePageModel?_homePageModel.logo:@"");
             cell.brandName = (_homePageModel?_homePageModel.brandIntroduction.brandName:@"");
             cell.pics = _picsModel.result;
-            if(self.isConnStatus == kConnStatus1){
+            if(self.isConnStatus == YYUserConnStatusConnected){
                 [cell.connStatusImg setBackgroundColor:[UIColor colorWithHex:@"58c776"]];
                 [cell.connStatusImg setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [cell.connStatusImg setTitle:NSLocalizedString(@"已经合作",nil) forState:UIControlStateNormal];
@@ -359,7 +362,7 @@
                 cell.connStatusImg.layer.borderColor = [UIColor colorWithHex:@"58c776"].CGColor;
                 cell.connStatusImg.layer.cornerRadius = 2.5;
                 cell.connStatusImg.layer.masksToBounds = YES;
-            }else if(self.isConnStatus == kConnStatus0 || self.isConnStatus == kConnStatus2){
+            }else if(self.isConnStatus == YYUserConnStatusInvite || self.isConnStatus == YYUserConnStatusBeInvited){
                 [cell.connStatusImg setBackgroundColor:[UIColor colorWithHex:@"FFFFFF"]];
                 [cell.connStatusImg setTitleColor:[UIColor colorWithHex:@"58c776"] forState:UIControlStateNormal];
                 [cell.connStatusImg setTitle:NSLocalizedString(@"已经邀请",nil) forState:UIControlStateNormal];

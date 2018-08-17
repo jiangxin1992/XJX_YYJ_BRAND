@@ -160,14 +160,14 @@
 }
 -(void)CreateTableView
 {
-    _tableView=[[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [_containerView addSubview:_tableView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(_containerView);
     }];
-    _tableView.delegate=self;
-    _tableView.dataSource=self;
-    _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [UIColor colorWithHex:@"f8f8f8"];
 
     [self addHeader];
@@ -220,7 +220,7 @@
 
     __block BOOL blockEndrefreshing = endrefreshing;
     [YYShowroomApi getOrderingCheckListWithAppointmentId:_appointmentId status:_status PageIndex:pageIndex pageSize:kPageSize andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYShowroomOrderingCheckListModel *showroomOrderingCheckListModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100) {
+        if (rspStatusAndMessage.status == YYReqStatusCode100) {
             if (pageIndex == 1) {
                 [ws.dataArray removeAllObjects];
             }
@@ -342,7 +342,7 @@
     WeakSelf(ws);
     NSString *ids = [[NSString alloc] initWithFormat:@"%ld",[showroomOrderingCheckModel.id integerValue]];
     [YYShowroomApi refuseOrderingApplicationWithIds:ids andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             showroomOrderingCheckModel.status = @"REJECTED";
             [ws.tableView reloadData];
             [ws userOperation];
@@ -356,7 +356,7 @@
     WeakSelf(ws);
     NSString *ids = [[NSString alloc] initWithFormat:@"%ld",[showroomOrderingCheckModel.id integerValue]];
     [YYShowroomApi agreeOrderingApplicationWithIds:ids andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             showroomOrderingCheckModel.status = @"VERIFIED";
             [ws.tableView reloadData];
             [ws userOperation];

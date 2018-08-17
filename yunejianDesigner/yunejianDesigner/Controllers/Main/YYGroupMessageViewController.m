@@ -7,7 +7,6 @@
 //
 
 #import "YYGroupMessageViewController.h"
-#import "YYInventoryViewController.h"
 #import "YYNavigationBarViewController.h"
 #import "YYOrderMessageViewController.h"
 #import "YYConnMsgListController.h"
@@ -21,8 +20,10 @@
 #import "YYPageInfoModel.h"
 #import "YYMessageApi.h"
 #import "MBProgressHUD.h"
+#import "YYMessageUserChatListModel.h"
 #import "YYUser.h"
 #import "YYMessageUnreadModel.h"
+#import "YYConnApi.h"
 
 @interface YYGroupMessageViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -348,27 +349,39 @@
             [self.navigationController pushViewController:messageViewController animated:YES];
         }
     }else{
-            if(self.personalMessageList == nil || [self.personalMessageList count] == 0){
-                return;
-            }
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Message" bundle:[NSBundle mainBundle]];
-            YYMessageDetailViewController *messageViewController = [storyboard instantiateViewControllerWithIdentifier:@"YYMessageDetailViewController"];
-            YYMessageUserChatModel *chatModel = [self.personalMessageList objectAtIndex:indexPath.row];
-            messageViewController.userEmail = chatModel.oppositeEmail;
-            messageViewController.userlogo = chatModel.oppositeURL;
-            messageViewController.userId = chatModel.oppositeId;
-            messageViewController.buyerName = chatModel.oppositeName;
-            YYMessageUserChatModel *blockchatModel = chatModel;
-            [messageViewController setCancelButtonClicked:^(void){
-                [ws.navigationController popViewControllerAnimated:YES];
-                [YYMessageDetailViewController markAsRead];
-                blockchatModel.unreadCount = [NSNumber numberWithInteger:0];
-                [ws loadListFromServerByPageIndex:1 endRefreshing:YES];
-            }];
-            [self.navigationController pushViewController:messageViewController animated:YES];
 
-
+        if(self.personalMessageList == nil || [self.personalMessageList count] == 0){
+            return;
         }
+
+        WeakSelf(ws);
+        YYMessageUserChatModel *chatModel = [self.personalMessageList objectAtIndex:indexPath.row];
+        [YYConnApi checkConnBuyers:[chatModel.oppositeId stringValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, BOOL isConn, NSError *error) {
+            if(rspStatusAndMessage.status == YYReqStatusCode100){
+                if(isConn){
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Message" bundle:[NSBundle mainBundle]];
+                    YYMessageDetailViewController *messageViewController = [storyboard instantiateViewControllerWithIdentifier:@"YYMessageDetailViewController"];
+                    messageViewController.userEmail = chatModel.oppositeEmail;
+                    messageViewController.userlogo = chatModel.oppositeURL;
+                    messageViewController.userId = chatModel.oppositeId;
+                    messageViewController.buyerName = chatModel.oppositeName;
+                    YYMessageUserChatModel *blockchatModel = chatModel;
+                    [messageViewController setCancelButtonClicked:^(void){
+                        [ws.navigationController popViewControllerAnimated:YES];
+                        [YYMessageDetailViewController markAsRead];
+                        blockchatModel.unreadCount = [NSNumber numberWithInteger:0];
+                        [ws loadListFromServerByPageIndex:1 endRefreshing:YES];
+                    }];
+                    [self.navigationController pushViewController:messageViewController animated:YES];
+                }else{
+                    [YYToast showToastWithTitle:NSLocalizedString(@"请邀请买手店合作进行沟通", @"") andDuration:kAlertToastDuration];
+                }
+            }else{
+                [YYToast showToastWithView:ws.view title:rspStatusAndMessage.message andDuration:kAlertToastDuration];
+            }
+        }];
+
+    }
 }
 
 //// 指定哪一行可以编辑 哪行不能编辑
@@ -406,7 +419,7 @@
                 YYMessageUserChatModel *chatModel = [ws.personalMessageList objectAtIndex:indexPath.row];
                 __block NSInteger row = indexPath.row;
                 [YYMessageApi deleteMessageUserChat:chatModel.oppositeEmail andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                    if(rspStatusAndMessage.status == kCode100){
+                    if(rspStatusAndMessage.status == YYReqStatusCode100){
                         [ws.personalMessageList removeObjectAtIndex:row];  //删除数组里的数据
                         [ws.tableView reloadData];
                         //[weakself.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -467,7 +480,7 @@
 
         __block BOOL blockEndrefreshing = endrefreshing;
         [YYMessageApi getUserChatListPageIndex:pageIndex pageSize:kMaxPageSize andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYMessageUserChatListModel *chatListModel, NSError *error) {
-            if (rspStatusAndMessage.status == kCode100) {
+            if (rspStatusAndMessage.status == YYReqStatusCode100) {
                 if (pageIndex == 1) {
                     [ws.personalMessageList removeAllObjects];
                 }

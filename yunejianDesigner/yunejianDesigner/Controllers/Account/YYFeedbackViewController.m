@@ -87,7 +87,7 @@
     _saveBtn.layer.cornerRadius = 2.5;
     _saveBtn.layer.masksToBounds = YES;
 
-    _whiteViewHeightLayout.constant = kTabbarHeight;
+    _whiteViewHeightLayout.constant = kTabbarAndBottomSafeAreaHeight;
     
 }
 #pragma mark - SomeAction
@@ -107,7 +107,7 @@
     }
     
     [YYUserApi userFeedBack:feedbackString andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100) {
+        if (rspStatusAndMessage.status == YYReqStatusCode100) {
             [YYToast showToastWithTitle:NSLocalizedString(@"反馈成功!",nil) andDuration:kAlertToastDuration];
             if (_modifySuccess) {
                 _modifySuccess();

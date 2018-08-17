@@ -370,7 +370,7 @@
         }else
         {
             if(_oprateBtn){
-                if([_infoModel.connectStatus integerValue] == kConnStatus){
+                if([_infoModel.connectStatus integerValue] == YYUserConnStatusNone){
                     
                     [_oprateBtn setBackgroundColor:[UIColor colorWithHex:@"FFFFFF"]];
                     [_oprateBtn setTitleColor:[UIColor colorWithHex:@"000000"] forState:UIControlStateNormal];
@@ -383,7 +383,7 @@
                         make.width.mas_equalTo(20);
                     }];
                     
-                }else if([_infoModel.connectStatus integerValue] == kConnStatus0 || [_infoModel.connectStatus integerValue] == kConnStatus2){
+                }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusInvite || [_infoModel.connectStatus integerValue] == YYUserConnStatusBeInvited){
                     
                     [_oprateBtn setBackgroundColor:[UIColor colorWithHex:@"FFFFFF"]];
                     [_oprateBtn setTitleColor:[UIColor colorWithHex:@"58c776"] forState:UIControlStateNormal];
@@ -396,7 +396,7 @@
                         make.width.mas_equalTo(20);
                     }];
                     
-                }else if([_infoModel.connectStatus integerValue] == kConnStatus1){
+                }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusConnected){
                     
                     [_oprateBtn setBackgroundColor:[UIColor colorWithHex:@"58c776"]];
                     [_oprateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -455,7 +455,7 @@
     }else
     {
         if(_oprateBtn){
-            if([_infoModel.connectStatus integerValue] == kConnStatus){
+            if([_infoModel.connectStatus integerValue] == YYUserConnStatusNone){
                 
                 [_oprateBtn setBackgroundColor:[UIColor colorWithHex:@"FFFFFF"]];
                 [_oprateBtn setTitleColor:[UIColor colorWithHex:@"000000"] forState:UIControlStateNormal];
@@ -468,7 +468,7 @@
                     make.width.mas_equalTo(20);
                 }];
                 
-            }else if([_infoModel.connectStatus integerValue] == kConnStatus0 || [_infoModel.connectStatus integerValue] == kConnStatus2){
+            }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusInvite || [_infoModel.connectStatus integerValue] == YYUserConnStatusBeInvited){
                 
                 [_oprateBtn setBackgroundColor:[UIColor colorWithHex:@"FFFFFF"]];
                 [_oprateBtn setTitleColor:[UIColor colorWithHex:@"58c776"] forState:UIControlStateNormal];
@@ -481,7 +481,7 @@
                     make.width.mas_equalTo(20);
                 }];
                 
-            }else if([_infoModel.connectStatus integerValue] == kConnStatus1){
+            }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusConnected){
                 
                 [_oprateBtn setBackgroundColor:[UIColor colorWithHex:@"58c776"]];
                 [_oprateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

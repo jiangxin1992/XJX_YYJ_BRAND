@@ -48,7 +48,7 @@
     _keyLabel.text = titleStr;
 //    _valueLabel.text = _userInfo.brandName;
 //    //_userInfo.status = @"305";
-    if([_userInfo.status integerValue] == kCode305 || [_userInfo.status integerValue] == kCode301){
+    if([_userInfo.status integerValue] == YYReqStatusCode305 || [_userInfo.status integerValue] == YYReqStatusCode301){
         _modifyButton.alpha = 1;
     }else{
         _modifyButton.alpha = 2;
@@ -56,7 +56,7 @@
     [_keyLabel setAdjustsFontSizeToFitWidth:YES];
     [_tipLabel setAdjustsFontSizeToFitWidth:YES];
 
-    if([_userInfo.status integerValue] == kCode305){
+    if([_userInfo.status integerValue] == YYReqStatusCode305){
         //_keyLabel.text = tipStr;
         NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString: tipStr];
         NSRange range = [tipStr rangeOfString:@"30"];
@@ -65,10 +65,10 @@
         }
         _keyLabel.attributedText = attributedStr;
         _tipLabel.text = NSLocalizedString(@"未验证的品牌账号将被锁定",nil);
-    }else if([_userInfo.status integerValue] == kCode300){
+    }else if([_userInfo.status integerValue] == YYReqStatusCode300){
         _keyLabel.text = btnWaitingStr;
         _tipLabel.text = NSLocalizedString(@"未通过验证的品牌账号将被锁定",nil);
-    }else if([_userInfo.status integerValue] == kCode301){
+    }else if([_userInfo.status integerValue] == YYReqStatusCode301){
         _keyLabel.text = rufuseTipStr;
         _tipLabel.text = NSLocalizedString(@"未通过验证的品牌账号将被锁定",nil);
     }

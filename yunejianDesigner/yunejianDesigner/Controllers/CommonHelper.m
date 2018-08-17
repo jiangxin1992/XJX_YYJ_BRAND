@@ -299,10 +299,6 @@ UIView *addNoDataView_phone(UIView *superView,NSString *title,NSString *titleCol
             NSArray *iconArr = [iconInfo componentsSeparatedByString:@":"];
             NSString *type = [iconArr objectAtIndex:0];
             if([type isEqualToString:@"icon"]){
-                //                NSString *imageName =  @"nodata_icon";
-                //                if([iconArr count] == 2){
-                //                    imageName = [iconArr objectAtIndex:1];
-                //                }
                 NSString *imageName = nil;
                 if(img)
                 {
@@ -656,22 +652,6 @@ NSString *getOrderSearchNoteStorePath(){
     return docPath;
 }
 
-//历史库存存放路径
-NSString *getInventorySearchNoteStorePath(){
-    NSArray *filePaths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docPath = [filePaths objectAtIndex: 0];
-    docPath = [docPath stringByAppendingPathComponent:@"inventoryrsearchnote.txt"];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:docPath]) {
-        //[fileManager createDirectoryAtPath:docPath withIntermediateDirectories:YES attributes:nil error:nil];
-        //[fileManager removeItemAtPath:docPath error:nil];
-    }
-    //防止icloud备份
-    addSkipBackupAttributeToItemAtURL([NSURL fileURLWithPath:docPath]);
-    return docPath;
-}
-
 //创建订单的分享码
 NSString *createOrderSharecode(){
     long long recordTime = [[NSDate date] timeIntervalSince1970]*1000;
@@ -718,7 +698,7 @@ NSString *createOrderSharecode(){
     return returnValue;
 }
 
-//买家地址格式
+//买手地址格式
 NSString *getBuyerAddressStr_phone(YYOrderBuyerAddress *buyerAddress){
     //    [NSString isNilOrEmpty:buyerAddress.town]?@"":buyerAddress.town
     NSString *nationStr = [LanguageManager isEnglishLanguage]?buyerAddress.nationEn:buyerAddress.nation;
@@ -1035,43 +1015,37 @@ NSString *getHTMLStringWithContent_pad(NSString *content,NSString *font,NSString
 
 //订单关联状态名称
 NSString *getOrderConnStatusName_brand(NSInteger status, BOOL needFlag){
-    if(status == kOrderStatus){
-        return (needFlag?[NSString stringWithFormat:@"【%@】",NSLocalizedString(@"未入驻",nil)]:NSLocalizedString(@"未入驻",nil));
-    }else if(status == kOrderStatus1){
+    if(status == YYOrderConnStatusLinked){
         return (needFlag?[NSString stringWithFormat:@"【%@】",NSLocalizedString(@"关联成功",nil)]:NSLocalizedString(@"关联成功",nil));
-    }else if(status == kOrderStatus2){
+    }else if(status == YYOrderConnStatusRefused){
         return (needFlag?[NSString stringWithFormat:@"【%@】",NSLocalizedString(@"关联失败",nil)]:NSLocalizedString(@"关联失败",nil));
-    }else if(status == kOrderStatus3){
+    }else if(status == YYOrderConnStatusNotFound){
         return (needFlag?[NSString stringWithFormat:@"【%@】",NSLocalizedString(@"未入驻",nil)]:NSLocalizedString(@"未入驻",nil));
-    }else if(status == kOrderStatus0){
+    }else if(status == YYOrderConnStatusUnconfirmed){
         return (needFlag?[NSString stringWithFormat:@"【%@】",NSLocalizedString(@"关联中",nil)]:NSLocalizedString(@"关联中",nil));
     }
     return @"";
 }
 NSString *getOrderConnStatusName_buyer(NSInteger status){
-    if(status == kOrderStatus){
-        return [NSString stringWithFormat:@"【%@】",NSLocalizedString(@"未入驻",nil)];
-    }else if(status == kOrderStatus1){
+    if(status == YYOrderConnStatusLinked){
         return [NSString stringWithFormat:@"【%@】",NSLocalizedString(@"关联成功",nil)];
-    }else if(status == kOrderStatus2){
+    }else if(status == YYOrderConnStatusRefused){
         return [NSString stringWithFormat:@"【%@】",NSLocalizedString(@"关联失败",nil)];
-    }else if(status == kOrderStatus3){
+    }else if(status == YYOrderConnStatusNotFound){
         return [NSString stringWithFormat:@"【%@】",NSLocalizedString(@"未入驻",nil)];
-    }else if(status == kOrderStatus0){
+    }else if(status == YYOrderConnStatusUnconfirmed){
         return [NSString stringWithFormat:@"【%@】",NSLocalizedString(@"关联中",nil)];
     }
     return @"";
 }
 NSString *getOrderConnStatusName_pad(NSInteger status){
-    if(status == kOrderStatus){
-        return NSLocalizedString(@"【未入驻】",nil);
-    }else if(status == kOrderStatus1){
+    if(status == YYOrderConnStatusLinked){
         return NSLocalizedString(@"【关联成功】",nil);
-    }else if(status == kOrderStatus2){
+    }else if(status == YYOrderConnStatusRefused){
         return NSLocalizedString(@"【关联失败】",nil);
-    }else if(status == kOrderStatus3){
+    }else if(status == YYOrderConnStatusNotFound){
         return NSLocalizedString(@"【未入驻】",nil);
-    }else if(status == kOrderStatus0){
+    }else if(status == YYOrderConnStatusUnconfirmed){
         return NSLocalizedString(@"【关联中】",nil);
     }
     return @"";
@@ -1080,8 +1054,8 @@ NSInteger getOrderTransStatus(NSNumber *designerTransStatus,NSNumber *buyerTrans
 
     //已确认？
     BOOL isConfirmed = NO;
-    if([designerTransStatus integerValue] == kOrderCode_NEGOTIATION_DONE || [designerTransStatus integerValue] == kOrderCode_CONTRACT_DONE){
-        if([buyerTransStatus integerValue] == kOrderCode_NEGOTIATION_DONE || [buyerTransStatus integerValue] == kOrderCode_CONTRACT_DONE){
+    if([designerTransStatus integerValue] == YYOrderCode_NEGOTIATION_DONE || [designerTransStatus integerValue] == YYOrderCode_CONTRACT_DONE){
+        if([buyerTransStatus integerValue] == YYOrderCode_NEGOTIATION_DONE || [buyerTransStatus integerValue] == YYOrderCode_CONTRACT_DONE){
             isConfirmed = YES;
         }
     }
@@ -1089,17 +1063,17 @@ NSInteger getOrderTransStatus(NSNumber *designerTransStatus,NSNumber *buyerTrans
     //已下单？
     BOOL isNegotiation = NO;
     if(!isConfirmed){
-        if([designerTransStatus integerValue] == kOrderCode_NEGOTIATION || [buyerTransStatus integerValue] == kOrderCode_NEGOTIATION){
+        if([designerTransStatus integerValue] == YYOrderCode_NEGOTIATION || [buyerTransStatus integerValue] == YYOrderCode_NEGOTIATION){
             isNegotiation = YES;
         }
     }
 
     NSInteger transStatus = 0;
     if(isConfirmed){
-        transStatus = kOrderCode_NEGOTIATION_DONE;
+        transStatus = YYOrderCode_NEGOTIATION_DONE;
     }else{
         if(isNegotiation){
-            transStatus = kOrderCode_NEGOTIATION;
+            transStatus = YYOrderCode_NEGOTIATION;
         }else{
             if(KUserIsBrand){
                 transStatus = [designerTransStatus integerValue];
@@ -1111,79 +1085,106 @@ NSInteger getOrderTransStatus(NSNumber *designerTransStatus,NSNumber *buyerTrans
     return transStatus;
 }
 //订单状态名称
-NSString *getOrderStatusName_detail(NSInteger transStatus,BOOL needNum){
+NSString *getOrderStatusName_detail(NSInteger transStatus,BOOL needNum,BOOL stockEnabled){
 
-    if(transStatus == kOrderCode_NEGOTIATION){
+    if(transStatus == YYOrderCode_NEGOTIATION){
         //已下单
         return  (needNum?[NSString stringWithFormat:@"① %@",NSLocalizedString(@"已下单",nil)]:NSLocalizedString(@"已下单",nil));
-    }else if(transStatus == kOrderCode_NEGOTIATION_DONE || transStatus == kOrderCode_CONTRACT_DONE){
+    }else if(transStatus == YYOrderCode_NEGOTIATION_DONE || transStatus == YYOrderCode_CONTRACT_DONE){
         //已确认
         return  (needNum?[NSString stringWithFormat:@"② %@",NSLocalizedString(@"已确认",nil)]:NSLocalizedString(@"已确认",nil));
-    }else if(transStatus == kOrderCode_MANUFACTURE){
+    }else if(transStatus == YYOrderCode_MANUFACTURE){
         //已生产
         return (needNum?[NSString stringWithFormat:@"③ %@",NSLocalizedString(@"已生产",nil)]:NSLocalizedString(@"已生产",nil));
-    }else if(transStatus == kOrderCode_DELIVERY){
-        //已发货
-        return (needNum?[NSString stringWithFormat:@"④ %@",NSLocalizedString(@"已发货",nil)]:NSLocalizedString(@"已发货",nil));
-    }else if(transStatus == kOrderCode_RECEIVED){
-        //已收货
-        return (needNum?[NSString stringWithFormat:@"⑤ %@",NSLocalizedString(@"已收货",nil)]:NSLocalizedString(@"已收货",nil));
-    }else if(transStatus == kOrderCode_CANCELLED || transStatus == kOrderCode_CLOSED){
+    }else if(transStatus == YYOrderCode_DELIVERING){
+        //发货中
+        return (needNum?[NSString stringWithFormat:@"④ %@",NSLocalizedString(@"发货中",nil)]:NSLocalizedString(@"发货中",nil));
+    }else if(transStatus == YYOrderCode_CANCELLED || transStatus == YYOrderCode_CLOSED){
         //已取消
         return NSLocalizedString(@"已取消",nil);
-    }else if(transStatus == kOrderCode_CLOSE_REQ){
+    }else if(transStatus == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return NSLocalizedString(@"交易取消处理中",nil);
+    }else{
+        if(stockEnabled){
+            if(transStatus == YYOrderCode_DELIVERY){
+                //已发货
+                return (needNum?[NSString stringWithFormat:@"⑤ %@",NSLocalizedString(@"已发货",nil)]:NSLocalizedString(@"已发货",nil));
+            }else if(transStatus == YYOrderCode_RECEIVED){
+                //已收货
+                return (needNum?[NSString stringWithFormat:@"⑥ %@",NSLocalizedString(@"已收货",nil)]:NSLocalizedString(@"已收货",nil));
+            }
+        }else{
+            if(transStatus == YYOrderCode_DELIVERY){
+                //已发货
+                return (needNum?[NSString stringWithFormat:@"④ %@",NSLocalizedString(@"已发货",nil)]:NSLocalizedString(@"已发货",nil));
+            }else if(transStatus == YYOrderCode_RECEIVED){
+                //已收货
+                return (needNum?[NSString stringWithFormat:@"⑤ %@",NSLocalizedString(@"已收货",nil)]:NSLocalizedString(@"已收货",nil));
+            }
+        }
     }
     return  @"";
 }
 //订单状态名称
 NSString *getOrderStatusName_short(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
         return NSLocalizedString(@"已下单",nil);
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
         return NSLocalizedString(@"已确认",nil);
-    }else if(status == kOrderCode_MANUFACTURE){
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
         return NSLocalizedString(@"已生产",nil);
-    }else if(status == kOrderCode_DELIVERY){
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        return NSLocalizedString(@"发货中",nil);
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
         return NSLocalizedString(@"已发货",nil);
-    }else if(status == kOrderCode_RECEIVED){
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
         return NSLocalizedString(@"已收货",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
         return NSLocalizedString(@"已取消",nil);
-    }else if(status == kOrderCode_CLOSE_REQ){
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return NSLocalizedString(@"交易取消处理中",nil);
     }
     return  @"";
 }
 //订单状态按钮名称
-NSString *getOrderStatusBtnName_brand(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
+NSString *getOrderStatusBtnName(NSInteger status,NSInteger connectStatus){
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
         return NSLocalizedString(@"已下单",nil);
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
         return NSLocalizedString(@"已确认",nil);
-    }else if(status == kOrderCode_MANUFACTURE){
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
-        return NSLocalizedString(@"已生产",nil);
-    }else if(status == kOrderCode_DELIVERY){
+        return NSLocalizedString(@"安排生产",nil);
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        return NSLocalizedString(@"继续发货",nil);
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
-        return NSLocalizedString(@"已发货",nil);
-    }else if(status == kOrderCode_RECEIVED){
+        return NSLocalizedString(@"完成发货",nil);
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
-        return NSLocalizedString(@"等待对方收货",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+        if(connectStatus == YYOrderConnStatusNotFound){
+            //未入驻
+            return NSLocalizedString(@"确认签收",nil);
+        }else{
+            //已入驻
+            return NSLocalizedString(@"等待对方收货",nil);
+        }
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
         return NSLocalizedString(@"重新建立订单",nil);
-    }else if(status == kOrderCode_CLOSE_REQ){
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return NSLocalizedString(@"处理请求",nil);
     }
@@ -1191,75 +1192,56 @@ NSString *getOrderStatusBtnName_brand(NSInteger status){
 }
 //订单状态按钮名称
 NSString *getOrderStatusBtnName_buyer(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
         return NSLocalizedString(@"已下单",nil);
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
         return NSLocalizedString(@"已确认",nil);
-    }else if(status == kOrderCode_MANUFACTURE){
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
         return NSLocalizedString(@"安排生产",nil);
-    }else if(status == kOrderCode_DELIVERY){
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        return NSLocalizedString(@"继续发货",nil);
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
         return NSLocalizedString(@"发货",nil);
-    }else if(status == kOrderCode_RECEIVED){
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
         return NSLocalizedString(@"确认收货",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
         return NSLocalizedString(@"重新建立订单",nil);
-    }else if(status == kOrderCode_CLOSE_REQ){
-        //关闭请求
-        return NSLocalizedString(@"处理请求",nil);
-    }
-    return  @"";
-}
-NSString *getOrderStatusBtnName_pad(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
-        //已下单
-        return NSLocalizedString(@"已下单",nil);
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
-        //已确认
-        return NSLocalizedString(@"已确认",nil);
-    }else if(status == kOrderCode_MANUFACTURE){
-        //已生产
-        return NSLocalizedString(@"安排生产",nil);
-    }else if(status == kOrderCode_DELIVERY){
-        //已发货
-        return NSLocalizedString(@"发货",nil);
-    }else if(status == kOrderCode_RECEIVED){
-        //已收货
-        return NSLocalizedString(@"确认收货",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
-        //已取消
-        return NSLocalizedString(@"重新建立订单",nil);
-    }else if(status == kOrderCode_CLOSE_REQ){
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return NSLocalizedString(@"处理请求",nil);
     }
     return  @"";
 }
 NSString *getOrderStatusAlertTip(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
         return  @"";
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
         return @"";
-    }else if(status == kOrderCode_MANUFACTURE){
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
         return NSLocalizedString(@"确认订单已经安排生产了吗？",nil);
-    }else if(status == kOrderCode_DELIVERY){
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        return @"";
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
         return NSLocalizedString(@"确认订单已经发货了吗？",nil);
-    }else if(status == kOrderCode_RECEIVED){
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
         return NSLocalizedString(@"等待对方收货",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
         return NSLocalizedString(@"重新建立订单",nil);
-    }else if(status == kOrderCode_CLOSE_REQ){
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return NSLocalizedString(@"处理请求",nil);
     }
@@ -1268,50 +1250,56 @@ NSString *getOrderStatusAlertTip(NSInteger status){
 
 //订单状态按钮提示
 NSString *getOrderStatusDesignerTip_phone(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
         return  NSLocalizedString(@"需要双方同时确认；订单确认后不能被修改",nil);
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
         return  NSLocalizedString(@"等待设计师生产",nil);
-    }else if(status == kOrderCode_MANUFACTURE){
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
         return NSLocalizedString(@"等待设计师发货",nil);
-    }else if(status == kOrderCode_DELIVERY){
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        return NSLocalizedString(@"包裹已发货，请注意签收",nil);
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
-        return NSLocalizedString(@"剩余%@将自动确认收货",nil);
-    }else if(status == kOrderCode_RECEIVED){
+        return NSLocalizedString(@"请等待买手确认收货，收货后交易完成",nil);
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
         return NSLocalizedString(@"订单已完成",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
         return NSLocalizedString(@"订单被取消，不能修改订单",nil);
-    }else if(status == kOrderCode_CLOSE_REQ){
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return @"";
     }
     return  @"";
 }
 NSString *getOrderStatusDesignerTip_pad(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
         return  NSLocalizedString(@"需要双方同时确认；订单确认后不能被修改",nil);
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
         return  NSLocalizedString(@"确认后的订单可以安排生产，若生产完毕请点击已生产",nil);
-    }else if(status == kOrderCode_MANUFACTURE){
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
-        return NSLocalizedString(@"若该订单已发货完毕，请点击已发货",nil);
-    }else if(status == kOrderCode_DELIVERY){
+        return NSLocalizedString(@"若订单已生产完毕，请点击发货按钮",nil);
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        return NSLocalizedString(@"请继续发货，直到对方收到全部商品",nil);
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
-        return NSLocalizedString(@"剩余%@将自动确认收货",nil);
-    }else if(status == kOrderCode_RECEIVED){
+        return NSLocalizedString(@"请等待买手确认收货，收货后交易完成",nil);
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
         return NSLocalizedString(@"等待对方确认收货",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
         return @"";
-    }else if(status == kOrderCode_CLOSE_REQ){
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return NSLocalizedString(@"交易取消处理中",nil);
     }
@@ -1319,25 +1307,28 @@ NSString *getOrderStatusDesignerTip_pad(NSInteger status){
 }
 //订单状态按钮提示
 NSString *getOrderStatusBuyerTip(NSInteger status){
-    if(status == kOrderCode_NEGOTIATION){
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
         return  NSLocalizedString(@"需要双方同时确认；订单确认后不能被修改",nil);
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
         return  NSLocalizedString(@"等待设计师生产",nil);
-    }else if(status == kOrderCode_MANUFACTURE){
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
         return NSLocalizedString(@"等待设计师发货",nil);
-    }else if(status == kOrderCode_DELIVERY){
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        return NSLocalizedString(@"入库请于web端操作；待品牌发货完成后即可确认收货",nil);
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
-        return NSLocalizedString(@"剩余%@将自动确认收货",nil);
-    }else if(status == kOrderCode_RECEIVED){
+        return NSLocalizedString(@"商品已发货完毕，请确认收货",nil);
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
         return NSLocalizedString(@"订单已完成",nil);
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
         return NSLocalizedString(@"订单被取消，不能修改订单",nil);
-    }else if(status == kOrderCode_CLOSE_REQ){
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
         return @"";
     }
@@ -1346,29 +1337,38 @@ NSString *getOrderStatusBuyerTip(NSInteger status){
 
 
 //订单状态按钮名称
-NSInteger getOrderNextStatus(NSInteger status){
-    NSInteger nextStatus = kOrderCode_NEGOTIATION;
-    if(status == kOrderCode_NEGOTIATION){
+NSInteger getOrderNextStatus(NSInteger status,NSInteger connectStatus){
+    NSInteger nextStatus = YYOrderCode_NEGOTIATION;
+    if(status == YYOrderCode_NEGOTIATION){
         //已下单
-        nextStatus = kOrderCode_NEGOTIATION_DONE;//已确认
-    }else if(status == kOrderCode_NEGOTIATION_DONE || status == kOrderCode_CONTRACT_DONE){
+        nextStatus = YYOrderCode_NEGOTIATION_DONE;//已确认
+    }else if(status == YYOrderCode_NEGOTIATION_DONE || status == YYOrderCode_CONTRACT_DONE){
         //已确认
-        nextStatus = kOrderCode_MANUFACTURE;//已生产
-    }else if(status == kOrderCode_MANUFACTURE){
+        nextStatus = YYOrderCode_MANUFACTURE;//已生产
+    }else if(status == YYOrderCode_MANUFACTURE){
         //已生产
-        nextStatus = kOrderCode_DELIVERY;//已发货
-    }else if(status == kOrderCode_DELIVERY){
+        if(connectStatus == YYOrderConnStatusLinked){
+            //已入驻
+            nextStatus = YYOrderCode_DELIVERING;//发货中
+        }else{
+            //未入驻
+            nextStatus = YYOrderCode_DELIVERY;//已发货
+            }
+    }else if(status == YYOrderCode_DELIVERING){
+        //发货中
+        nextStatus = YYOrderCode_DELIVERY;//已发货
+    }else if(status == YYOrderCode_DELIVERY){
         //已发货
-        nextStatus = kOrderCode_RECEIVED;//已收货
-    }else if(status == kOrderCode_RECEIVED){
+        nextStatus = YYOrderCode_RECEIVED;//已收货
+    }else if(status == YYOrderCode_RECEIVED){
         //已收货
-        nextStatus = kOrderCode_RECEIVED;//已收货
-    }else if(status == kOrderCode_CANCELLED || status == kOrderCode_CLOSED){
+        nextStatus = YYOrderCode_RECEIVED;//已收货
+    }else if(status == YYOrderCode_CANCELLED || status == YYOrderCode_CLOSED){
         //已取消
-        nextStatus = kOrderCode_CANCELLED;//已取消
-    }else if(status == kOrderCode_CLOSE_REQ){
+        nextStatus = YYOrderCode_CANCELLED;//已取消
+    }else if(status == YYOrderCode_CLOSE_REQ){
         //关闭请求
-        nextStatus = kOrderCode_CLOSE_REQ;//关闭请求
+        nextStatus = YYOrderCode_CLOSE_REQ;//关闭请求
     }
     return nextStatus;
 }
@@ -1844,9 +1844,9 @@ BOOL needPayTaxView(NSInteger moneyType){
 //加税显示数据 已废弃
 NSArray *getPayTaxData(BOOL isTxt){
     if(isTxt){
-        return @[NSLocalizedString(@"不加税",nil),NSLocalizedString(@"17%税",nil)];//,@"6%税"
+        return @[NSLocalizedString(@"不加税",nil),NSLocalizedString(@"16%税",nil)];//,@"6%税"
     }
-    return @[@(0),@(0.17)];//,@(0.06)
+    return @[@(0),@(0.16)];//,@(0.06)
 }
 
 NSString *getPayTaxType(NSInteger type,BOOL isTxt){
@@ -1878,7 +1878,7 @@ NSString *getPayTaxType(NSInteger type,BOOL isTxt){
 
 
 /**
- * 获取税率初始化数据 不加税/17%税/自定义税率
+ * 获取税率初始化数据 不加税/16%税/自定义税率
  */
 NSMutableArray *getPayTaxInitData(){
 
@@ -1886,9 +1886,9 @@ NSMutableArray *getPayTaxInitData(){
     for (int i = 0; i < 3; i++) {
         NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
         NSNumber *tax_type = i == 0 ? @(1) : i == 1 ? @(2) : @(3);
-        NSString *tax_title = i == 0 ? NSLocalizedString(@"不加税",nil) : i == 1 ? NSLocalizedString(@"17%税",nil) : NSLocalizedString(@"自定义税率",nil);
+        NSString *tax_title = i == 0 ? NSLocalizedString(@"不加税",nil) : i == 1 ? NSLocalizedString(@"16%税",nil) : NSLocalizedString(@"自定义税率",nil);
 
-        NSNumber *tax_value = i == 0 ? @(0) : i == 1 ? @(0.17) : @(0);
+        NSNumber *tax_value = i == 0 ? @(0) : i == 1 ? @(0.16) : @(0);
         [tempDict setObject:tax_type forKey:@"tax_type"];
         [tempDict setObject:tax_title forKey:@"tax_title"];
         [tempDict setObject:tax_value forKey:@"tax_value"];
@@ -1908,7 +1908,7 @@ void updateCustomTaxValue(NSMutableArray *taxData,NSNumber *value,BOOL shouldCle
             NSInteger valueNum = [value floatValue]*100;
             if(value){
                 if(shouldClear){
-                    if(valueNum == 17 || valueNum == 0){
+                    if(valueNum == 16 || valueNum == 0){
                         [taxData removeAllObjects];
                         [taxData addObjectsFromArray:getPayTaxInitData()];
                     }else{
@@ -1931,7 +1931,7 @@ void updateCustomTaxValue(NSMutableArray *taxData,NSNumber *value,BOOL shouldCle
 }
 /**
  * 获取对应的描述
- *   %17 VAT | 1 ------> 17%税
+ *   %16 VAT | 1 ------> 16%税
  *  Tax Free | 0 ------> Tax
  *   taxData | 2 ------> 0.22
  */
@@ -1956,7 +1956,7 @@ NSString *getPayTaxValue(NSMutableArray *taxData,NSInteger type,BOOL isTxt){
 /**
  * 获取对应税率整数形式
  *   taxData | 0 ------> 0
- *   taxData | 1 ------> 17
+ *   taxData | 1 ------> 16
  *   taxData | 2 ------> 22
  */
 NSInteger getPayTaxTypeToServiceNew(NSMutableArray *taxData,NSInteger value){
@@ -1966,7 +1966,7 @@ NSInteger getPayTaxTypeToServiceNew(NSMutableArray *taxData,NSInteger value){
 /**
  * 获取整数形式税率对应的index
  *   taxData | 0 ------> 0
- *   taxData | 17 ------> 1
+ *   taxData | 16 ------> 1
  *   taxData | 30 ------> 2
  */
 NSInteger getPayTaxTypeFormServiceNew(NSMutableArray *taxData,NSInteger value){

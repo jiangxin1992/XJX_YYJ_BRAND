@@ -9,9 +9,8 @@
 #import <Foundation/Foundation.h>
 
 #import "YYRspStatusAndMessage.h"
-#import "YYUserModel.h"
 
-@class YYShowroomBrandListModel,YYShowroomHomePageModel,YYShowroomInfoByDesignerModel,YYShowroomOrderingListModel,YYShowroomOrderingCheckListModel;
+@class YYShowroomBrandListModel,YYShowroomHomePageModel,YYShowroomInfoByDesignerModel,YYShowroomOrderingListModel,YYShowroomOrderingCheckListModel,YYUserModel;
 
 @interface YYShowroomApi : NSObject
 

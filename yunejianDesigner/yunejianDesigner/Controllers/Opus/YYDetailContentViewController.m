@@ -76,7 +76,7 @@
     WeakSelf(ws);
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [YYOpusApi getStyleInfoByStyleId:[_currentOpusStyleModel.id longValue] orderCode:nil andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYStyleInfoModel *styleInfoModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100) {
+        if (rspStatusAndMessage.status == YYReqStatusCode100) {
             ws.styleInfoModel = styleInfoModel;
             [self updateUI];
 
@@ -119,7 +119,7 @@
 }
 #pragma mark - SomeAction
 - (IBAction)addShoppingCarAction:(id)sender {
-    if(_opusSeriesModel == nil || [_opusSeriesModel.status integerValue] == kOpusDraft){
+    if(_opusSeriesModel == nil || [_opusSeriesModel.status integerValue] == YYOpusCheckAuthDraft){
         if(_isToScan){
             [YYToast showToastWithView:self.view title:NSLocalizedString(@"该款式为草稿不能加入购物车",nil) andDuration:kAlertToastDuration];
         }else{

@@ -162,14 +162,14 @@
 }
 -(void)CreateTableView
 {
-    _tableView=[[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     
     [self addSubview:_tableView];
     //    消除分割线
-    _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    _tableView.delegate=self;
-    _tableView.dataSource=self;
-    _tableView.backgroundColor=[UIColor colorWithHex:@"F8F8F8"];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor colorWithHex:@"F8F8F8"];
     _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     _tableView.sectionIndexColor = [UIColor colorWithHex:@"D3D3D3"];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {

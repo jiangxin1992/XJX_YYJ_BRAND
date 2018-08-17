@@ -76,6 +76,7 @@
 
 #import "YYUser.h"
 #import "YYUserModel.h"
+#import "YYMessageUnreadModel.h"
 #import "YYSubShowroomUserPowerModel.h"
 #import "YYOrderInfoModel.h"
 #import "YYStyleInfoModel.h"
@@ -83,7 +84,7 @@
 #import "YYOrderStyleModel.h"
 #import "YYOrderSeriesModel.h"
 #import "YYOpusStyleModel.h"
-#import "YYInventoryBoardModel.h"
+#import "YYStyleOneColorModel.h"
 #import "YYBrandSeriesToCartTempModel.h"
 
 #import "YYUpdateAppStore.h"
@@ -325,14 +326,14 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
 
     [YYUserApi loginWithUsername:email password:md5(password) verificationCode:verificationCode andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYUserModel *userModel, NSError *error) {
         ws.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] ;
-        if (rspStatusAndMessage.status == kCode100 || rspStatusAndMessage.status == kCode1000){
+        if (rspStatusAndMessage.status == YYReqStatusCode100 || rspStatusAndMessage.status == YYReqStatusCode1000){
 
             YYUser *user = [YYUser currentUser];
             [user saveUserWithEmail:email username:userModel.name password:password userType:[userModel.type intValue] userId:userModel.id logo:userModel.logo status:[userModel.authStatus stringValue] brandId:[[NSString alloc] initWithFormat:@"%ld",(long)[userModel.brandId integerValue]]];
 
             //进入首页
             [ws enterMainIndexPage];
-            if( [user.status integerValue] == kCode305){
+            if( [user.status integerValue] == YYReqStatusCode305){
                 NSString *expireDate = getShowDateByFormatAndTimeInterval(@"yyyy/MM/dd HH:mm",userModel.expireDate);
                 [[YYYellowPanelManage instance] showYellowUserCheckAlertPanel:@"Main" andIdentifier:@"YYUserCheckAlertViewController" title:expireDate msg:[NSString stringWithFormat:NSLocalizedString(@"请于 %@ 前完成品牌验证，|未验证的账号将被锁定",nil),expireDate] iconStr:userModel.logo  btnStr:NSLocalizedString(@"去验证",nil) align:NSTextAlignmentCenter closeBtn:YES funArray:nil andCallBack:^(NSArray *value) {
                     YYVerifyBrandViewController *viewController = [[YYVerifyBrandViewController alloc] init];
@@ -344,7 +345,7 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
             [LanguageManager setLanguageToServer];
 
             // 获取subshowroom的权限列表, 首先是判断showroom子账号
-            if (user.userType == kShowroomSubType) {
+            if (user.userType == YYUserTypeShowroomSub) {
                 [YYShowroomApi selectSubShowroomPowerUserId:[NSNumber numberWithInteger:[user.userId integerValue]] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSArray *powerArray, NSError *error) {
                     YYSubShowroomUserPowerModel *subShowroom = [YYSubShowroomUserPowerModel shareModel];
                     for (NSNumber *i in powerArray) {
@@ -406,11 +407,10 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
     }
     NSString *type = @"";
     [YYOrderApi getUnreadNotifyMsgAmount:type andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYMessageUnreadModel *messageUnreadModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100) {
+        if (rspStatusAndMessage.status == YYReqStatusCode100) {
             self.messageUnreadModel = messageUnreadModel;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:UnreadMsgAmountChangeNotification object:nil userInfo:nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:UnreadInventoryNotifyMsgAmount object:nil userInfo:nil];
             });
         }
     }];
@@ -464,7 +464,7 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
 //进入首页
 - (void)enterMainIndexPage{
     YYUser *user = [YYUser currentUser];
-    if(user.userType == 5||user.userType == 6)
+    if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub)
     {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         _mainViewController = [[UINavigationController alloc] initWithRootViewController:[[YYShowroomMainViewController alloc] init]];
@@ -556,8 +556,8 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
 -(void)showBuyerInfoViewController:(NSNumber *)buyerId WithBuyerName:(NSString *)buyerName parentViewController:(UIViewController *)viewController WithReqSuccessBlock:(void(^)())reqSuccessblock WithHomePageCancelBlock:(CancelButtonClicked )cancelblock WithModifySuccessBlock:(ModifySuccess )modifySuccessblock{
 
     [YYUserApi getUserStatus:[buyerId integerValue] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSInteger status, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
-            if(status != kUserStatusStop && status >-1){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
+            if(status != YYUserStatusStop && status >-1){
 
                 YYBuyerHomePageViewController *connInfoController = [[YYBuyerHomePageViewController alloc] init];
                 connInfoController.buyerId = [buyerId integerValue];
@@ -644,7 +644,7 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
     styleDetailViewController.totalPages = 1;
     [viewController.navigationController pushViewController:styleDetailViewController animated:YES];
 }
-- (void)showStyleInfoViewController:(YYInventoryBoardModel *)infoModel parentViewController:(UIViewController*)viewController IsShowroomToScan:(BOOL)isShowroomToScan{
+- (void)showStyleInfoViewController:(YYStyleOneColorModel *)infoModel parentViewController:(UIViewController*)viewController IsShowroomToScan:(BOOL)isShowroomToScan{
 
     //初始化或更新(brandName和brandLogo)购物车信息
     [self initOrUpdateShoppingCarInfo:infoModel.designerId];
@@ -811,9 +811,9 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
 - (void)showStyleDetailWithStyleId:(NSInteger)styleId parentViewController:(UIViewController*)viewController {
     [MBProgressHUD showHUDAddedTo:viewController.view animated:YES];
     [YYOpusApi getStyleInfoByStyleId:styleId orderCode:nil andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYStyleInfoModel *styleInfoModel, NSError *error) {
-        [MBProgressHUD hideHUDForView:viewController.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:viewController.view animated:YES];
         if (!error) {
-            if (rspStatusAndMessage.status == kCode100) {
+            if (rspStatusAndMessage.status == YYReqStatusCode100) {
                 YYOpusSeriesModel *seriesModel = [styleInfoModel transformToOpusSeriesModel];
                 YYOpusStyleModel *styleModel = [styleInfoModel transformToOpusStyleModel];
                 NSMutableArray * onlineOpusStyleArray = [NSMutableArray array];
@@ -858,7 +858,7 @@ static NSString * const isFirstOpenApp = @"isFirstOpenApp";
 
 - (void)reloadRootViewController:(NSInteger)index{
     YYUser *user = [YYUser currentUser];
-    if(user.userType == 5||user.userType == 6)
+    if(user.userType == YYUserTypeShowroom||user.userType == YYUserTypeShowroomSub)
     {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         _mainViewController = [[UINavigationController alloc] initWithRootViewController:[[YYShowroomMainViewController alloc] init]];

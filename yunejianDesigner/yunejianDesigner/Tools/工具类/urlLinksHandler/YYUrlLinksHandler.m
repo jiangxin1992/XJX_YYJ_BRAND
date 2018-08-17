@@ -33,6 +33,7 @@ demo ycobrand://linkt.ycosystem.com/ycobrand/detail/action?key1=value1&key2=valu
 #import "AppDelegate.h"
 #import "YYUser.h"
 #import "YYOrderApi.h"
+#import "YYOrderTransStatusModel.h"
 #import "YYOrderDetailViewController.h"
 @implementation YYUrlLinksHandler
 + (void)handleUserInfo:(NSString*)actionType query:(NSString *)query{
@@ -69,25 +70,21 @@ demo ycobrand://linkt.ycosystem.com/ycobrand/detail/action?key1=value1&key2=valu
     }
     __block NSString *orderCode = [queryInfo objectForKey:@"orderCode"];
     [YYOrderApi getOrderTransStatus:orderCode andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYOrderTransStatusModel *transStatusModel, NSError *error) {
-        NSInteger transStatus = getOrderTransStatus(transStatusModel.designerTransStatus, transStatusModel.buyerTransStatus);
-        if (transStatusModel == nil || transStatus == kOrderCode_DELETED) {
-            [YYToast showToastWithView:uiviewController.view title:NSLocalizedString(@"此订单已被删除",nil) andDuration:kAlertToastDuration];//“
-            return ;
-        }else{
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"OrderDetail" bundle:[NSBundle mainBundle]];
-            YYOrderDetailViewController *orderDetailViewController = [storyboard instantiateViewControllerWithIdentifier:@"YYOrderDetailViewController"];
-            orderDetailViewController.currentOrderCode = orderCode;
-            //orderDetailViewController.currentOrderLogo =  brandLogo;
-            orderDetailViewController.currentOrderConnStatus = kOrderStatusNUll;
-            [uiviewController.navigationController pushViewController:orderDetailViewController animated:YES];
+        if (rspStatusAndMessage.status == YYReqStatusCode100){
+            NSInteger transStatus = getOrderTransStatus(transStatusModel.designerTransStatus, transStatusModel.buyerTransStatus);
+            if (transStatusModel == nil || transStatus == YYOrderCode_DELETED) {
+                [YYToast showToastWithView:uiviewController.view title:NSLocalizedString(@"此订单已被删除",nil) andDuration:kAlertToastDuration];//“
+                return ;
+            }else{
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"OrderDetail" bundle:[NSBundle mainBundle]];
+                YYOrderDetailViewController *orderDetailViewController = [storyboard instantiateViewControllerWithIdentifier:@"YYOrderDetailViewController"];
+                orderDetailViewController.currentOrderCode = orderCode;
+                orderDetailViewController.currentOrderConnStatus = YYOrderConnStatusUnknow;
+                [uiviewController.navigationController pushViewController:orderDetailViewController animated:YES];
+            }
         }
     }];
 }
-
-//+(void)showInventoryView{
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kShowInventoryNotification object:nil];
-//}
-
 
 +(NSDictionary *)tranDataToNSDictionary:(NSString *)query{
     NSArray *queryInfo = [query componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"?&="]];

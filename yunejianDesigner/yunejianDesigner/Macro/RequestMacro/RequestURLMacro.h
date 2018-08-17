@@ -65,9 +65,11 @@ UIKIT_EXTERN NSString * const kUserStatus;
 
 
 #pragma mark - 用户相关
+/** 获取买手基础信息 */
+UIKIT_EXTERN NSString * const kGetBuyerInfo;
 /** 更改头像 logo */
 UIKIT_EXTERN NSString * const kModifyLogoInfo;
-/** 修改买家用户名或电话 */
+/** 修改买手用户名或电话 */
 UIKIT_EXTERN NSString * const kUpdateBuyerUsernameOrPhone;
 /** 修改设计师用户名或电话 */
 UIKIT_EXTERN NSString * const kUpdateDesignerUsernameOrPhone;
@@ -85,9 +87,9 @@ UIKIT_EXTERN NSString * const kBuyerStorBasicInfo;
 UIKIT_EXTERN NSString * const kSalesManList;
 /** 销售代表列表接口 */
 UIKIT_EXTERN NSString * const kSalesManListNew;
-/** 收货地址列表接口 */
+/** 收件地址列表接口 */
 UIKIT_EXTERN NSString * const kAddressList;
-/** 买家-删除地址 */
+/** 买手-删除地址 */
 UIKIT_EXTERN NSString * const kDeleteAddress;
 /** 停用或启用销售代表 */
 UIKIT_EXTERN NSString * const kUpdateSalesmanStatuse;
@@ -97,9 +99,9 @@ UIKIT_EXTERN NSString * const kaddSalesman;
 UIKIT_EXTERN NSString * const kBrandInfoUpdate_brand;
 /** 修改设计师品牌信息 买手端 */
 UIKIT_EXTERN NSString * const kBrandInfoUpdate_buyer;
-/** 修改收货地址 */
+/** 修改收件地址 */
 UIKIT_EXTERN NSString * const kModifyAddress;
-/** 添加收货地址 */
+/** 添加收件地址 */
 UIKIT_EXTERN NSString * const kAddAddress;
 /** 首页lookBook和产品介绍 */
 UIKIT_EXTERN NSString * const kHomePageInfoNew;
@@ -177,6 +179,24 @@ UIKIT_EXTERN NSString * const kCollectionSeriesList;
 
 
 #pragma mark - 订单相关
+/** 包裹异常详情 */
+UIKIT_EXTERN NSString * const kParcelExceptionDetail;
+/** 包裹单列表 */
+UIKIT_EXTERN NSString * const kPackagesList;
+/** 品牌端收货完成 */
+UIKIT_EXTERN NSString * const kDesignerReceived;
+/** 绑定物流信息并发货 */
+UIKIT_EXTERN NSString * const kSaveDeliverPackage;
+/** 发货时的仓库列表 */
+UIKIT_EXTERN NSString * const kWarehouseListWhenDelivery;
+/** 快递列表 */
+UIKIT_EXTERN NSString * const kExpressCompany;
+/** 保存装箱单 */
+UIKIT_EXTERN NSString * const kSaveParcel;
+/** 单个包裹单详情 */
+UIKIT_EXTERN NSString * const kParcelDetail;
+/** 订单商品详情 */
+UIKIT_EXTERN NSString * const kPackingListDetail;
 /** 确认订单 */
 UIKIT_EXTERN NSString * const kOrderConfirm;
 /** 拒绝确认订单 */
@@ -195,10 +215,8 @@ UIKIT_EXTERN NSString * const kOrderInfo;
 UIKIT_EXTERN NSString * const kOrderSettingInfo;
 /** 最少起订额 */
 UIKIT_EXTERN NSString * const kOrderUnitPrice;
-/** 添加或修改买家收货地址 */
+/** 添加或修改买手收件地址 */
 UIKIT_EXTERN NSString * const kAddOrModifyBuyerAddress;
-/** 订单创建或修改 */
-UIKIT_EXTERN NSString * const kOrderCreateOrModify;
 /** 订单创建或修改 */
 UIKIT_EXTERN NSString * const kOrderCreate;
 /** 订单创建或修改 */
@@ -233,9 +251,11 @@ UIKIT_EXTERN NSString * const kUpdateTransStatus;
 UIKIT_EXTERN NSString * const kCrtTransStatus;
 /** 设计师发货接口 */
 UIKIT_EXTERN NSString * const kDesignerSendOut;
+/** 退款 */
+UIKIT_EXTERN NSString * const kAddRefundNote;
 /** 添加付款（收款）记录 */
 UIKIT_EXTERN NSString * const kAddPaymentNote;
-/** 订单收款记录/service/order/paymentNoteList */
+/** 订单收款记录 */
 UIKIT_EXTERN NSString * const kPaymentNoteList;
 /** 关闭订单请求(买手,设计师) */
 UIKIT_EXTERN NSString * const kOrderCloseRequest;
@@ -245,14 +265,12 @@ UIKIT_EXTERN NSString * const kDealOrderCloseRequest;
 UIKIT_EXTERN NSString * const kRevokeOrderCloseRequest;
 /** 款式是否过期 */
 UIKIT_EXTERN NSString * const kIsStyleModify;
-/** 买家收货接口 */
+/** 买手收货接口 */
 UIKIT_EXTERN NSString * const kBuyerReceived;
 /** 查看对方是否订单关闭 */
 UIKIT_EXTERN NSString * const kOrderCloseStatus;
 /** 关闭订单 */
 UIKIT_EXTERN NSString * const kCloseOrder;
-/** 修改付款记录 */
-UIKIT_EXTERN NSString * const kEditPaymentNote;
 /** 删除付款记录 */
 UIKIT_EXTERN NSString * const kDeletePaymentNote;
 /** 开启或关闭补货 */
@@ -321,7 +339,7 @@ UIKIT_EXTERN NSString * const KGetShowroomOrderingCheckList;
 #pragma mark - 买手店相关
 /** 按条件查询所有买手店 */
 UIKIT_EXTERN NSString * const kBuyerList;
-/** 买家-收货地址列表 */
+/** 买手-收件地址列表 */
 UIKIT_EXTERN NSString * const kBuyerAddressList;
 /** 设计师作品系列列表 */
 UIKIT_EXTERN NSString * const kBuyerAvailableSeries;
@@ -364,8 +382,6 @@ UIKIT_EXTERN NSString * const kConnStyleList_brand;
 UIKIT_EXTERN NSString * const kConnStyleList_buyer;
 /** 合作设计师款式列表（带搜索） */
 UIKIT_EXTERN NSString * const kConnStyleList_yco;
-/** 买手店按条件查询所有设计师(带分页 */
-UIKIT_EXTERN NSString * const kConnQueryDesignerWithPage;
 /** 买手店按条件查询所有设计师(更全) */
 UIKIT_EXTERN NSString * const kConnNewQueryDesignerWithPage;
 /** 获取brand分类 */
@@ -378,46 +394,6 @@ UIKIT_EXTERN NSString * const kConnNewBrands;
 UIKIT_EXTERN NSString * const kCheckConnBuyers;
 /** 判断买手是否有访问某系列权限 */
 UIKIT_EXTERN NSString * const kISSeriesPubToBuyer;
-
-
-#pragma mark - 库存调拨/补货
-/** 库存调拨列表 */
-UIKIT_EXTERN NSString * const kInventoryAllotting;
-/** 获取调拨详情 */
-UIKIT_EXTERN NSString * const kInventoryAllottingInfo;
-/** 单个买手店订单列表 */
-UIKIT_EXTERN NSString * const kInventoryOrders;
-/** 标识补货需求已解决 */
-UIKIT_EXTERN NSString * const kInventoryDemandResolve;
-/** 标识库存已解决 */
-UIKIT_EXTERN NSString * const kInventoryAllottingResolve;
-/** 标记消息为已读 */
-UIKIT_EXTERN NSString * const kInventoryMarkAsRead;
-/** 买手店获取合作品牌 */
-UIKIT_EXTERN NSString * const kInventoryBrands;
-/** 买手店下过单的款式 */
-UIKIT_EXTERN NSString * const kInventoryOrderStyles;
-/** 获取款式颜色及尺码信息 */
-UIKIT_EXTERN NSString * const kInventoryStyleColorInfo;
-/** 买手店补货公告 */
-UIKIT_EXTERN NSString * const kInventoryBoard;
-/** 发布补货需求 */
-UIKIT_EXTERN NSString * const kInventoryDemand;
-/** 发布库存信息 */
-UIKIT_EXTERN NSString * const kInventoryStore;
-/** 买手店我的补货列表 */
-UIKIT_EXTERN NSString * const kInventoryDemandList;
-/** 我的库存列表 */
-UIKIT_EXTERN NSString * const kInventoryStoreList;
-/** 发布补货需求 */
-UIKIT_EXTERN NSString * const kInventoryDeleteDemand;
-/** 删除单个我的库存 */
-UIKIT_EXTERN NSString * const kInventoryDeleteStore;
-/** 修改补货需求 */
-UIKIT_EXTERN NSString * const kInventoryModifyDemand;
-/** 修改我有库存 */
-UIKIT_EXTERN NSString * const kInventoryModifyStore;
-
 
 #pragma mark - 站内信
 /** 消息历史记录 */

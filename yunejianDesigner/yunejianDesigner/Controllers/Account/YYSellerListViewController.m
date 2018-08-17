@@ -58,7 +58,7 @@
 }
 -(void)PrepareData{
     YYUser *user = [YYUser currentUser];
-    if(user.userType == 5)
+    if(user.userType == YYUserTypeShowroom)
     {
         _isShowroom = YES;
     }else
@@ -188,7 +188,7 @@
             if(_isShowroom)
             {
                 [YYShowroomApi updateSubShowroomStatusWithId:[salesmanId integerValue] status:status andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                    if (rspStatusAndMessage.status == kCode100) {
+                    if (rspStatusAndMessage.status == YYReqStatusCode100) {
                         [YYToast showToastWithTitle:NSLocalizedString(@"操作成功！",nil) andDuration:kAlertToastDuration];
 
                     }else{
@@ -201,7 +201,7 @@
             }else
             {
                 [YYUserApi updateSalesmanStatusWithId:[salesmanId integerValue] status:status andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                    if (rspStatusAndMessage.status == kCode100) {
+                    if (rspStatusAndMessage.status == YYReqStatusCode100) {
                         [YYToast showToastWithTitle:NSLocalizedString(@"操作成功！",nil) andDuration:kAlertToastDuration];
 
                     }else{
@@ -249,7 +249,7 @@
 
             [YYShowroomApi deleteNotActiveSubShowroomUserId:subModel.showroomUserId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
                 //
-                if (rspStatusAndMessage.status == kCode100) {
+                if (rspStatusAndMessage.status == YYReqStatusCode100) {
                     [YYToast showToastWithTitle:NSLocalizedString(@"操作成功！",nil) andDuration:kAlertToastDuration];
                     // 先删除数据源，再删除cell
                     [_ShowroomModel.subList removeObject:subModel];
@@ -271,7 +271,7 @@
             YYShowRoomSubModel *subModel = [_ShowroomModel.subList objectAtIndex:indexPath.row];
             [YYShowroomApi selectSubShowroomPowerUserId:subModel.showroomUserId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSArray *powerArray, NSError *error) {
                 //
-                if (rspStatusAndMessage.status == kCode100) {
+                if (rspStatusAndMessage.status == YYReqStatusCode100) {
                     // 先删除数据源，再删除cell
                     YYSubShowroomPowerViewContorller *subRoom = [[YYSubShowroomPowerViewContorller alloc] init];
                     subRoom.userId = subModel.showroomUserId;
@@ -390,7 +390,7 @@
     YYNavigationBarViewController *navigationBarViewController = [storyboard instantiateViewControllerWithIdentifier:@"YYNavigationBarViewController"];
     navigationBarViewController.previousTitle = @"";
     self.navigationBarViewController = navigationBarViewController;
-    if(user.userType ==5)
+    if(user.userType == YYUserTypeShowroom)
     {
         navigationBarViewController.nowTitle = NSLocalizedString(@"Showroom子账号",nil);
     }else

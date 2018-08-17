@@ -133,8 +133,8 @@
     YYTableViewCellInfoModel *infoModel = ((YYTableViewCellData *)self.cellDataArrays[0][1]).object;
     __block NSString *blockEmailstr = infoModel.value;
     [YYUserApi forgetPassword:paramsStr andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view animated:NO];
-        if( rspStatusAndMessage.status == kCode100){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        if( rspStatusAndMessage.status == YYReqStatusCode100){
             self.viewType = kEmailPasswordType;
             self.userEmail = blockEmailstr;
             [self buildTableViewDataSource];

@@ -129,7 +129,7 @@
     }
     
     [YYUserApi passwdUpdateWithOldPassword:md5(old) nowPassword:md5(now) andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100) {
+        if (rspStatusAndMessage.status == YYReqStatusCode100) {
             [YYToast showToastWithTitle:NSLocalizedString(@"密码修改成功！",nil) andDuration:kAlertToastDuration];
             if (_modifySuccess) {
                 _modifySuccess();

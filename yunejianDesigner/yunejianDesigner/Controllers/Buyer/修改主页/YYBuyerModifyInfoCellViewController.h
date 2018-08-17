@@ -21,11 +21,12 @@ typedef NS_ENUM(NSInteger, YYBuyerModifyInfoCellViewType) {
     YYBuyerModifyInfoCellViewContactTelephone
 };
 @interface YYBuyerModifyInfoCellViewController : UIViewController
-@property (nonatomic,strong)CancelButtonClicked cancelButtonClicked;
-@property (nonatomic,strong)SelectedValue saveButtonClicked;
 
-@property (nonatomic ,assign) NSInteger viewType;
-@property (nonatomic ,strong) NSString *detailType;
-@property (nonatomic ,strong) NSString *value;
+@property (nonatomic, strong) CancelButtonClicked cancelButtonClicked;
+@property (nonatomic, strong) SelectedValue saveButtonClicked;
+
+@property (nonatomic, assign) NSInteger viewType;
+@property (nonatomic, strong) NSString *detailType;
+@property (nonatomic, strong) NSString *value;
 
 @end

@@ -42,9 +42,11 @@
 /** 导航栏高度+状态栏高度*/
 #define kStatusBarAndNavigationBarHeight    (kIPhoneX ? 89.f : 65.f)
 /** tabbar高度 */
-#define kTabbarHeight   (kIPhoneX ? (49.f + 34.f) : 49.f)
+#define kTabbarHeight   58.f
 /** 底部安全区高度 */
 #define kBottomSafeAreaHeight   (kIPhoneX ? 34.f : 0.f)
+/** tabbar高度+底部安全区高度 */
+#define kTabbarAndBottomSafeAreaHeight  (kIPhoneX ? (58.f + 34.f) : 58.f)
 
 /** 最多显示尺寸数量 */
 #define kMaxSizeCount 20

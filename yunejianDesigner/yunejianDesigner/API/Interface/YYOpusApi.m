@@ -8,12 +8,28 @@
 
 #import "YYOpusApi.h"
 
-#import "YYRequestHelp.h"
+// c文件 —> 系统文件（c文件在前）
+
+// 控制器
+
+// 自定义视图
+
+// 接口
+
+// 分类
+
+// 自定义类和三方类（ cocoapods类 > model > 工具类 > 其他）
 #import "RequestMacro.h"
-#import "UserDefaultsMacro.h"
+#import "YYRequestHelp.h"
 #import "YYHttpHeaderManager.h"
-#import "YYSeriesInfoModel.h"
-#import "YYUser.h"
+
+#import "YYStyleInfoModel.h"
+#import "YYBrandHomeInfoModel.h"
+#import "YYOpusStyleListModel.h"
+#import "YYOpusSeriesListModel.h"
+#import "YYSeriesInfoDetailModel.h"
+#import "YYOpusSeriesAuthTypeBuyerListModel.h"
+
 @implementation YYOpusApi
 /**
  *
@@ -335,7 +351,7 @@
  *合作设计师系列详情
  *
  */
-+ (void)getConnSeriesInfoWithId:(NSInteger )designerId seriesId:(NSInteger )seriesId  andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYSeriesInfoDetailModel *infoDetailModel,NSError *error))block{
++ (void)getConnSeriesInfoWithId:(NSInteger )designerId seriesId:(NSInteger )seriesId andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYSeriesInfoDetailModel *infoDetailModel,NSError *error))block{
     // get URL
     NSString *requestURL = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastYYServerURL] stringByAppendingString:kConnSeriesInfo_brand];
     NSDictionary *dic = [YYHttpHeaderManager buildHeadderWithAction:kConnSeriesInfo_brand params:nil];
@@ -411,7 +427,7 @@
  * 更改系列权限
  *
  */
-+ (void)updateSeriesAuthType:(long)seriesId authType:(NSInteger)authType buyerIds:(NSString*)buyerIds  andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,NSError *error))block{
++ (void)updateSeriesAuthType:(long)seriesId authType:(NSInteger)authType buyerIds:(NSString*)buyerIds andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,NSError *error))block{
     // get URL
     NSString *requestURL = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastYYServerURL] stringByAppendingString:kUpdateSeriesAuthType_brand];
     NSDictionary *dic = [YYHttpHeaderManager buildHeadderWithAction:kUpdateSeriesAuthType_brand params:nil];
@@ -444,7 +460,7 @@
  *设计师系列详情
  *
  */
-+ (void)getSeriesInfo:(NSInteger )seriesId  andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYSeriesInfoDetailModel *infoDetailModel,NSError *error))block{
++ (void)getSeriesInfo:(NSInteger )seriesId andBlock:(void (^)(YYRspStatusAndMessage *rspStatusAndMessage,YYSeriesInfoDetailModel *infoDetailModel,NSError *error))block{
     // get URL
     NSString *requestURL = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastYYServerURL] stringByAppendingString:kSeriesInfo_brand];
     NSDictionary *dic = [YYHttpHeaderManager buildHeadderWithAction:kSeriesInfo_brand params:nil];

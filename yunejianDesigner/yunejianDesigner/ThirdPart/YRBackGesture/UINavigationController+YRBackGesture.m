@@ -97,7 +97,7 @@ static const char *assoKeyEnableGesture="__yrakenabg";
                 [self hidePreViewController];
             }else{
                 [self showPreViewController];
-                if([self.topViewController isKindOfClass:[YYOrderMessageViewController class]] ){//YYConnMsgListController YYOrderMessageViewController
+                if([self.topViewController isKindOfClass:[YYOrderMessageViewController class]] ){
                     [YYOrderMessageViewController markAsRead];
                 }
                 if([self.topViewController isKindOfClass:[YYConnMsgListController class]]){

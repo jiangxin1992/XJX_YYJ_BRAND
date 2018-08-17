@@ -63,9 +63,11 @@ NSString * const kUserStatus = @"/service/account/status";
 
 
 #pragma mark - 用户相关
+/** 获取买手基础信息 */
+NSString *const kGetBuyerInfo = @"/service/connect/coop_status";
 /** 更改头像 logo */
 NSString * const kModifyLogoInfo = @"/service/modifyLogo";
-/** 修改买家用户名或电话 */
+/** 修改买手用户名或电话 */
 NSString * const kUpdateBuyerUsernameOrPhone = @"/service/buyer/basicInfoUpdate";
 /** 修改设计师用户名或电话 */
 NSString * const kUpdateDesignerUsernameOrPhone = @"/service/designer/basicInfoUpdate";
@@ -83,9 +85,9 @@ NSString * const kBuyerStorBasicInfo = @"/service/buyer/basicInfo";
 NSString * const kSalesManList = @"/service/designer/salesmanList";
 /** 销售代表列表接口 */
 NSString * const kSalesManListNew = @"/service/showroom/order/users";
-/** 收货地址列表接口 */
+/** 收件地址列表接口 */
 NSString * const kAddressList = @"/service/buyer/addressList";
-/** 买家-删除地址 */
+/** 买手-删除地址 */
 NSString * const kDeleteAddress = @"/service/buyer/deleteAddress";
 /** 停用或启用销售代表 */
 NSString * const kUpdateSalesmanStatuse = @"/service/designer/updateSalesmanStatus";
@@ -95,9 +97,9 @@ NSString * const kaddSalesman = @"/service/designer/addSalesman";
 NSString * const kBrandInfoUpdate_brand = @"/service/designerIndex/brandInfoUpdate";
 /** 修改设计师品牌信息 买手端 */
 NSString * const kBrandInfoUpdate_buyer = @"/service/designer/brandInfoUpdate";
-/** 修改收货地址 */
+/** 修改收件地址 */
 NSString * const kModifyAddress = @"/service/buyer/modifyAddress";
-/** 添加收货地址 */
+/** 添加收件地址 */
 NSString * const kAddAddress = @"/service/buyer/addAddress";
 /** 首页lookBook和产品介绍 */
 NSString * const kHomePageInfoNew = @"/service/designerIndex/brandInfo";
@@ -175,6 +177,24 @@ NSString * const kCollectionSeriesList = @"service/buyer/collect/seriesList";
 
 
 #pragma mark - 订单相关
+/** 包裹异常详情 */
+NSString * const kParcelExceptionDetail = @"/service/v2/order/order_package/exception";
+/** 包裹单列表 */
+NSString * const kPackagesList = @"/service/v2/order/order_packages";
+/** 品牌端收货完成 */
+NSString * const kDesignerReceived = @"/service/order/designerReceived";
+/** 绑定物流信息并发货 */
+NSString * const kSaveDeliverPackage = @"/service/v2/order/deliver_package";
+/** 发货时的仓库列表 */
+NSString * const kWarehouseListWhenDelivery = @"/service/warehouse/options";
+/** 快递列表 */
+NSString * const kExpressCompany = @"/service/trade/express_company";
+/** 保存装箱单 */
+NSString * const kSaveParcel = @"/service/v2/order/order_package";
+/** 单个包裹单详情 */
+NSString * const kParcelDetail = @"/service/v2/order/order_package";
+/** 订单商品详情 */
+NSString * const kPackingListDetail = @"/service/v2/order/items";
 /** 确认订单 */
 NSString * const kOrderConfirm = @"/service/order/confirm";
 /** 拒绝确认订单 */
@@ -193,10 +213,8 @@ NSString * const kOrderInfo = @"/service/v2/order/detail";
 NSString * const kOrderSettingInfo = @"/service/designer/prefer/orderSettingInfo";
 /** 最少起订额 */
 NSString * const kOrderUnitPrice = @"/service/preference/orderUnitPrice";
-/** 添加或修改买家收货地址 */
+/** 添加或修改买手收件地址 */
 NSString * const kAddOrModifyBuyerAddress = @"/service/order/addOrderBuyerAddress";
-/** 订单创建或修改 */
-NSString * const kOrderCreateOrModify = @"/service/order/addOrder";
 /** 订单创建或修改 */
 NSString * const kOrderCreate = @"/service/v2/order/add/pad";
 /** 订单创建或修改 */
@@ -231,9 +249,11 @@ NSString * const kUpdateTransStatus = @"/service/order/updateTransStatus";
 NSString * const kCrtTransStatus = @"/service/order/crtTransStatus";
 /** 设计师发货接口 */
 NSString * const kDesignerSendOut = @"/service/designer/designerSendOut";
+/** 退款 */
+NSString * const kAddRefundNote = @"/service/payment/addRefundNote";
 /** 添加付款（收款）记录 */
 NSString * const kAddPaymentNote = @"/service/payment/addPaymentNote";
-/** 订单收款记录/service/order/paymentNoteList */
+/** 订单收款记录 */
 NSString * const kPaymentNoteList = @"/service/payment/paymentNoteList";
 /** 关闭订单请求(买手,设计师) */
 NSString * const kOrderCloseRequest = @"/service/order/orderCloseRequest";
@@ -243,14 +263,12 @@ NSString * const kDealOrderCloseRequest = @"/service/order/dealOrderCloseRequest
 NSString * const kRevokeOrderCloseRequest = @"/service/order/revokeOrderCloseRequest";
 /** 款式是否过期 */
 NSString * const kIsStyleModify = @"/service/order/isStyleModify";
-/** 买家收货接口 */
+/** 买手收货接口 */
 NSString * const kBuyerReceived = @"/service/buyer/buyerReceived";
 /** 查看对方是否订单关闭 */
 NSString * const kOrderCloseStatus = @"/service/order/orderCloseStatus";
 /** 关闭订单 */
 NSString * const kCloseOrder = @"/service/order/closeOrder";
-/** 修改付款记录 */
-NSString * const kEditPaymentNote = @"/service/payment/edit";
 /** 删除付款记录 */
 NSString * const kDeletePaymentNote = @"/service/payment/delete";
 /** 开启或关闭补货 */
@@ -318,7 +336,7 @@ NSString * const KGetShowroomOrderingCheckList = @"/service/appointment/applies"
 #pragma mark - 买手店相关
 /** 按条件查询所有买手店 */
 NSString * const kBuyerList = @"/service/designer/queryBuyer";
-/** 买家-收货地址列表 */
+/** 买手-收件地址列表 */
 NSString * const kBuyerAddressList = @"/service/designer/buyerAddresses";
 /** 设计师作品系列列表 */
 NSString * const kBuyerAvailableSeries = @"/service/buyer/availableSeries";
@@ -361,8 +379,6 @@ NSString * const kConnStyleList_brand = @"/service/v2/style/list";
 NSString * const kConnStyleList_buyer = @"/service/v2/style/list";
 /** 合作设计师款式列表（带搜索） */
 NSString * const kConnStyleList_yco = @"/service/buyer/designerStyleList";
-/** 买手店按条件查询所有设计师(带分页 */
-NSString * const kConnQueryDesignerWithPage = @"/service/connect/queryDesignerWithPage";
 /** 买手店按条件查询所有设计师(更全) */
 NSString * const kConnNewQueryDesignerWithPage = @"/service/connect/brandsPhone";
 /** 获取brand分类 */
@@ -375,45 +391,6 @@ NSString * const kConnNewBrands = @"/service/v2/buyer/new_brands";
 NSString * const kCheckConnBuyers = @"/service/seriesAuth/isConnected";
 /** 判断买手是否有访问某系列权限 */
 NSString * const kISSeriesPubToBuyer = @"/service/seriesAuth/isSeriesPubToBuyer";
-
-#pragma mark - 库存调拨/补货
-/** 库存调拨列表 */
-NSString * const kInventoryAllotting = @"/service/inventory/allotting";
-/** 获取调拨详情 */
-NSString * const kInventoryAllottingInfo = @"/service/inventory/allotting/info";
-/** 单个买手店订单列表 */
-NSString * const kInventoryOrders = @"/service/inventory/orders";
-/** 标识补货需求已解决 */
-NSString * const kInventoryDemandResolve = @"/service/inventory/allotting/demand/resolve";
-/** 标识库存已解决 */
-NSString * const kInventoryAllottingResolve = @"/service/inventory/allotting/resolve";
-/** 标记消息为已读 */
-NSString * const kInventoryMarkAsRead = @"/service/inventory/markAsRead";
-/** 买手店获取合作品牌 */
-NSString * const kInventoryBrands = @"/service/inventory/cobrands";
-/** 买手店下过单的款式 */
-NSString * const kInventoryOrderStyles = @"/service/inventory/orderStyles";
-/** 获取款式颜色及尺码信息 */
-NSString * const kInventoryStyleColorInfo = @"/service/inventory/styleInfo";
-/** 买手店补货公告 */
-NSString * const kInventoryBoard = @"/service/inventory/board";
-/** 发布补货需求 */
-NSString * const kInventoryDemand = @"/service/inventory/demand";
-/** 发布库存信息 */
-NSString * const kInventoryStore = @"/service/inventory/add";
-/** 买手店我的补货列表 */
-NSString * const kInventoryDemandList = @"/service/inventory/demand/list";
-/** 我的库存列表 */
-NSString * const kInventoryStoreList = @"/service/inventory/list";
-/** 发布补货需求 */
-NSString * const kInventoryDeleteDemand = @"/service/inventory/demand/delete";
-/** 删除单个我的库存 */
-NSString * const kInventoryDeleteStore = @"/service/inventory/delete";
-/** 修改补货需求 */
-NSString * const kInventoryModifyDemand = @"/service/inventory/demand/modify";
-/** 修改我有库存 */
-NSString * const kInventoryModifyStore = @"/service/inventory/modify";
-
 
 #pragma mark - 站内信
 /** 消息历史记录 */

@@ -24,6 +24,7 @@
 #import "YYUser.h"
 #import "MBProgressHUD.h"
 #import "YYOrderApi.h"
+#import "YYCountryListModel.h"
 #import "YYBuyerHomeUpdateModel.h"
 #import "YYUserApi.h"
 #import "YYCountryPickView.h"
@@ -279,7 +280,7 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [YYUserApi getSubCountryInfoWithCountryID:[_currentNationID integerValue] WithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYCountryListModel *countryListModel, NSInteger impId,NSError *error) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if (rspStatusAndMessage.status == kCode100) {
+            if (rspStatusAndMessage.status == YYReqStatusCode100) {
                 if(countryListModel.result.count){
                     _provinceInfo = countryListModel;
                 }else{
@@ -314,7 +315,7 @@
     
     if(!_countryInfo){
         [YYUserApi getCountryInfoWithBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYCountryListModel *countryListModel, NSError *error) {
-            if (rspStatusAndMessage.status == kCode100) {
+            if (rspStatusAndMessage.status == YYReqStatusCode100) {
                 _countryInfo = countryListModel;
                 
                 if(_countryInfo.result.count){
@@ -406,11 +407,11 @@
     WeakSelf(ws);
     NSData *jsondata = [[model toDictionary] mj_JSONData];
     [YYUserApi updateBuyerWithData:jsondata andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if( rspStatusAndMessage.status == kCode100){
+        if( rspStatusAndMessage.status == YYReqStatusCode100){
             //更新处理 重新获取用户数据
             [YYUserApi getBuyerHomeInfo:@"" andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYBuyerHomeInfoModel *infoModel, NSError *error) {
                 [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
-                if(rspStatusAndMessage.status == kCode100){
+                if(rspStatusAndMessage.status == YYReqStatusCode100){
                     [self updateHomeInfoWithData:infoModel];
                     [ws.tableView reloadData];
                 }else{

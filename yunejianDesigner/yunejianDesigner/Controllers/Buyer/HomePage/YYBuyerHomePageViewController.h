@@ -10,14 +10,14 @@
 
 @interface YYBuyerHomePageViewController : UIViewController
 
-@property (nonatomic,assign) NSInteger buyerId;
-@property (nonatomic,strong) NSString *previousTitle;
+@property (nonatomic, assign) NSInteger buyerId;
+@property (nonatomic, strong) NSString *previousTitle;
 
-@property (nonatomic,assign) BOOL isHomePage;
+@property (nonatomic, assign) BOOL isHomePage;
 
-@property (nonatomic,copy) void (^readblock)(NSString *type);
+@property (nonatomic, copy) void (^readblock)(NSString *type);
 
-@property (nonatomic,strong) ModifySuccess modifySuccess;
-@property (nonatomic,strong)CancelButtonClicked cancelButtonClicked;
+@property (nonatomic, strong) ModifySuccess modifySuccess;
+@property (nonatomic, strong) CancelButtonClicked cancelButtonClicked;
 
 @end

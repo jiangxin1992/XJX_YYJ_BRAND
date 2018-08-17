@@ -10,10 +10,10 @@
 
 @implementation NSArray (extra)
 
-- (BOOL )isNilOrEmpty{
-    if (self)
++ (BOOL)isNilOrEmpty:(NSArray *)array{
+    if (array)
     {
-        if(self.count){
+        if(array.count){
             return NO;
         }
     }

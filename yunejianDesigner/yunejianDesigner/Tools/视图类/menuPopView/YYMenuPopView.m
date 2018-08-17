@@ -10,6 +10,7 @@
 #import "YYMenuPopView.h"
 
 #import "YYConnApi.h"
+#import "YYConnBuyerListModel.h"
 
 @interface  YYMenuPopView()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,copy) NSArray *selectData;
@@ -370,7 +371,7 @@ UIImageView *menuArrow;
             cell.textLabel.textColor = [UIColor colorWithHex:@"919191"];
             
             [YYConnApi getConnBuyers:1 pageIndex:1 pageSize:1 andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYConnBuyerListModel *listModel, NSError *error) {
-                if(rspStatusAndMessage.status == kCode100){
+                if(rspStatusAndMessage.status == YYReqStatusCode100){
                     if(listModel && [listModel.result count] > 0){
                         blockcell.userInteractionEnabled = YES;
                         //blockcell.alpha = 1;

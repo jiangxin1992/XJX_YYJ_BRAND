@@ -14,7 +14,7 @@
 #import "YYDateRangeModel.h"
 #import "YYOpusSeriesModel.h"
 
-@class YYInventoryBoardModel;
+@class YYStyleOneColorModel;
 @class YYOpusStyleModel;
 
 @interface YYStyleInfoModel : JSONModel
@@ -33,7 +33,7 @@
 
  @return ...
  */
-- (YYInventoryBoardModel *)transformToInventoryBoardModel;
+- (YYStyleOneColorModel *)transformToStyleOneColorModel;
 - (YYOpusSeriesModel *)transformToOpusSeriesModel;
 - (YYOpusStyleModel *)transformToOpusStyleModel;
 

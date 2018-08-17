@@ -17,8 +17,10 @@
 #import "YYConnApi.h"
 #import "YYUser.h"
 #import "AppDelegate.h"
-#import "YYBuyerHomePageViewController.h"
+#import "YYOrderMessageInfoModel.h"
+#import "YYMessageUnreadModel.h"
 #import "UINavigationController+YRBackGesture.h"
+#import "YYOrderMessageInfoListModel.h"
 
 @interface YYConnMsgListController ()<UITableViewDataSource,UITableViewDelegate,YYTableCellDelegate>
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -116,7 +118,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    YYOrderMessageInfoModel* infoModel = [self.msgListArray objectAtIndex:indexPath.row];
+    YYOrderMessageInfoModel *infoModel = [self.msgListArray objectAtIndex:indexPath.row];
     static NSString* reuseIdentifier = @"YYConnMsgListCell";
     YYConnMsgListCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     cell.msgInfoModel = infoModel;
@@ -136,7 +138,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    YYOrderMessageInfoModel* infoModel = [self.msgListArray objectAtIndex:indexPath.row];
+    YYOrderMessageInfoModel *infoModel = [self.msgListArray objectAtIndex:indexPath.row];
     if(infoModel && infoModel.msgContent){
 
         WeakSelf(ws);
@@ -151,7 +153,7 @@
 //设置可删除
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     if(self.msgListArray.count){
-        YYOrderMessageInfoModel* infoModel = [self.msgListArray objectAtIndex:indexPath.row];
+        YYOrderMessageInfoModel *infoModel = [self.msgListArray objectAtIndex:indexPath.row];
         if(infoModel.isPlainMsg == NO){
             if([infoModel.dealStatus integerValue] == -1){
                 return YES;
@@ -167,7 +169,7 @@
                                                                          title:NSLocalizedString(@"拒绝",nil) handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
 
                                                                              if(self.msgListArray.count > 0){
-                                                                                 YYOrderMessageInfoModel* infoModel = self.msgListArray[indexPath.row];
+                                                                                 YYOrderMessageInfoModel *infoModel = self.msgListArray[indexPath.row];
                                                                                  [self oprateConnWithMsgInfoModel:infoModel status:2 indexPath:indexPath];
                                                                              }
                                                                          }];
@@ -182,7 +184,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [YYConnApi OprateConnWithBuyer:[infoModel.msgContent.fromId integerValue] status:status andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
             //移除并刷新
             if(_tableView){
@@ -230,7 +232,7 @@
     }];
 }
 
-//请求买家地址列表
+//请求买手地址列表
 -(void)loadMsgListWithpageIndex:(NSInteger)pageIndex{
     WeakSelf(ws);
     NSString *type = @"0";
@@ -240,7 +242,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     [YYOrderApi getNotifyMsgList:type pageIndex:pageIndex pageSize:pageSize andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYOrderMessageInfoListModel *msgListModel, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             ws.currentPageInfo = msgListModel.pageInfo;
             if(ws.currentPageInfo.isFirstPage){
                 ws.msgListArray =  [[NSMutableArray alloc] init];//;
@@ -266,7 +268,7 @@
 #pragma YYTableCellDelegate
 -(void)btnClick:(NSInteger)row section:(NSInteger)section andParmas:(NSArray *)parmas{
     WeakSelf(ws);
-    YYOrderMessageInfoModel* infoModel = [self.msgListArray objectAtIndex:row];
+    YYOrderMessageInfoModel *infoModel = [self.msgListArray objectAtIndex:row];
     if([[parmas objectAtIndex:0] integerValue] == 1){
         CMAlertView *alertView = [[CMAlertView alloc] initWithTitle:NSLocalizedString(@"同意邀请吗？",nil) message:nil needwarn:NO delegate:nil cancelButtonTitle:NSLocalizedString(@"取消",nil) otherButtonTitles:@[NSLocalizedString(@"确定",nil)]];
         //alertView.specialParentView = self.view;
@@ -295,11 +297,11 @@
     __block NSInteger blockStatus = status;
     __block NSInteger blockRow = row;
     YYUser *user = [YYUser currentUser];
-    if(user.userType != kBuyerStorUserType){
+    if(user.userType != YYUserTypeRetailer){
     [YYConnApi OprateConnWithBuyer:buyerId status:status andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
-            YYOrderMessageInfoModel* infoModel = [ws.msgListArray objectAtIndex:blockRow];
+            YYOrderMessageInfoModel *infoModel = [ws.msgListArray objectAtIndex:blockRow];
 
             infoModel.dealStatus = [[NSNumber alloc] initWithInteger:blockStatus];
             [ws.tableView reloadData];
@@ -308,9 +310,9 @@
     }];
     }else{
         [YYConnApi OprateConnWithDesignerBrand: buyerId status:status andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-            if(rspStatusAndMessage.status == kCode100){
+            if(rspStatusAndMessage.status == YYReqStatusCode100){
                 [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
-                YYOrderMessageInfoModel* infoModel = [ws.msgListArray objectAtIndex:blockRow];
+                YYOrderMessageInfoModel *infoModel = [ws.msgListArray objectAtIndex:blockRow];
                 
                 infoModel.dealStatus = [[NSNumber alloc] initWithInteger:blockStatus];
                 [ws.tableView reloadData];

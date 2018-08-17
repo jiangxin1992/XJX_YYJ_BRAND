@@ -12,7 +12,7 @@
 
 @interface YYShowroomAgentController : UIViewController
 
-@property (nonatomic,strong)CancelButtonClicked cancelButtonClicked;
-@property(nonatomic,strong) YYShowroomInfoByDesignerModel *showroomInfoByDesignerModel;
+@property (nonatomic, strong) CancelButtonClicked cancelButtonClicked;
+@property (nonatomic, strong) YYShowroomInfoByDesignerModel *showroomInfoByDesignerModel;
 
 @end

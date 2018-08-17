@@ -8,9 +8,6 @@
 
 #import "YYSeriesInfoDetailModel.h"
 
-#import "YYOpusSeriesModel.h"
-#import "YYSeriesInfoModel.h"
-
 @implementation YYSeriesInfoDetailModel
 
 - (YYOpusSeriesModel *)toOpusSeriesModel{

@@ -187,8 +187,8 @@
 - (void)reSendEmailHandler:(id)sender {
     if(sender){
         if(self.emailType == kEmailRegisterType){
-            [YYUserApi reSendMailConfirmMail:self.email andUserType:[NSString stringWithFormat:@"%ld",(long)kDesignerType]  andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                if(rspStatusAndMessage.status == kCode100){
+            [YYUserApi reSendMailConfirmMail:self.email andUserType:[NSString stringWithFormat:@"%ld",(long)YYUserTypeDesigner]  andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
+                if(rspStatusAndMessage.status == YYReqStatusCode100){
                     [YYToast showToastWithTitle:NSLocalizedString(@"发送成功！",nil) andDuration:kAlertToastDuration];
                 }else{
                     [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
@@ -197,7 +197,7 @@
             }];
         }else if (self.emailType == kEmailPasswordType){
             [YYUserApi forgetPassword:[NSString stringWithFormat:@"email=%@",self.email] andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-                if( rspStatusAndMessage.status == kCode100){
+                if( rspStatusAndMessage.status == YYReqStatusCode100){
                     [YYToast showToastWithTitle:NSLocalizedString(@"发送成功！",nil) andDuration:kAlertToastDuration];
                 }else{
                     [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];

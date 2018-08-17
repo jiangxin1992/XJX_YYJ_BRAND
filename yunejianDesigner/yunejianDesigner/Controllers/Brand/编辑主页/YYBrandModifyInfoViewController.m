@@ -202,7 +202,7 @@
     NSDictionary *paramsMap=[self getParamsMapWithModel:model];
     [YYUserApi updateBrandWithDataDict:paramsMap andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:ws.view animated:NO];
-        if( rspStatusAndMessage.status == kCode100){
+        if( rspStatusAndMessage.status == YYReqStatusCode100){
             //更新处理
             if(blockviewType == YYBrandModifyInfoCellViewDesc){
                 ws.homeInfoModel.brandIntroduction = blockmodel.brandIntroduction;

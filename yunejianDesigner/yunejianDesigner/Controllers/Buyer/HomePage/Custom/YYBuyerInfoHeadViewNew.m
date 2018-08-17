@@ -178,19 +178,19 @@
         }else{
             _oprateBtn.hidden = NO;
             _oprateBtn.backgroundColor =[UIColor clearColor];
-            if([_infoModel.connectStatus integerValue] == kConnStatus){
+            if([_infoModel.connectStatus integerValue] == YYUserConnStatusNone){
                 //                [_oprateBtn setImage:[UIImage imageNamed:@"conn_invite1_icon"] forState:UIControlStateNormal];
                 [_oprateBtn setImage:[UIImage imageNamed:@"brandadd_homepage_icon"] forState:UIControlStateNormal];
                 [_oprateBtn setTitle:NSLocalizedString(@"邀请合作",nil) forState:UIControlStateNormal];
                 [_oprateBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 _oprateBtn.layer.borderColor = [UIColor blackColor].CGColor;
-            }else if([_infoModel.connectStatus integerValue] == kConnStatus0 || [_infoModel.connectStatus integerValue] == kConnStatus2){
+            }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusInvite || [_infoModel.connectStatus integerValue] == YYUserConnStatusBeInvited){
                 //                [_oprateBtn setImage:[UIImage imageNamed:@"conn_inviteing1_icon"] forState:UIControlStateNormal];
                 [_oprateBtn setImage:[UIImage imageNamed:@"brandwait_homepage_icon"] forState:UIControlStateNormal];
                 [_oprateBtn setTitle:NSLocalizedString(@"已经邀请_short",nil) forState:UIControlStateNormal];
                 [_oprateBtn setTitleColor:[UIColor colorWithHex:@"58c77d"] forState:UIControlStateNormal];
                 _oprateBtn.layer.borderColor = [UIColor colorWithHex:@"58c77d"].CGColor;
-            }else if([_infoModel.connectStatus integerValue] == kConnStatus1){
+            }else if([_infoModel.connectStatus integerValue] == YYUserConnStatusConnected){
                 
                 [_oprateBtn setImage:[UIImage imageNamed:@"chat_homepage_icon"] forState:UIControlStateNormal];
                 [_oprateBtn setTitle:NSLocalizedString(@"发送私信",nil) forState:UIControlStateNormal];

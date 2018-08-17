@@ -17,9 +17,11 @@
 #import "AppDelegate.h"
 #import "JPUSHService.h"
 #import "NSTimer+eocBlockSupports.h"
-#import "YYBuyerHomePageViewController.h"
 #import "YYUserApi.h"
 #import "YYOrderApi.h"
+#import "YYPageInfoModel.h"
+#import "YYMessageUnreadModel.h"
+#import "YYMessageTalkListModel.h"
 #import "UIView+UpdateAutoLayoutConstraints.h"
 #import "YYShowImageViewController.h"
 #import "YYShowMessageUrlViewController.h"
@@ -120,7 +122,17 @@ static NSInteger textFieldDefautlHeight;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self loadListFromServerByPageIndex:1 endRefreshing:NO];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    // 进入埋点
+    [MobClick beginLogPageView:kYYPageMessageDetail];
+}
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    // 退出埋点
+    [MobClick endLogPageView:kYYPageMessageDetail];
+}
 #pragma mark - --------------SomePrepare--------------
 
 
@@ -501,7 +513,7 @@ static NSInteger textFieldDefautlHeight;
                         
                         [changeCell setIsHiddenProgress:YES];
                         
-                        if(rspStatusAndMessage.status == kCode100){
+                        if(rspStatusAndMessage.status == YYReqStatusCode100){
                             // 处理图片
                         }else{
                             [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
@@ -598,7 +610,7 @@ static NSInteger textFieldDefautlHeight;
     WeakSelf(ws);
     __block YYMessageChatModel *blockchatModel = chatModel;
     [YYMessageApi sendTalkWithOppositeId:_userId content:chatModel.message charType:chatModel.chatType andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             [ws insertMessage:blockchatModel];
         }else{
             [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
@@ -641,7 +653,7 @@ static NSInteger textFieldDefautlHeight;
     
     __block BOOL blockEndrefreshing = endrefreshing;
     [YYMessageApi getMessageTalkHistoryWithOppositeId:_userId pageIndex:pageIndex pageSize:kPageSize andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYMessageTalkListModel *talkListModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100) {
+        if (rspStatusAndMessage.status == YYReqStatusCode100) {
             if (pageIndex == 1) {
                 [ws.dataArray removeAllObjects];
             }

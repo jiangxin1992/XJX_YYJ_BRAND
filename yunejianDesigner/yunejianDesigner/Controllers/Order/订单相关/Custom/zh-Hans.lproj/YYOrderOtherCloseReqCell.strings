@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "对方申请了已取消，您可以选择以下操作："; ObjectID = "3iq-xd-MP6"; */
+"3iq-xd-MP6.text" = "对方申请了已取消，您可以选择以下操作：";
+
+/* Class = "UILabel"; text = "1."; ObjectID = "U2u-m6-ohR"; */
+"U2u-m6-ohR.text" = "1.";
+
+/* Class = "UILabel"; text = "与对方协商，使其撤销已取消的申请，订单恢复为正常状态。"; ObjectID = "SzY-fq-WnM"; */
+"SzY-fq-WnM.text" = "与对方协商，使其撤销已取消的申请，订单恢复为正常状态。";
+
+/* Class = "UILabel"; text = "2."; ObjectID = "wqt-GJ-eWC"; */
+"wqt-GJ-eWC.text" = "2.";
+
+/* Class = "UIButton"; normalTitle = "同意取消"; ObjectID = "bP1-UK-WNC"; */
+"bP1-UK-WNC.normalTitle" = "同意取消";
+
+/* Class = "UILabel"; text = "点击                          ，则正式取消交易。"; ObjectID = "mJJ-Iv-dVs"; */
+"mJJ-Iv-dVs.text" = "点击                          ，则正式取消交易。";
+
+/* Class = "UILabel"; text = "3."; ObjectID = "vnx-vf-ACM"; */
+"vnx-vf-ACM.text" = "3.";
+
+/* Class = "UIButton"; normalTitle = "拒绝申请"; ObjectID = "AQD-fg-a7Y"; */
+"AQD-fg-a7Y.normalTitle" = "拒绝申请";
+
+/* Class = "UILabel"; text = "点击                          ，则正常继续交易，订单状态将会回到申请取消之前的订单状态。"; ObjectID = "dfV-Cn-3Ch"; */
+"dfV-Cn-3Ch.text" = "点击                          ，则正常继续交易，订单状态将会回到申请取消之前的订单状态。";

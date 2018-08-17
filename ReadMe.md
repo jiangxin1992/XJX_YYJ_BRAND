@@ -121,9 +121,8 @@ static NSString * const text;
 ```
 
 #### 七 枚举
-1. 不允许出现神秘数字 0, 1, 2 等等，请用枚举代替
-2. 在使用enum的时候，推荐适用最新的fixed underlying type(WWDC 2012 session 405- Modern Objective-C)规范，
-因为它具备更强的类型检查和代码完成功能。 例如
+1. 非特殊情况下，不允许出现神秘数字 0, 1, 2 等等，请用枚举代替
+2. 在使用enum的时候，推荐适用最新的fixed underlying type(WWDC 2012 session 405- Modern Objective-C)规范，因为它具备更强的类型检查和代码完成功能。 例如
 
 ```
  typedef NS_ENUM(NSInteger, JRAdRequestState){
@@ -131,6 +130,14 @@ static NSString * const text;
      mYYRAdRequestStateLoading
  };
 ```
+
+3.枚举命名：
+
+```
+1.系统相关枚举：  以E开头; 
+2.非系统相关枚举：以YY开头
+```
+
 #### 八 容器
 1. 在创建NSString,NSDictionary,NSArray和NSNumber等对象的immutable实例，时，应使用字面量。
 需要注意的是，不应将nil传递给NSArray和NSDictionary字面量，否则会引起程序崩溃。

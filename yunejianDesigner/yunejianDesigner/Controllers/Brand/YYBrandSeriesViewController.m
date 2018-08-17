@@ -39,6 +39,8 @@
 #import "YYOrderInfoModel.h"
 #import "YYSeriesInfoModel.h"
 #import "YYBrandHomeInfoModel.h"
+#import "YYOpusStyleListModel.h"
+#import "YYSeriesInfoDetailModel.h"
 #import "YYStylesAndTotalPriceModel.h"
 #import "YYBrandSeriesToCartTempModel.h"
 
@@ -246,7 +248,7 @@ static NSInteger headViewHeight = 37;
     WeakSelf(ws);
     [YYUserApi getDesignerHomeInfo:@"" andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYBrandHomeInfoModel *infoModel, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             ws.homePageMode = infoModel;
         }
     }];
@@ -254,7 +256,7 @@ static NSInteger headViewHeight = 37;
 -(void)loadSeriesInfo{
     WeakSelf(ws);
     [YYOpusApi getConnSeriesInfoWithId:_designerId seriesId:_seriesId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYSeriesInfoDetailModel *infoDetailModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100){
+        if (rspStatusAndMessage.status == YYReqStatusCode100){
             ws.seriesInfoDetailModel = infoDetailModel;
             NSComparisonResult compareResult = NSOrderedDescending;
             if(ws.seriesInfoDetailModel.series.orderDueTime !=nil){
@@ -263,7 +265,7 @@ static NSInteger headViewHeight = 37;
             self.orderDueCompareResult = compareResult;
         }
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
-        if (rspStatusAndMessage.status != kCode100) {
+        if (rspStatusAndMessage.status != YYReqStatusCode100) {
             [YYToast showToastWithTitle:rspStatusAndMessage.message  andDuration:kAlertToastDuration];
         }
         [ws reloadCollectionViewData];
@@ -272,7 +274,7 @@ static NSInteger headViewHeight = 37;
 - (void)loadDataByPageIndex:(int)pageIndex queryStr:(NSString*)queryStr{
     WeakSelf(ws);
     [YYOpusApi getConnStyleListWithDesignerId:_designerId seriesId:_seriesId orderBy:nil queryStr:queryStr pageIndex:pageIndex pageSize:8 andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYOpusStyleListModel *opusStyleListModel, NSError *error) {
-        if (rspStatusAndMessage.status == kCode100 && opusStyleListModel.result
+        if (rspStatusAndMessage.status == YYReqStatusCode100 && opusStyleListModel.result
             ) {
             if(!_isSearchView){
                 ws.currentPageInfo = opusStyleListModel.pageInfo;
@@ -291,7 +293,7 @@ static NSInteger headViewHeight = 37;
         }
 
         [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
-        if (rspStatusAndMessage.status != kCode100) {
+        if (rspStatusAndMessage.status != YYReqStatusCode100) {
             [YYToast showToastWithTitle:rspStatusAndMessage.message  andDuration:kAlertToastDuration];
         }
         [ws reloadCollectionViewData];
@@ -302,8 +304,8 @@ static NSInteger headViewHeight = 37;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     WeakSelf(ws);
     [YYOpusApi getStyleInfoByStyleId:styleId orderCode:nil andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYStyleInfoModel *styleInfoModel, NSError *error) {
-        [MBProgressHUD hideHUDForView:ws.view animated:YES];
-        if (!error && rspStatusAndMessage.status == kCode100) {
+        [MBProgressHUD hideAllHUDsForView:ws.view animated:YES];
+        if (!error && rspStatusAndMessage.status == YYReqStatusCode100) {
             if (successBlock) {
                 successBlock(styleInfoModel);
             }
@@ -416,7 +418,7 @@ static NSInteger headViewHeight = 37;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0 || ([_searchResultArray isNilOrEmpty]&&[_filterResultArray isNilOrEmpty]&&[_stylesListArray isNilOrEmpty]) || !self.seriesInfoDetailModel){
+    if(indexPath.section == 0 || ([NSMutableArray isNilOrEmpty:_searchResultArray]&&[NSMutableArray isNilOrEmpty:_filterResultArray]&&[NSMutableArray isNilOrEmpty:_stylesListArray]) || !self.seriesInfoDetailModel){
         return;
     }
 
@@ -551,7 +553,7 @@ static NSInteger headViewHeight = 37;
 
     if(_isSearchView){
         //显示
-        if([_searchResultArray isNilOrEmpty]){
+        if([NSMutableArray isNilOrEmpty:_searchResultArray]){
             _tempHeadView.hidden = YES;
         }else{
             _tempHeadView.hidden = NO;
@@ -978,7 +980,7 @@ static NSInteger headViewHeight = 37;
     [self reloadCollectionViewData];
 }
 - (void)addShoppingCartWithOpusStyleModel:(YYOpusStyleModel *)opusStyleModel{
-    if(_seriesInfoDetailModel == nil || [_seriesInfoDetailModel.series.status integerValue] == kOpusDraft){
+    if(_seriesInfoDetailModel == nil || [_seriesInfoDetailModel.series.status integerValue] == YYOpusCheckAuthDraft){
         [YYToast showToastWithView:self.view title:NSLocalizedString(@"请先发布作品！",nil) andDuration:kAlertToastDuration];
         return;
     }
@@ -1123,7 +1125,7 @@ static NSInteger headViewHeight = 37;
     }else{
         //获取是否存在多币种
         [YYOpusApi hasMultiCurrencyWithSeriesId:_seriesId andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, BOOL hasMultiCurrency, NSError *error) {
-            if((rspStatusAndMessage.status = kCode100)){
+            if((rspStatusAndMessage.status = YYReqStatusCode100)){
                 _haveGetMuCurrency = YES;
                 _isMuCurrency = hasMultiCurrency;
                 //有获取过
@@ -1193,7 +1195,7 @@ static NSInteger headViewHeight = 37;
                 _shareSeriesView.hidden = YES;
                 _shareSeriesView.emailTextField.text = @"";
                 _shareSeriesView.emailTipButton.hidden = YES;
-                if((rspStatusAndMessage.status = kCode100)){
+                if((rspStatusAndMessage.status = YYReqStatusCode100)){
                     [YYToast showToastWithTitle:NSLocalizedString(@"发送成功！", @"") andDuration:kAlertToastDuration];
                 }else{
                     [YYToast showToastWithTitle:rspStatusAndMessage.message andDuration:kAlertToastDuration];
@@ -1217,7 +1219,7 @@ static NSInteger headViewHeight = 37;
     [self.collectionView.mj_header endRefreshing];
     [self.collectionView.mj_footer endRefreshing];
     if(_isSearchView){
-        if([_searchResultArray isNilOrEmpty]){
+        if([NSMutableArray isNilOrEmpty:_searchResultArray]){
             _collectionViewTopLayout.constant = 0;
         }else{
             _collectionViewTopLayout.constant = YY_COLLECTION_HEADERVIEW_HEIGHT;

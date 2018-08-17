@@ -260,7 +260,7 @@
         phone = textFiedlValue;
     }
     
-    if (_userInfo.userType == kBuyerStorUserType){
+    if (_userInfo.userType == YYUserTypeRetailer){
         NSString *_province = [LanguageManager isEnglishLanguage]?self.userInfo.provinceEn:self.userInfo.province;
         NSString *_city = [LanguageManager isEnglishLanguage]?self.userInfo.cityEn:self.userInfo.city;
         
@@ -283,7 +283,7 @@
         }
         
         [YYUserApi updateBuyerUsername:username phone:phone  province:province city:city andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-            if (rspStatusAndMessage.status == kCode100) {
+            if (rspStatusAndMessage.status == YYReqStatusCode100) {
                 [YYToast showToastWithTitle:NSLocalizedString(@"修改成功！",nil) andDuration:kAlertToastDuration];
                 if (_modifySuccess) {
                     _modifySuccess();
@@ -293,7 +293,7 @@
             }
             
         }];
-    }else  if (_userInfo.userType == kDesignerType) {
+    }else  if (_userInfo.userType == YYUserTypeDesigner) {
         if (_currentShowType == ShowTypeUsername) {
             NSArray *phoneArr = [phone componentsSeparatedByString:@" "];
             if(phoneArr.count > 1){
@@ -310,7 +310,7 @@
             }
         }
         [YYUserApi updateDesignerUsername:username phone:phone andBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, NSError *error) {
-            if (rspStatusAndMessage.status == kCode100) {
+            if (rspStatusAndMessage.status == YYReqStatusCode100) {
                 
                 [YYToast showToastWithTitle:NSLocalizedString(@"修改成功！",nil) andDuration:kAlertToastDuration];
                 if (_modifySuccess) {

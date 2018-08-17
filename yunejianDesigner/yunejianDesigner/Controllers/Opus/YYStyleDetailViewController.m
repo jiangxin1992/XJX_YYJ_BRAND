@@ -526,7 +526,7 @@ static NSInteger tagOffset = 90000;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [YYShowroomApi brandToShowroomBlock:^(YYRspStatusAndMessage *rspStatusAndMessage, YYUserModel *userModel, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if(rspStatusAndMessage.status == kCode100){
+        if(rspStatusAndMessage.status == YYReqStatusCode100){
             //清除购物车
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             [appDelegate clearBuyCar];

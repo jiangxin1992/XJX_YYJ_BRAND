@@ -18,7 +18,6 @@
 // 接口
 
 // 分类
-#import "NSArray+extra.h"
 #import "UIImage+YYImage.h"
 #import "UIImage+Tint.h"
 
@@ -340,7 +339,7 @@
 
     UIButton *button = [UIButton getCustomTitleBtnWithAlignment:0 WithFont:14.0f WithSpacing:0 WithNormalTitle:nil WithNormalColor:_define_white_color WithSelectedTitle:nil WithSelectedColor:nil];
     [alertView addSubview:button];
-    if(![_otherBts isNilOrEmpty]){
+    if(![NSArray isNilOrEmpty:_otherBts]){
         [button setTitle:_otherBts[0] forState:UIControlStateNormal];
     }
     button.backgroundColor = _define_black_color;

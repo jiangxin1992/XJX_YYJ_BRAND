@@ -10,10 +10,29 @@
 #define YYBuride_h
 
 #import <UMMobClick/MobClick.h>
-#import "CommonMacro.h"
-
 
 #define currentServerUrlRelease(monitor, placeholder) [[[NSUserDefaults standardUserDefaults] objectForKey: kLastYYServerURL] containsString:@"http://ycosystem.com"]? monitor: placeholder
+
+//原订单内容
+#define kYYPageOriginalOrderDetail currentServerUrlRelease(@"YYOriginalOrderDetail", @"not-release")
+//强制发货（操作确认页面）
+#define kYYPageDeliveringDoneConfirm currentServerUrlRelease(@"YYDeliveringDoneConfirm", @"not-release")
+//查看异常反馈
+#define kYYPageParcelExceptionDetail currentServerUrlRelease(@"YYParcelExceptionDetail", @"not-release")
+//包裹单详情
+#define kYYPagePackageDetail currentServerUrlRelease(@"YYPackageDetail", @"not-release")
+//包裹单列表
+#define kYYPagePackageList currentServerUrlRelease(@"YYPackageList", @"not-release")
+//发货时的编辑地址
+#define kYYPageDeliverModifyAddress currentServerUrlRelease(@"YYDeliverModifyAddress", @"not-release")
+//发货时选择仓库
+#define kYYPageChooseWarehouse currentServerUrlRelease(@"YYChooseWarehouse", @"not-release")
+//发货时选择物流公司
+#define kYYPageChooseLogistics currentServerUrlRelease(@"YYChooseLogistics", @"not-release")
+//建立和编辑装箱单界面
+#define kYYPagePackingList currentServerUrlRelease(@"YYPackingList", @"not-release")
+//发货界面
+#define kYYPageDeliver currentServerUrlRelease(@"YYDeliver", @"not-release")
 
 // 产品介绍页（安装后的三张介绍）
 #define kYYPageIntroduction currentServerUrlRelease(@"YYIntroduction", @"not-release")
@@ -35,8 +54,6 @@
 #define kYYPageOrderList currentServerUrlRelease(@"YYOrderList", @"not-release")
 // 买手店(第一页)
 #define kYYPageBuyer currentServerUrlRelease(@"YYBuyer", @"not-release")
-// 库存(第一页)
-#define kYYPageInventory currentServerUrlRelease(@"YYInventory", @"not-release")
 // 我的(第一页)
 #define kYYPageAccountDetail currentServerUrlRelease(@"YYAccountDetail", @"not-release")
 
@@ -101,8 +118,6 @@
 /// ---------- Register start ----------
 // 设计师入驻
 #define kYYPageRegisterDesignerTypeEmailRegisterType currentServerUrlRelease(@"YYRegister_designerType|EmailRegisterType", @"not-release")
-// 买手店身份审核
-#define kYYPageBuyerRegisterType currentServerUrlRelease(@"YYRegister_buyerRegisterType", @"not-release")
 // 找回密码
 #define kYYPageForgetPasswordTypeEmailPasswordType currentServerUrlRelease(@"YYRegister_forgetPasswordType|EmailPasswordType", @"not-release")
 // 品牌验证
@@ -133,13 +148,6 @@
 
 // 邀请合作买手店
 #define kYYPageBuyerInvite currentServerUrlRelease(@"YYBuyerInvite", @"not-release")
-
-// 调拨库存详情
-#define kYYPageInventoryDetail currentServerUrlRelease(@"YYInventoryDetail", @"not-release")
-// 订货买手店
-#define kYYPageInventoryBuyers currentServerUrlRelease(@"YYInventoryBuyers", @"not-release")
-// 联系买手店
-#define kYYPageInventoryBuyerInfo currentServerUrlRelease(@"YYInventoryBuyerInfo", @"not-release")
 
 // 我的品牌主页
 #define kYYPageBrandHomePage currentServerUrlRelease(@"YYBrandHomePage", @"not-release")

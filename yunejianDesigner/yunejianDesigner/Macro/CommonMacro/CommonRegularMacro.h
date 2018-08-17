@@ -82,7 +82,7 @@
 #define kStyleDetailCover IS_RETINA?@"-z1200.png":@"-z600.jpg"
 /** 款式颜色图片 */
 #define kStyleColorImageCover IS_RETINA?@"-z88.png":@"-z44.png"
-/** 买家名片图片 */
+/** 买手名片图片 */
 #define kBuyerCardImage @"-z500.jpg"
 /** 账户界面LOGO封面 */
 #define kLogoCover IS_RETINA?@"-z260.png":@"-z130.png"
@@ -143,7 +143,6 @@
 #define kShowOrderListNotification @"kShowOrderListNotification"
 #define kOrderAddStyleNotification @"kOrderAddStyleNotification"
 #define kUpdateShoppingCarNotification @"kUpdateShoppingCarNotification"
-//#define kShowInventoryNotification @"kShowInventoryNotification"
 #define kShowStyleNotification @"kShowStyleNotification"
 
 //不再提醒类别
@@ -155,8 +154,6 @@
 #define UserCheckStatusChangeNotification @"UserCheckStatusChangeNotification" //隐身用户checkStatus
 #define UnreadMsgAmountChangeNotification @"UnreadMsgAmountChangeNotification" //消息中心变化
 #define UnreadMsgAmountStatusChangeNotification @"UnreadMsgAmountStatusChangeNotification"//预约申请状态变更
-//#define UnreadNewsNotifyMsgAmount @"UnreadNewsNotifyMsgAmount" //新闻消息变化
-#define UnreadInventoryNotifyMsgAmount @"UnreadInventoryNotifyMsgAmount" //库存消息变化
 #define UnreadOrderNotifyMsgAmount @"UnreadOrderNotifyMsgAmount" //唯独消息变化
 #define UnreadConnNotifyMsgAmount @"UnreadConnNotifyMsgAmount" //唯独消息变化
 #define VisibleInfoPostIsOk @"visibleInfoPostIsOk" //隐形账号填写信息完成后返回界面

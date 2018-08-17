@@ -8,7 +8,7 @@
 
 #import "YYStyleInfoModel.h"
 
-#import "YYInventoryBoardModel.h"
+#import "YYStyleOneColorModel.h"
 #import "YYOpusStyleModel.h"
 
 @implementation YYStyleInfoModel
@@ -53,8 +53,8 @@
 
  @return ...
  */
--(YYInventoryBoardModel *)transformToInventoryBoardModel{
-    YYInventoryBoardModel *infoModel = [[YYInventoryBoardModel alloc] init];
+-(YYStyleOneColorModel *)transformToStyleOneColorModel{
+    YYStyleOneColorModel *infoModel = [[YYStyleOneColorModel alloc] init];
     infoModel.designerId = self.style.designerId;
     infoModel.brandName = self.style.designerBrandName;
     infoModel.brandLogo = self.style.designerBrandLogo;

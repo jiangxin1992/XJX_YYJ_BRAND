@@ -24,9 +24,10 @@ typedef NS_ENUM(NSInteger, YYCountryPickViewType) {
 @end
 
 @interface YYCountryPickView : UIView
-@property(nonatomic,strong)NSArray *plistArray;//数据
-@property(nonatomic,weak) id<YYCountryPickViewDelegate> delegate;
-@property (nonatomic,strong)CancelButtonClicked cancelButtonClicked;
+
+@property (nonatomic, strong) NSArray *plistArray;//数据
+@property (nonatomic, weak) id<YYCountryPickViewDelegate> delegate;
+@property (nonatomic, strong) CancelButtonClicked cancelButtonClicked;
 
 /**
  *  通过plistName添加一个pickView

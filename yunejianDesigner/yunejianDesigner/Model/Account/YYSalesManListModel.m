@@ -42,13 +42,13 @@
             NSMutableArray *mutaleArr5 = [[NSMutableArray alloc] init];
             NSMutableArray *mutaleArr6 = [[NSMutableArray alloc] init];
             for (YYSalesManModel *saleManModel in tempArr) {
-                if([saleManModel.userType integerValue] == 0){
+                if([saleManModel.userType integerValue] == YYUserTypeDesigner){
                     [mutaleArr0 addObject:saleManModel];
-                }else if([saleManModel.userType integerValue] == 2){
+                }else if([saleManModel.userType integerValue] == YYUserTypeSales){
                     [mutaleArr2 addObject:saleManModel];
-                }else if([saleManModel.userType integerValue] == 5){
+                }else if([saleManModel.userType integerValue] == YYUserTypeShowroom){
                     [mutaleArr5 addObject:saleManModel];
-                }else if([saleManModel.userType integerValue] == 6){
+                }else if([saleManModel.userType integerValue] == YYUserTypeShowroomSub){
                     [mutaleArr6 addObject:saleManModel];
                 }
             }
@@ -67,7 +67,7 @@
         if(self.result.count){
             NSMutableArray *mutableArr = [[NSMutableArray alloc] init];
             for (YYSalesManModel *saleManModel in self.result) {
-                if([saleManModel.userType integerValue] == 2){
+                if([saleManModel.userType integerValue] == YYUserTypeSales){
                     [mutableArr addObject:saleManModel];
                 }
             }

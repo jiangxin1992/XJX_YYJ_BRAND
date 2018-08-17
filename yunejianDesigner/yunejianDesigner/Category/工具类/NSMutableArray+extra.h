@@ -10,11 +10,6 @@
 
 @interface NSMutableArray (extra)
 
-/**
- 判断当前字符串是否为空（尽量用这个）
-
- @return 是否为空(nil/no count)
- */
-- (BOOL )isNilOrEmpty;
++ (BOOL)isNilOrEmpty:(NSMutableArray *)array;
 
 @end
