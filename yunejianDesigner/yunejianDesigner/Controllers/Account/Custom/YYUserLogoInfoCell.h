@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "SCGIFButtonView.h"
-@protocol YYUserLogoInfoCellDelegate
+
+@protocol YYUserLogoInfoCellDelegate<NSObject>
+
 -(void)handlerBtnClick:(id)target;
 -(void)settingBtnClick:(id)target;
+
 @end
 
 @interface YYUserLogoInfoCell : UITableViewCell
@@ -21,5 +25,4 @@
 
 @property(nonatomic,weak)id<YYUserLogoInfoCellDelegate> delegate;
 
-- (IBAction)changeLogoHandler:(id)sender;
 @end

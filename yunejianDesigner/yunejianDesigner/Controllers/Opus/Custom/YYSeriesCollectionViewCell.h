@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol YYSeriesCollectionViewCellDelegate
+@protocol YYSeriesCollectionViewCellDelegate<NSObject>
 -(void)operateHandler:(NSInteger)section androw:(NSInteger)row type:(NSString*)type;
 -(UIView *)getview;
 @end

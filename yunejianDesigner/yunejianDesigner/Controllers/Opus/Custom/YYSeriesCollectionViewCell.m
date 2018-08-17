@@ -42,7 +42,7 @@
 -(void)menuBtnHandler:(NSInteger)sender{
     NSInteger type = sender;
 
-        if(_indexPath != nil){
+        if(_indexPath && self.delegate && [self.delegate respondsToSelector:@selector(operateHandler:androw:type:)]){
 
             [self.delegate operateHandler:type androw:_indexPath.row type:@"updateAuthType"];
         }
@@ -166,10 +166,8 @@
             [ws menuBtnHandler:index];
         } animated:YES parentView:self];
     }else{
-        if(self.delegate){//[self.delegate getview]
-            if(_indexPath != nil){
-                [self.delegate operateHandler:_indexPath.section androw:_indexPath.row type:@"updatePubStatus"];
-            }
+        if(_indexPath && self.delegate && [self.delegate respondsToSelector:@selector(operateHandler:androw:type:)]){
+            [self.delegate operateHandler:_indexPath.section androw:_indexPath.row type:@"updatePubStatus"];
         }
     }
 }
